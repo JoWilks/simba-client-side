@@ -40,6 +40,13 @@ class API {
     }).then(resp => resp.json())
   }
 
+//MONZO API CALLS
+
+  static get_accounts () {
+    return 
+  }
+
+
 }
 
 API.baseURL = 'http://localhost:3000/api/v1'

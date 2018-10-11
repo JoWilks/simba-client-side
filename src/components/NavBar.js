@@ -19,7 +19,12 @@ class NavBar extends React.Component {
               <div className='navbar-item'>
                 {
                   props.currentUser
-                    ? <button className='button' onClick={props.logout}>LOGOUT</button>
+                    ? <div>
+                      <button className='button' onClick={props.logout}>LOGOUT</button>
+                      <Link to='/monzo'>
+                        <button className="button is-info">Sync Monzo</button>
+                      </Link>
+                      </div>
                     : <React.Fragment>
                       <Link to='/login'>
                         <button className="button is-primary">Login</button>
