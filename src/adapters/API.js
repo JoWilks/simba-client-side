@@ -42,8 +42,13 @@ class API {
 
 //MONZO API CALLS
 
-  static get_accounts () {
-    return 
+  static get_list_accounts () {
+    const monzo_token = localStorage.getItem(monzo_token)
+    return fetch(API.listAccounts, {
+      headers: {'Authorization':`Bearer ${monzo_token}`}
+    })
+    .then(resp => resp.json())
+    //do some sort of dispatch to reducer to set state in store
   }
 
 
@@ -54,5 +59,12 @@ API.baseURL = 'http://localhost:3000/api/v1'
 API.registerURL = API.baseURL + '/register'
 API.loginURL = API.baseURL + '/login'
 API.validateURL = API.baseURL + '/validate'
+
+API.baseURL = 'http://api.monzo.com/'
+API.listAccounts = API.baseURL + '/accounts'
+API.readBalance = API.baseURL + '/balance'
+API.listPots = API.baseURL + '/pots'
+API.getAllTransactions = API.baseURL + '/transactions'
+API.getRangeTransactions = API.baseURL + '/transactions'
 
 export default API
