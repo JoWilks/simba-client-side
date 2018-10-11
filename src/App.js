@@ -25,6 +25,11 @@ class App extends Component {
     this.props.history.push('/')
   }
 
+  get_all_transactions_test = () => {
+    this.props.all_transactions()
+
+  }
+
   componentDidMount () {
     const token = localStorage.getItem('token')
     if (token) {
@@ -53,18 +58,25 @@ class App extends Component {
         <Route exact path='/register' component={props => <Register login={this.login} {...props} />} />
         <Route exact path='/monzo' component={props => <MonzoSync {...props} />} />
         </div>
+        <div>
         <button onClick={API.get_list_accounts}>Get list accounts</button>
         <button onClick={API.read_balance_account}>Read Balance Account</button>
         <button onClick={API.list_pots}>List Pots</button>
         <button onClick={API.get_all_transaction}>Get all transactions</button>
         <button onClick={() => API.get_range_transactions(new Date(2018,9).toISOString(),new Date(2018,9,1).toISOString())}>Get Range Transactions</button>
+        </div>
+        <div>
+        <button onClick={this.props.all_transactions}>Test store transactions</button>
+        <button onClick={() => console.log(this.props.transactions)}>Check transactions store</button>
+        </div>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-    currentUser: state.userReducer
+    currentUser: state.userReducer,
+    transactions: state.transactionsReducer
 })
 
 

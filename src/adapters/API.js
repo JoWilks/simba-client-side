@@ -74,13 +74,13 @@ class API {
     //do some sort of dispatch to reducer to set state in store
   }
 
-  static get_all_transaction () {
+  static get_all_transactions () {
     return fetch(API.getAllTransactions + `?account_id=${account_id}`, {
       method: 'GET',
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
     .then(resp => resp.json())
-    .then(data => console.log(data))
+    // .then(data => console.log(data))
     //do some sort of dispatch to reducer to set state in store
   }
 
