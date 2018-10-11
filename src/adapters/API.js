@@ -1,4 +1,5 @@
 import { get } from 'https'
+require('dotenv').config()
 
 class API {
   // USER API CALLS
@@ -43,14 +44,55 @@ class API {
 //MONZO API CALLS
 
   static get_list_accounts () {
-    const monzo_token = localStorage.getItem(monzo_token)
     return fetch(API.listAccounts, {
+      method: 'GET',
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
     .then(resp => resp.json())
+    .then(data => console.log(data))
+    //do some sort of dispatch to reducer to set state in store
+    //will need to store account_id when do get_list_accounts
+  }
+
+  static read_balance_account () {
+    return fetch(API.readBalance + `?account_id=${account_id}`, {
+      method: 'GET',
+      headers: {'Authorization':`Bearer ${monzo_token}`}
+    })
+    .then(resp => resp.json())
+    .then(data => console.log(data))
     //do some sort of dispatch to reducer to set state in store
   }
 
+  static list_pots () {
+    return fetch(API.listPots, {
+      method: 'GET',
+      headers: {'Authorization':`Bearer ${monzo_token}`}
+    })
+    .then(resp => resp.json())
+    .then(data => console.log(data))
+    //do some sort of dispatch to reducer to set state in store
+  }
+
+  static get_all_transaction () {
+    return fetch(API.getAllTransactions + `?account_id=${account_id}`, {
+      method: 'GET',
+      headers: {'Authorization':`Bearer ${monzo_token}`}
+    })
+    .then(resp => resp.json())
+    .then(data => console.log(data))
+    //do some sort of dispatch to reducer to set state in store
+  }
+
+  static get_range_transactions () {
+    return fetch(API.getAllTransactions + `?account_id=${account_id}`, {
+      method: 'GET',
+      headers: {'Authorization':`Bearer ${monzo_token}`}
+    })
+    .then(resp => resp.json())
+    .then(data => console.log(data))
+    //do some sort of dispatch to reducer to set state in store
+  }
 
 }
 
@@ -60,11 +102,14 @@ API.registerURL = API.baseURL + '/register'
 API.loginURL = API.baseURL + '/login'
 API.validateURL = API.baseURL + '/validate'
 
-API.baseURL = 'http://api.monzo.com/'
-API.listAccounts = API.baseURL + '/accounts'
-API.readBalance = API.baseURL + '/balance'
-API.listPots = API.baseURL + '/pots'
-API.getAllTransactions = API.baseURL + '/transactions'
-API.getRangeTransactions = API.baseURL + '/transactions'
+API.monzoBaseURL = 'https://api.monzo.com'
+API.listAccounts = API.monzoBaseURL + '/accounts'
+API.readBalance = API.monzoBaseURL + '/balance'
+API.listPots = API.monzoBaseURL + '/pots'
+API.getAllTransactions = API.monzoBaseURL + '/transactions'
+API.getRangeTransactions = API.monzoBaseURL + '/transactions'
+
+const monzo_token = localStorage.getItem('monzo_token')
+const account_id = 'acc_00009YD5n3MghHFkmJCPib'
 
 export default API

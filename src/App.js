@@ -39,8 +39,8 @@ class App extends Component {
         })
     }
   }
+
   render() {
-    console.log(actions)
     return (
       <div className="App">
         <header className="App-header">
@@ -54,6 +54,11 @@ class App extends Component {
         <Route exact path='/register' component={props => <Register login={this.login} {...props} />} />
         <Route exact path='/monzo' component={props => <MonzoSync {...props} />} />
         </div>
+        <button onClick={API.get_list_accounts}>Get list accounts</button>
+        <button onClick={API.read_balance_account}>Read Balance Account</button>
+        <button onClick={API.list_pots}>List Pots</button>
+        <button onClick={API.get_all_transaction}>Get all transactions</button>
+        <button onClick={() => API.get_range_transactions(Date(2018,8,1),Date())}>Get Range Transactions</button>
       </div>
     );
   }
