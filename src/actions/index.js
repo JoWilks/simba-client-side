@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, REGISTER } from './types'
+import { LOGIN, LOGOUT, REGISTER, ALL_TRANSACTIONS } from './types'
 //import data so can put into payload
 
 export function login (username) {
@@ -11,4 +11,8 @@ export function logout () {
 
 export function register (username, password) {
     return {type: REGISTER, payload: {username, password}}
+}
+
+export function all_transactions (transactions) {
+    return {type: ALL_TRANSACTIONS, payload: {transactions}}
 }

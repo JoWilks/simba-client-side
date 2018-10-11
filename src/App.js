@@ -32,7 +32,6 @@ class App extends Component {
         .then(data => {
           if (data.username) {
             this.login(data.username)
-
           } else {
             this.props.history.push('/login')
           }
