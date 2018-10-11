@@ -84,8 +84,10 @@ class API {
     //do some sort of dispatch to reducer to set state in store
   }
 
-  static get_range_transactions () {
-    return fetch(API.getAllTransactions + `?account_id=${account_id}`, {
+  static get_range_transactions (since, before) {
+    //need to convert the DateTimes to An RFC 3339 encoded-timestamp, can do new Date().toISOString()
+    const rest_url = `&since=${since}&before${before}`
+    return fetch(API.getAllTransactions + `?&account_id=${account_id}${rest_url}`, {
       method: 'GET',
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
@@ -107,7 +109,7 @@ API.listAccounts = API.monzoBaseURL + '/accounts'
 API.readBalance = API.monzoBaseURL + '/balance'
 API.listPots = API.monzoBaseURL + '/pots'
 API.getAllTransactions = API.monzoBaseURL + '/transactions'
-API.getRangeTransactions = API.monzoBaseURL + '/transactions'
+// API.getRangeTransactions = API.monzoBaseURL + '/transactions'
 
 const monzo_token = localStorage.getItem('monzo_token')
 const account_id = 'acc_00009YD5n3MghHFkmJCPib'

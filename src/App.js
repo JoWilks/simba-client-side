@@ -58,7 +58,7 @@ class App extends Component {
         <button onClick={API.read_balance_account}>Read Balance Account</button>
         <button onClick={API.list_pots}>List Pots</button>
         <button onClick={API.get_all_transaction}>Get all transactions</button>
-        <button onClick={() => API.get_range_transactions(Date(2018,8,1),Date())}>Get Range Transactions</button>
+        <button onClick={() => API.get_range_transactions(new Date(2018,9).toISOString(),new Date(2018,9,1).toISOString())}>Get Range Transactions</button>
       </div>
     );
   }
