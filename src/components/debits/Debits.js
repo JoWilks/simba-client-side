@@ -1,6 +1,7 @@
 import React from 'react'
 import Listview from '../templates/Listview'
 import Graphview from '../templates/Graphview'
+import Toolbar from '../Toolbar'
 
 class Debits extends React.Component {
 
@@ -15,6 +16,14 @@ class Debits extends React.Component {
         this.setState({ listView: !this.state.listView })
     }
 
+    toggleAddForm = () => {
+        
+    }
+
+    toggleFilterForm = () => {
+
+    }
+
     render () {
         return (
             <div>
@@ -27,7 +36,7 @@ class Debits extends React.Component {
                 }
 
                 <div>
-                    <button onClick={this.toggleListView}>{this.state.listView? "Graph" : "List"}</button>
+                    <Toolbar toggleListView={this.toggleListView} listView={this.state.listView}/>
                 </div>
                 
             </div>

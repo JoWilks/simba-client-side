@@ -8,7 +8,7 @@ class Listview extends React.Component {
             <div>
                 {
                     this.props.transactions &&
-                    this.props.transactions.reverse().map(transaction => 
+                    this.props.transactions.map(transaction => 
                         <Transactionview transaction={transaction}/>
                     )
                 }
