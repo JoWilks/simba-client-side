@@ -9,6 +9,7 @@ export const STORE_CREDITS = 'STORE_CREDITS'
 
 
 export const STORE_ACCOUNTS = 'STORE_ACCOUNTS'
+export const STORE_POTS = 'STORE_POTS'
 
 export const SET_CURRENT_TIME = 'SET_CURRENT_TIME'
 export const SET_START_DAY_WEEK = 'SET_START_DAY_WEEK'

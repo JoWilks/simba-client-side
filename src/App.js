@@ -30,7 +30,8 @@ class App extends Component {
   }
 
   test = () => {
-    this.props.all_transactions()
+    this.props.store_accounts_details()
+    this.props.store_pots_details()
   }
 
   componentDidMount () {
@@ -46,6 +47,8 @@ class App extends Component {
         })
     }
     this.props.last_two_months()
+    this.props.store_accounts_details()
+    this.props.store_pots_details()
   }
 
   render() {
@@ -64,7 +67,7 @@ class App extends Component {
         </div>
         <div>
         <button onClick={() => console.log(this.props)}>Check store</button>
-        <button onClick={null}>Test</button>
+        <button onClick={this.test}>Test</button>
         </div>
       </div>
     );

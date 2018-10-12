@@ -12,18 +12,15 @@ const transactionsReducer= (state = initialState, action) => {
         case STORE_ALL_TRANSACTIONS:
             return state.all = [action.payload.transactions]
         case STORE_LAST_TWO_MONTHS:
-        console.log()
             const curr = JSON.parse(JSON.stringify(state))
             curr.twoMonths = action.payload.transactions
             return state = curr
         case STORE_CREDITS:
-            console.log(state)
             const curr1 = JSON.parse(JSON.stringify(state))
             const filteredCredits = state.twoMonths.filter(transaction => transaction.amount > 0 && !transaction.metadata.pot_id)
             curr1.credits = filteredCredits
             return state = curr1
         case STORE_DEBITS:
-        console.log(state)
             const curr2 = JSON.parse(JSON.stringify(state))
             const filteredDebits = state.twoMonths.filter(transaction => transaction.amount < 0 && !transaction.metadata.pot_id)
             curr2.debits = filteredDebits
