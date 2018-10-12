@@ -7,8 +7,6 @@ import * as actions from './actions'
 
 import API from './adapters/API'
 
-import { moment, now, startDayOfWeek, startDayOfMonth, startDayOfTwoMonthsAgo } from './datefunctions'
-
 import NavBar from './components/NavBar'
 import Login from './components/user/Login'
 import Register from './components/user/Register'

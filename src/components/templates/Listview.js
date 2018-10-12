@@ -1,10 +1,18 @@
 import React from 'react'
+import Transactionview from './Transactionview'
 
 class Listview extends React.Component {
 
     render () {
         return (
-            <div>Listview Page</div>
+            <div>
+                {
+                    this.props.transactions &&
+                    this.props.transactions.reverse().map(transaction => 
+                        <Transactionview transaction={transaction}/>
+                    )
+                }
+            </div>
         )
     }
 

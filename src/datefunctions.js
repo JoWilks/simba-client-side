@@ -8,3 +8,6 @@ export const startDayOfMonth = moment().date(1) //gets the date of 1st of curren
 
 export const startDayOfTwoMonthsAgo = now.subtract(2, 'months').date(1) //gets day 1 of 2 months prior
 
+export const convertISOToNiceDate = (ISODateString) => {
+    moment(ISODateString)
+}
