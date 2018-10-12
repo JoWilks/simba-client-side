@@ -14,24 +14,20 @@ import Login from './components/user/Login'
 import Register from './components/user/Register'
 import MonzoSync from './components/user/MonzoSync'
 import Dashboard from './components/dashboard/Dashboard'
-
-// var moment = require('moment');
+import Debits from './components/debits/Debits'
+import Credits from './components/credits/Credits'
 
 class App extends Component {
 
   login = username => {
     this.props.login(username)
+    console.log(this.props)
     this.props.history.push('/dashboard') //going to want to push this to the dashboard
   }
 
   logout = () => {
     this.props.logout()
     this.props.history.push('/')
-  }
-
-  test = () => {
-    this.props.store_accounts_details()
-    this.props.store_pots_details()
   }
 
   componentDidMount () {
@@ -46,9 +42,6 @@ class App extends Component {
           }
         })
     }
-    this.props.last_two_months()
-    this.props.store_accounts_details()
-    this.props.store_pots_details()
   }
 
   render() {
@@ -59,15 +52,17 @@ class App extends Component {
         </header>
         <div>
         { this.props.currentUser
-          ? <Route exact path='/dashboard' component={props => <Dashboard {...props} />} />
-          : <Route exact path='/login' component={props => <Login login={this.login} {...props} />} />
+          ? <Route exact path='/dashboard' component={props => <Dashboard {...this.props} />} />
+          : <Route exact path='/login' component={props => <Login login={this.login} {...this.props} />} />
         }
-        <Route exact path='/register' component={props => <Register login={this.login} {...props} />} />
+        <Route exact path='/register' component={props => <Register login={this.login} {...this.props} />} />
         <Route exact path='/monzo' component={props => <MonzoSync {...props} />} />
+        <Route exact path='/debits' component={props => <Debits {...this.props} />} />
+        <Route exact path='/credits' component={props => <Credits {...this.props} />} />
         </div>
         <div>
         <button onClick={() => console.log(this.props)}>Check store</button>
-        <button onClick={this.test}>Test</button>
+        <button onClick={this.props.store_pots_details}>Test</button>
         </div>
       </div>
     );

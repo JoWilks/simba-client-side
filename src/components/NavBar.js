@@ -24,6 +24,12 @@ class NavBar extends React.Component {
                       <Link to='/monzo'>
                         <button className="button is-info">Sync Monzo</button>
                       </Link>
+                      <Link to='/debits'>
+                        <button className="button is-info">Expenses</button>
+                      </Link>
+                      <Link to='/credits'>
+                        <button className="button is-info">Income</button>
+                      </Link>
                       </div>
                     : <React.Fragment>
                       <Link to='/login'>
