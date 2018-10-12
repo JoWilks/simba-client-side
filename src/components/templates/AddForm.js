@@ -1,5 +1,5 @@
 import React from 'react'
-import './Addform.css';
+import './Forms.css';
 
 class AddForm extends React.Component {
 

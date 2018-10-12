@@ -48,7 +48,7 @@ class App extends Component {
         <header className="App-header">
           <NavBar currentUser={this.props.currentUser} login={this.login} logout={this.logout} />
         </header>
-        <div>
+        <div className='body'>
         { this.props.currentUser
           ? <Route exact path='/dashboard' component={props => <Dashboard {...this.props} />} />
           : <Route exact path='/login' component={props => <Login login={this.login} {...this.props} />} />

@@ -5,10 +5,10 @@ import './Toolbar.css'
 class Toolbar extends React.Component {
   render () {
     return (
-        <div class='toolbar'>
-        <footer class='footer'>
-            <button>Filter</button>
-            <button>Add</button>
+        <div className='toolbar'>
+        <footer className='footer'>
+            <button onClick={this.props.toggleFilterForm}>Filter</button>
+            <button onClick={this.props.toggleAddForm}>Add</button>
             <button onClick={this.props.toggleListView}>{this.props.listView? "Graph" : "List"}</button>
         </footer>
         </div>
