@@ -7,13 +7,15 @@ import * as actions from './actions'
 
 import API from './adapters/API'
 
+import { moment, now, startDayOfWeek, startDayOfMonth, startDayOfTwoMonthsAgo } from './datefunctions'
+
 import NavBar from './components/NavBar'
 import Login from './components/user/Login'
 import Register from './components/user/Register'
 import MonzoSync from './components/user/MonzoSync'
 import Dashboard from './components/dashboard/Dashboard'
 
-var moment = require('moment');
+// var moment = require('moment');
 
 class App extends Component {
 
@@ -27,9 +29,8 @@ class App extends Component {
     this.props.history.push('/')
   }
 
-  get_all_transactions_test = () => {
+  test = () => {
     this.props.all_transactions()
-
   }
 
   componentDidMount () {
@@ -44,6 +45,7 @@ class App extends Component {
           }
         })
     }
+    this.props.last_two_months()
   }
 
   render() {
@@ -61,16 +63,8 @@ class App extends Component {
         <Route exact path='/monzo' component={props => <MonzoSync {...props} />} />
         </div>
         <div>
-        <button onClick={API.get_list_accounts}>Get list accounts</button>
-        <button onClick={API.read_balance_account}>Read Balance Account</button>
-        <button onClick={API.list_pots}>List Pots</button>
-        <button onClick={API.get_all_transaction}>Get all transactions</button>
-        <button onClick={() => API.get_range_transactions(new Date(2018,9).toISOString(),new Date(2018,9,1).toISOString())}>Get Range Transactions</button>
-        </div>
-        <div>
-        <button onClick={this.props.all_transactions}>Test store transactions</button>
-        <button onClick={() => console.log(this.props.transactions)}>Check transactions store</button>
-        <button onClick={this.props.get_accounts}>Test</button>
+        <button onClick={() => console.log(this.props)}>Check store</button>
+        <button onClick={null}>Test</button>
         </div>
       </div>
     );
