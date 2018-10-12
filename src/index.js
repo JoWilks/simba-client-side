@@ -13,7 +13,8 @@ import rootReducer from './reducers/reducers'
 
 import configureStore from './configureStore'
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
+// const store = createStore(rootReducer, applyMiddleware(thunk))
+const store = configureStore() //Can pass in an initalState but need to add it in where that window deve thing is in configurestore file
 
 ReactDOM.render(
     <Provider store={store}>

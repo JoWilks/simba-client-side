@@ -49,7 +49,7 @@ class API {
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
     .then(resp => resp.json())
-    .then(data => console.log(data))
+    // .then(data => console.log(data))
     //do some sort of dispatch to reducer to set state in store
     //will need to store account_id when do get_list_accounts
   }
@@ -60,7 +60,7 @@ class API {
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
     .then(resp => resp.json())
-    .then(data => console.log(data))
+    // .then(data => console.log(data))
     //do some sort of dispatch to reducer to set state in store
   }
 
@@ -70,7 +70,7 @@ class API {
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
     .then(resp => resp.json())
-    .then(data => console.log(data))
+    // .then(data => console.log(data))
     //do some sort of dispatch to reducer to set state in store
   }
 
@@ -92,7 +92,7 @@ class API {
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
     .then(resp => resp.json())
-    .then(data => console.log(data))
+    // .then(data => console.log(data))
     //do some sort of dispatch to reducer to set state in store
   }
 

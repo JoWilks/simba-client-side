@@ -13,6 +13,8 @@ import Register from './components/user/Register'
 import MonzoSync from './components/user/MonzoSync'
 import Dashboard from './components/dashboard/Dashboard'
 
+var moment = require('moment');
+
 class App extends Component {
 
   login = username => {
@@ -68,6 +70,7 @@ class App extends Component {
         <div>
         <button onClick={this.props.all_transactions}>Test store transactions</button>
         <button onClick={() => console.log(this.props.transactions)}>Check transactions store</button>
+        <button onClick={this.props.get_accounts}>Test</button>
         </div>
       </div>
     );
@@ -76,7 +79,8 @@ class App extends Component {
 
 const mapStateToProps = state => ({
     currentUser: state.userReducer,
-    transactions: state.transactionsReducer
+    transactions: state.transactionsReducer,
+    accounts: state.accountsReducer
 })
 
 
