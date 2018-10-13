@@ -49,9 +49,6 @@ class API {
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
     .then(resp => resp.json())
-    // .then(data => console.log(data))
-    //do some sort of dispatch to reducer to set state in store
-    //will need to store account_id when do get_list_accounts
   }
 
   static read_balance_account () {
@@ -60,8 +57,6 @@ class API {
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
     .then(resp => resp.json())
-    // .then(data => console.log(data))
-    //do some sort of dispatch to reducer to set state in store
   }
 
   static list_pots () {
@@ -70,8 +65,6 @@ class API {
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
     .then(resp => resp.json())
-    // .then(data => console.log(data))
-    //do some sort of dispatch to reducer to set state in store
   }
 
   static get_all_transactions () {
@@ -80,8 +73,6 @@ class API {
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
     .then(resp => resp.json())
-    // .then(data => console.log(data))
-    //do some sort of dispatch to reducer to set state in store
   }
 
   static get_range_transactions (since, before) {
@@ -92,8 +83,6 @@ class API {
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
     .then(resp => resp.json())
-    // .then(data => console.log(data))
-    //do some sort of dispatch to reducer to set state in store
   }
 
 }
@@ -109,7 +98,6 @@ API.listAccounts = API.monzoBaseURL + '/accounts'
 API.readBalance = API.monzoBaseURL + '/balance'
 API.listPots = API.monzoBaseURL + '/pots'
 API.getAllTransactions = API.monzoBaseURL + '/transactions'
-// API.getRangeTransactions = API.monzoBaseURL + '/transactions'
 
 const monzo_token = localStorage.getItem('monzo_token')
 const account_id = 'acc_00009YD5n3MghHFkmJCPib'

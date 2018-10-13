@@ -7,15 +7,12 @@ import FilterForm from '../templates/FilterForm'
 import '../templates/Forms.css'
 
 class Debits extends React.Component {
-
-    //need either a state here or in redux to flick show List or Graph
-    //need to modal render an add form on change of state
-    //modal to render filter form
     state = {
         listView: true,
         addFormView: false,
         filterFormView: false
     }
+    
 
     toggleListView = () => {
         this.setState({ listView: !this.state.listView })
@@ -38,8 +35,6 @@ class Debits extends React.Component {
     render () {
         return (
             <div>
-                <h1>Expenses</h1>
-
                 {
                     this.state.addFormView &&
                     <AddForm />
@@ -53,7 +48,7 @@ class Debits extends React.Component {
                 {
                     //if statement to show either listview or graph
                      this.state.listView ? 
-                     <Listview transactions={this.props.transactions.debits} /> :
+                    <Listview transactions={this.props.transactions.debits} /> :
                     <Graphview transactions={this.props.transactions.debits} />
                 }
 
