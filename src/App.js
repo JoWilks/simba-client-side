@@ -70,7 +70,8 @@ class App extends Component {
 const mapStateToProps = state => ({
     currentUser: state.userReducer,
     transactions: state.transactionsReducer,
-    accounts: state.accountsReducer
+    accounts: state.accountsReducer,
+    categories: state.categoriesReducer
 })
 
 

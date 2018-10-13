@@ -12,7 +12,7 @@ class Debits extends React.Component {
         addFormView: false,
         filterFormView: false
     }
-    
+
 
     toggleListView = () => {
         this.setState({ listView: !this.state.listView })
@@ -37,12 +37,12 @@ class Debits extends React.Component {
             <div>
                 {
                     this.state.addFormView &&
-                    <AddForm />
+                    <AddForm categories={this.props.categories.debit}/>
                 }
 
                 {
                     this.state.filterFormView &&
-                    <FilterForm />
+                    <FilterForm categories={this.props.categories.debit}/>
                 }
 
                 {

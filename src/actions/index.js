@@ -18,8 +18,13 @@ export function register (username, password) {
 }
 
 //CATEGORY TRANSACTIONS
-export const DEBIT_CATEGORIES = 'DEBIT_CATEGORIES'
-export const CREDIT_CATEGORIES = 'CREDIT_CATEGORIES'
+export function get_debit_categories () {
+    return {type: DEBIT_CATEGORIES}
+}
+
+export function get_credit_categories () {
+    return {type: CREDIT_CATEGORIES}
+}
 
 //TRANSACTION ACTIONS
 export function all_transactions () {
@@ -27,7 +32,7 @@ export function all_transactions () {
         API.get_all_transactions()
         .then(data => { console.log(data)
             dispatch({ type: STORE_ALL_TRANSACTIONS, payload: data})
-         } )
+         })
     }
 }
 
@@ -41,8 +46,7 @@ export function last_two_months () {
         .then(() => {
             dispatch({ type: STORE_CREDITS })
             dispatch({ type: STORE_DEBITS })
-        }
-        )
+        })
     }
 }
 
