@@ -13,4 +13,10 @@
     height: 60vh;
     border-radius: 10px;
   }
+
+  .close-form {
+    float: right;
+    margin-right: 3%;
+    margin-top: 3%;
+  }
   

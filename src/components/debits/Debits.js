@@ -37,12 +37,14 @@ class Debits extends React.Component {
             <div>
                 {
                     this.state.addFormView &&
-                    <AddForm categories={this.props.categories.debit}/>
+                    <AddForm    categories={this.props.categories.debit} 
+                                toggleAddForm={this.toggleAddForm}/>
                 }
 
                 {
                     this.state.filterFormView &&
-                    <FilterForm categories={this.props.categories.debit}/>
+                    <FilterForm categories={this.props.categories.debit}
+                                toggleFilterForm={this.toggleFilterForm}/>
                 }
 
                 {
