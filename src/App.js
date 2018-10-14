@@ -59,8 +59,8 @@ class App extends Component {
         <Route exact path='/credits' component={props => <Credits {...this.props} />} />
         </div>
         <div>
-        <button onClick={() => console.log(this.props)}>Check store</button>
-        <button onClick={this.props.store_pots_details}>Test</button>
+        {/* <button onClick={() => console.log(this.props)}>Check store</button>
+        <button onClick={this.props.store_pots_details}>Test</button> */}
         </div>
       </div>
     );

@@ -70,7 +70,7 @@ class Debits extends React.Component {
                 {
                     //if statement to show either listview or graph
                      this.state.listView ? 
-                    <Listview   transactions={this.state.debits}/> :
+                    <Listview  transactions={this.state.debits}/> :
                     <Graphview transactions={this.state.debits} />
                 }
 
