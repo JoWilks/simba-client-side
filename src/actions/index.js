@@ -1,5 +1,5 @@
 import { LOGIN, LOGOUT, REGISTER, STORE_ALL_TRANSACTIONS, STORE_ACCOUNTS, STORE_LAST_TWO_MONTHS, STORE_CREDITS, STORE_DEBITS, STORE_POTS, DEBIT_CATEGORIES, CREDIT_CATEGORIES } from './types'
-import { moment, now, startDayOfWeek, startDayOfMonth, startDayOfTwoMonthsAgo } from '../datefunctions'
+import { moment, today, startDayOfWeek, startDayOfMonth, startDayOfTwoMonthsAgo } from '../datefunctions'
 import API from '../adapters/API'
 import { Stream } from 'stream';
 
@@ -38,7 +38,7 @@ export function all_transactions () {
 
 export function last_two_months () {
     return (dispatch) => {
-        API.get_range_transactions(startDayOfTwoMonthsAgo.toISOString(), now.toISOString())
+        API.get_range_transactions(startDayOfTwoMonthsAgo.toISOString(), today.toISOString())
         .then(data => { 
             console.log(data)
             dispatch({ type: STORE_LAST_TWO_MONTHS, payload: data})

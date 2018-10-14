@@ -2,24 +2,24 @@ import { DEBIT_CATEGORIES, CREDIT_CATEGORIES } from '../actions/types'
 
 const initialState= {
     debit: [
-        'Eating Out',
-        'Transport',
-        'Groceries',
-        'Shopping',
-        'Personal Care',
-        'Bills',
-        'Finances',
-        'Entertainment',
-        'Expenses',
-        'Family',
-        'General',
-        'Holidays'
+        'eating_out',
+        'transport',
+        'groceries',
+        'shopping',
+        'personal_care',
+        'bills',
+        'finances',
+        'entertainment',
+        'expenses',
+        'family',
+        'general',
+        'holidays'
     ],
     credit: [
-        'Salary',
-        'Side Income',
-        'Interest',
-        'Investment Profit'
+        'salary',
+        'side income',
+        'interest',
+        'investment profit'
     ]
 }
 
