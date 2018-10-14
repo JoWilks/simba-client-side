@@ -44,14 +44,10 @@ class Debits extends React.Component {
        let debits = JSON.parse(JSON.stringify(this.props.transactions.debits)).reverse()
        let filtered
        if (category === 'everything') {
-            filtered =  debits.filter(debit => 
-                            moment(debit.settled).isBetween( startDate, endDate ) 
-                            // moment(debit.settled).isSameOrAfter(startDate) && moment(debit.settled).isSameOrBefore(endDate))
-                        )
+            filtered =  debits.filter(debit => moment(debit.settled).isBetween( startDate, endDate ) )
        } else {
-            filtered = debits.filter(debit => debit.category === category && moment(debit.settled).isSameOrAfter(startDate) && moment(debit.settled).isSameOrBefore(endDate))
+            filtered = debits.filter(debit => debit.category === category && moment(debit.settled).isBetween( startDate, endDate ) )
        }
-       console.log(filtered)
        this.setState({ debits: filtered })
     }
 

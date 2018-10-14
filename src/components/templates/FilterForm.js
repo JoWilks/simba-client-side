@@ -35,7 +35,7 @@ class FilterForm extends React.Component {
                 this.props.filterTransactions(category, startToday, endToday)
                 break;
             case 'this week':
-            //prob want to store details about what start day of week/month equals etcc
+            //prob want to store details about what start day of week/month equals etc
                 let startDayWeek = moment().day('Monday')
                 if (moment().day('Monday').isAfter(endToday)) { 
                     startDayWeek.subtract(7, 'days')
