@@ -52,7 +52,7 @@ class Debits extends React.Component {
                 } else {
                     filterType = 'today'
                 }
-            this.setState(prev => ({ ...prev, filterInfo: {...prev.filterInfo, filterType} })) 
+            this.setState(prev => ({ ...prev, filterInfo: {...prev.filterInfo, filterType, startDate: start, endDate: end} })) 
         } else {
             this.setState(prev => ({ ...prev, filterInfo: {...prev.filterInfo, filterType: string} })) 
         }

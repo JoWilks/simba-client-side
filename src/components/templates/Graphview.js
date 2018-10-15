@@ -1,23 +1,25 @@
 import React from 'react'
 import DonutGraph from '../graphs/DonutGraph'
 import BarGraph from '../graphs/BarGraph'
+import LineGraph from '../graphs/LineGraph'
 import { moment } from '../../datefunctions'
 
 class Graphview extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            barGraphView: true,
+            barGraphView: false,
             isExpense: true,
             donutGraphData: [],
-            barGraphData: []
+            barGraphData: [],
+            lineGraphData: []
         }
     }
 
     componentDidMount () {
         this.checkIsExpense()
         this.parseDonutData()
-        // this.parseBarData()
+        this.parseBarData()
     }
 
     parseDonutData = () => {
@@ -49,62 +51,83 @@ class Graphview extends React.Component {
     }
 
     parseBarData = () => {
-        const barGraphData = []
-        const allTransactions = JSON.parse(JSON.stringify(this.props.allTransactions)).reverse()
         const { filterInfo } = this.props
+
+        let barGraphData = []
+        let newArray = []
+        let endDate = moment(filterInfo.endDate).hour(0).minute(0).second(0)
+        let currDate
 
         switch (filterInfo.filterType) {
             case 'today':
                 // make array of days starting from today going back 7 days
-                const startToday = moment().hour(0).minute(0).second(0)
-                let currDate = startToday.subtract(7, 'days')
-                for (let i=1; i<8; i++) {
-                    barGraphData[currDate]= {date: currDate.format("dddd Do MMMM")}
-                    currDate = currDate.add(1, 'days')
-                }
+
+                currDate = endDate.subtract(6, 'days')
+                    for (let i=1; i<8; i++) {
+                        barGraphData[currDate]= {date: currDate.format("dddd Do MMMM")}
+                        currDate = currDate.add(1, 'days')
+                    }
 
                 //add categories with values of summed amounts to each date range
-                Object.keys(barGraphData).forEach(date => {
-                    const startKeyDate = moment(date).hour(0).minute(0).second(0)
-                    const endKeyDate = moment(date).hour(23).minute(59).second(59)
-                    allTransactions.forEach(transaction => {
-                        const transDate = moment(transaction.settled)
-                            if (transDate.isBetween(startKeyDate, endKeyDate) ) {
-
-                                if (barGraphData[date][transaction.category]) {
-                                    barGraphData[date][transaction.category] +=  transaction.amount < 0 
-                                                                            ? transaction.amount/-1
-                                                                            : transaction.amount
-                                } else {
-                                    barGraphData[date][transaction.category] = transaction.amount < 0
-                                                                            ? (transaction.amount/-1)
-                                                                            : transaction.amount
-                                }
-
-                            }
-                        })
-                    })
+                barGraphData = this.sortIntoCategoriesandDateRange(barGraphData)
                     
-                    //remove date key from before objects
-                    let newArray = []
-                    Object.keys(barGraphData).forEach( key => {
-                        console.log(key, barGraphData[key])
-                        Object.keys(barGraphData[key]).forEach( keyname => {
-                            console.log(barGraphData[key][keyname])
-                           if (Number.isInteger(barGraphData[key][keyname])) {
-                                barGraphData[key][keyname] /= 100 //converts from pence/cents to £/$  
-                           } 
-                        })
-                        newArray.push(barGraphData[key])
-                    });
+                //remove date key from before objects
+                Object.keys(barGraphData).forEach( key => {
+                    Object.keys(barGraphData[key]).forEach( keyname => {
+                        if (Number.isInteger(barGraphData[key][keyname])) {
+                            barGraphData[key][keyname] /= 100 //converts from pence/cents to £/$  
+                        } 
+                    })
+                    newArray.push(barGraphData[key])
+                });
 
                     this.setState({ barGraphData: newArray })
                 break;
             case 'this week':
+                // make array of days starting from today going back 7 weeks
+                currDate = endDate.subtract(6, 'weeks')
+                    for (let i=1; i<8; i++) {
+                    barGraphData[currDate]= {date: currDate.format("dddd Do MMMM")}
+                    currDate = currDate.add(1, 'weeks')
+                    } 
+                    
+                //add categories with values of summed amounts to each date range
+                barGraphData = this.sortIntoCategoriesandDateRange(barGraphData, 'weekly')
+                    
+                //remove date key from before objects
+                Object.keys(barGraphData).forEach( key => {
+                    Object.keys(barGraphData[key]).forEach( keyname => {
+                        if (Number.isInteger(barGraphData[key][keyname])) {
+                            barGraphData[key][keyname] /= 100 //converts from pence/cents to £/$  
+                        } 
+                    })
+                    newArray.push(barGraphData[key])
+                });
 
-                break;
+                    this.setState({ barGraphData: newArray })
+                break; 
             case 'this month':
+                // make array of days starting from today going back 7 weeks
+                currDate = endDate.subtract(2, 'months').date(1).hour(0).minute(0).second(0)
+                for (let i=1; i<4; i++) {
+                barGraphData[currDate]= {date: currDate.format("dddd Do MMMM")}
+                currDate = currDate.add(1, 'months')
+                } 
+                
+                //add categories with values of summed amounts to each date range
+                barGraphData = this.sortIntoCategoriesandDateRange(barGraphData, 'weekly')
+                    
+                //remove date key from before objects
+                Object.keys(barGraphData).forEach( key => {
+                    Object.keys(barGraphData[key]).forEach( keyname => {
+                        if (Number.isInteger(barGraphData[key][keyname])) {
+                            barGraphData[key][keyname] /= 100 //converts from pence/cents to £/$  
+                        } 
+                    })
+                    newArray.push(barGraphData[key])
+                });
 
+                this.setState({ barGraphData: newArray })
                 break;
             default:
                 break;
@@ -113,23 +136,45 @@ class Graphview extends React.Component {
 
     }
 
-    // [
-    //     {
-    //       "country": "AD",
-    //       "hot dog": 20,
-    //       "hot dogColor": "hsl(104, 70%, 50%)",
-    //       "burger": 54,
-    //       "burgerColor": "hsl(351, 70%, 50%)",
-    //       "sandwich": 79,
-    //       "sandwichColor": "hsl(193, 70%, 50%)",
-    //       "kebab": 174,
-    //       "kebabColor": "hsl(195, 70%, 50%)",
-    //       "fries": 148,
-    //       "friesColor": "hsl(100, 70%, 50%)",
-    //       "donut": 154,
-    //       "donutColor": "hsl(117, 70%, 50%)"
-    //     }
-    // ]
+    sortIntoCategoriesandDateRange = (array, rangeType) => {
+         //add categories with values of summed amounts to each date range
+         const allTransactions = JSON.parse(JSON.stringify(this.props.allTransactions)).reverse()
+
+         Object.keys(array).forEach(date => {
+            const startKeyDate = moment(date).hour(0).minute(0).second(0)
+            let endKeyDate
+                if (rangeType === 'weekly') {
+                    endKeyDate = moment(date).hour(0).minute(0).second(0).add(1, 'weeks')
+                } else if (rangeType === 'monthly') {
+                    endKeyDate = moment(date).hour(23).minute(59).second(59).add(1, 'months')
+                } else {
+                    endKeyDate = moment(date).hour(23).minute(59).second(59)
+                }
+            allTransactions.forEach(transaction => {
+                const transDate = moment(transaction.settled)
+                    if (transDate.isBetween(startKeyDate, endKeyDate) ) {
+
+                        if (array[date][transaction.category]) {
+                            array[date][transaction.category] +=  transaction.amount < 0 
+                                                                    ? transaction.amount/-1
+                                                                    : transaction.amount
+                        } else {
+                            array[date][transaction.category] = transaction.amount < 0
+                                                                    ? (transaction.amount/-1)
+                                                                    : transaction.amount
+                        }
+
+                    }
+            })
+        })
+        return array
+    }
+    
+
+    parseLineData = () => {
+        //get expenses and income for same time ranges, subtract expenses from income
+    }
+
 
     checkIsExpense = () => {
         //check whether expense or income
@@ -150,8 +195,8 @@ class Graphview extends React.Component {
                 <DonutGraph donutGraphData={this.state.donutGraphData}/>
                 {
                     this.state.barGraphView
-                    ? <BarGraph   barGraphData={this.state.barGraphData}/>
-                    : null
+                    ? <BarGraph   barGraphData={this.state.barGraphData} />
+                    : <LineGraph  lineGraphData={this.state.lineGraphData} />
                 }
             </div>
         )
