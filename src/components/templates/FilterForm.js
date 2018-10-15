@@ -32,6 +32,7 @@ class FilterForm extends React.Component {
         // const moment = require('moment');
         switch (this.state.timeFrame) {
             case 'today':
+                this.props.setFilterType(this.state.timeFrame, startToday, endToday )
                 this.props.filterTransactions(category, startToday, endToday)
                 break;
             case 'this week':
@@ -40,17 +41,21 @@ class FilterForm extends React.Component {
                 if (moment().day('Monday').isAfter(endToday)) { 
                     startDayWeek.subtract(7, 'days')
                 }
+                this.props.setFilterType(this.state.timeFrame, startDayWeek.hour(0).minute(0).second(0), endToday)
                 this.props.filterTransactions(category, startDayWeek.hour(0).minute(0).second(0), endToday ) //refer start of week from dateReducer
                 break;
             case 'this month':
+                this.props.setFilterType(this.state.timeFrame, moment().date(1).hour(0).minute(0).second(0), endToday)
                 this.props.filterTransactions(category, moment().date(1).hour(0).minute(0).second(0), endToday ) //refer start of month from dateReducer
                 break;
             case 'since two months ago':
+                this.props.setFilterType(this.state.timeFrame, moment().subtract(2, 'months').date(1).hour(0).minute(0).second(0), endToday)
                 this.props.filterTransactions(category, moment().subtract(2, 'months').date(1).hour(0).minute(0).second(0), endToday)
                 break;
             case 'between':
                 const start = moment(startDate).startOf('day')
                 const end = moment(endDate).endOf('day')
+                this.props.setFilterType(this.state.timeFrame, start, end)
                 this.props.filterTransactions(category, start, end)
                 break;
         }
@@ -69,12 +74,12 @@ class FilterForm extends React.Component {
                     <select name='category' onChange={this.handleChange}>
                     <option value='everything'>everything</option>
                         {this.props.categories.map(category => 
-                            <option value={category}>{category}</option>
+                            <option value={category} key={category}>{category}</option>
                         )}  
                     </select> <br/>
                     <select name='timeFrame' onChange={this.handleChange}>
                         {timeFrames.map(timeFrame => 
-                            <option value={timeFrame}>{timeFrame}</option>
+                            <option value={timeFrame} key={timeFrame}>{timeFrame}</option>
                         )}
                     </select> <br/>
 

@@ -1,7 +1,7 @@
 import { render } from 'react-dom'
 import React from 'react'
 import { ResponsivePie } from '@nivo/pie'
-import './Donutgraph.css'
+import './Graphs.css'
 
 class DonutGraph extends React.Component{
 
@@ -13,7 +13,7 @@ class DonutGraph extends React.Component{
                 <div className='wrapper'>
                     <div className='donut-graph'>
                     <ResponsivePie
-                        data={this.props.transactions}
+                        data={this.props.donutGraphData}
                         margin={{
                             "top": 40,
                             "right": 80,

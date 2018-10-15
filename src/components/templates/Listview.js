@@ -10,7 +10,7 @@ class Listview extends React.Component {
                 {
                     this.props.transactions &&
                     transactions.map(transaction => 
-                        <Transactionview transaction={transaction}/>
+                        <Transactionview transaction={transaction} key={transaction.id}/>
                     
                     )
                 }

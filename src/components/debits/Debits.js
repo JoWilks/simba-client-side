@@ -8,16 +8,18 @@ import '../templates/Forms.css'
 
 import { moment, today, startDayOfWeek, startDayOfMonth, startDayOfTwoMonthsAgo, convertISOToNiceDate } from '../../datefunctions'
 
-
 class Debits extends React.Component {
     constructor(props) {
         super(props)
         const transactions = this.props.transactions.debits
+        const startDate = moment().subtract(2, 'months').date(1).hour(0).minute(0).second(0)
+        const endDate = moment().hour(23).minute(59).second(59)
         this.state = {
             listView: true,
             addFormView: false,
             filterFormView: false,
-            debits: transactions
+            debits: transactions,
+            filterInfo: {filterType: 'since two months ago', startDate , endDate }
         }
     }
 
@@ -37,6 +39,23 @@ class Debits extends React.Component {
             filterFormView: !this.state.filterFormView,
             addFormView: false
         })
+    }
+
+    setFilterType = (string, start, end) => {
+        if (string === 'between') {
+            const diff = end.diff(start, 'days')
+            let filterType
+                if (diff >= 29) {
+                    filterType = 'this month' 
+                } else if (diff >= 6) {
+                    filterType = 'this week' 
+                } else {
+                    filterType = 'today'
+                }
+            this.setState(prev => ({ ...prev, filterInfo: {...prev.filterInfo, filterType} })) 
+        } else {
+            this.setState(prev => ({ ...prev, filterInfo: {...prev.filterInfo, filterType: string} })) 
+        }
     }
 
     filterTransactions = (category, startDate, endDate) => {
@@ -64,14 +83,17 @@ class Debits extends React.Component {
                     this.state.filterFormView &&
                     <FilterForm categories={this.props.categories.debit}
                                 toggleFilterForm={this.toggleFilterForm}
+                                setFilterType={this.setFilterType}
                                 filterTransactions={this.filterTransactions}/>
                 }
 
                 {
                     //if statement to show either listview or graph
                      this.state.listView ? 
-                    <Listview  transactions={this.state.debits}/> :
-                    <Graphview transactions={this.state.debits} />
+                    <Listview   transactions={this.state.debits} /> :
+                    <Graphview  transactions={this.state.debits}
+                                allTransactions={this.props.transactions.debits}
+                                filterInfo={this.state.filterInfo} />
                 }
 
                 <div>
