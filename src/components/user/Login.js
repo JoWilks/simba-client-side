@@ -10,7 +10,7 @@ class Login extends React.Component {
 handleSubmit = (event) => {
   event.preventDefault()
   const { username, password } = this.state
-  const { login } = this.props
+  const { loginAppPage } = this.props
 
   API.login(username, password)
     .then(data => {
@@ -20,10 +20,7 @@ handleSubmit = (event) => {
       } else {
         localStorage.setItem('token', data.token)
         // localStorage.setItem('monzo_token', data.monzo_token) will add once have this set in server
-        this.props.last_two_months()
-        this.props.store_accounts_details()
-        this.props.store_pots_details()
-        login(data.user.username)
+        loginAppPage(data.user.username)
       }
     })
 }

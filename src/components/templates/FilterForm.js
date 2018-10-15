@@ -65,7 +65,7 @@ class FilterForm extends React.Component {
     render () {
         return (
             <div id='wrapper'>
-                <form id='form' onSubmit={this.handleSubmit}>
+                <form id='form' onSubmit={(event) => this.handleSubmit(event)}>
                     <div className='close-form' onClick={this.props.toggleFilterForm}>X</div><br />
 
                     <div>

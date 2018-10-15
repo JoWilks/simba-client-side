@@ -6,7 +6,7 @@ import AddForm from '../templates/AddForm'
 import FilterForm from '../templates/FilterForm'
 import '../templates/Forms.css'
 
-import { moment, today, startDayOfWeek, startDayOfMonth, startDayOfTwoMonthsAgo, convertISOToNiceDate } from '../../datefunctions'
+import { moment } from '../../datefunctions'
 
 class Debits extends React.Component {
     constructor(props) {
@@ -62,8 +62,9 @@ class Debits extends React.Component {
        //Filter for transction in a time range and of a specific category
        let debits = JSON.parse(JSON.stringify(this.props.transactions.debits)).reverse()
        let filtered
+       
        if (category === 'everything') {
-            filtered =  debits.filter(debit => moment(debit.settled).isBetween( startDate, endDate ) )
+            filtered =  debits.filter(debit => moment(debit.settled).isBetween( startDate, endDate ))
        } else {
             filtered = debits.filter(debit => debit.category === category && moment(debit.settled).isBetween( startDate, endDate ) )
        }

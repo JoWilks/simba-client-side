@@ -1,0 +1,22 @@
+.category {
+  /* grid-area: category; */
+}
+
+.date {
+  /* grid-area: date; */
+}
+
+.name-notes {
+  /* grid-area: name-notes; */
+}
+
+.amount {
+  /* grid-area: amount; */
+}
+
+.transaction-box {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  grid-template-rows: auto;
+  border-bottom: 2px solid gray;
+}

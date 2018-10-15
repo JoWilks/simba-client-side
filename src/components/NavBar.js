@@ -7,7 +7,7 @@ class NavBar extends React.Component {
     const props = this.props
 
     //Make some redux state thing that holds title based on page user is on.
-    const title = "Income" 
+    const title = "Dashboard" 
     
     return (
       <nav className='navbar'>
@@ -19,6 +19,7 @@ class NavBar extends React.Component {
                     ? 
                     <div className='dropdown-content'>
                       <p className='user'>{props.currentUser && `Hello, ${props.currentUser}.`}</p>
+                      <Link to='/dashboard'>Dashboard</Link>
                       <Link to='/debits'>Expenses</Link>
                       <Link to='/credits'>Income</Link>
                       <Link to='/monzo'>Sync Monzo</Link>

@@ -17,9 +17,8 @@ import Credits from './components/credits/Credits'
 
 class App extends Component {
 
-  login = username => {
+  loginAppPage = username => {
     this.props.login(username)
-    console.log(this.props)
     this.props.history.push('/dashboard') //going to want to push this to the dashboard
   }
 
@@ -34,7 +33,7 @@ class App extends Component {
       API.validate(token)
         .then(data => {
           if (data.username) {
-            this.login(data.username)
+            this.loginAppPage(data.username)
           } else {
             this.props.history.push('/login')
           }
@@ -51,7 +50,7 @@ class App extends Component {
         <div className='body'>
         { this.props.currentUser
           ? <Route exact path='/dashboard' component={props => <Dashboard {...this.props} />} />
-          : <Route exact path='/login' component={props => <Login login={this.login} {...this.props} />} />
+          : <Route exact path='/login' component={props => <Login loginAppPage={this.loginAppPage} {...this.props} />} />
         }
         <Route exact path='/register' component={props => <Register login={this.login} {...this.props} />} />
         <Route exact path='/monzo' component={props => <MonzoSync {...props} />} />
