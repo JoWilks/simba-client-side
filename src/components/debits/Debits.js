@@ -85,7 +85,8 @@ class Debits extends React.Component {
                     <FilterForm categories={this.props.categories.debit}
                                 toggleFilterForm={this.toggleFilterForm}
                                 setFilterType={this.setFilterType}
-                                filterTransactions={this.filterTransactions}/>
+                                filterTransactions={this.filterTransactions}
+                                isExpense={true}/>
                 }
 
                 {

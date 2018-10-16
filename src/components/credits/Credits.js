@@ -94,7 +94,8 @@ class Credits extends React.Component {
                         <Listview   transactions={this.state.credits} /> :
                         <Graphview  transactions={this.state.credits}
                                     allTransactions={this.props.transactions.credits}
-                                    filterInfo={this.state.filterInfo} />
+                                    filterInfo={this.state.filterInfo}
+                                    isExpense={false} />
                     }
     
                     <div>

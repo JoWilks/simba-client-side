@@ -19,7 +19,8 @@ const initialState= {
         'salary',
         'side income',
         'interest',
-        'investment profit'
+        'investment profit',
+        'payback'
     ]
 }
 

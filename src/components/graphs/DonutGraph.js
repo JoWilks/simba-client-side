@@ -86,26 +86,26 @@ class DonutGraph extends React.Component{
                                 "id": "lines"
                             }
                         ]}
-                        legends={[
-                            {
-                                "anchor": "right",
-                                "direction": "column",
-                                "translateY": 56,
-                                "itemWidth": 100,
-                                "itemHeight": 18,
-                                "itemTextColor": "#999",
-                                "symbolSize": 18,
-                                "symbolShape": "circle"
-                                // "effects": [
-                                //     {
-                                //         "on": "hover",
-                                //         "style": {
-                                //             "itemTextColor": "#000"
-                                //         }
-                                //     }
-                                // ]
-                            }
-                        ]}
+                        // legends={[
+                        //     {
+                        //         "anchor": "right",
+                        //         "direction": "column",
+                        //         "translateY": 56,
+                        //         "itemWidth": 100,
+                        //         "itemHeight": 18,
+                        //         "itemTextColor": "#999",
+                        //         "symbolSize": 18,
+                        //         "symbolShape": "circle"
+                        //         // "effects": [
+                        //         //     {
+                        //         //         "on": "hover",
+                        //         //         "style": {
+                        //         //             "itemTextColor": "#000"
+                        //         //         }
+                        //         //     }
+                        //         // ]
+                        //     }
+                        // ]}
                     />
                     </div>
                 </div>

@@ -19,6 +19,7 @@ handleSubmit = (event) => {
         alert(data.message)
       } else {
         localStorage.setItem('token', data.token)
+        this.props.last_two_months()
         // localStorage.setItem('monzo_token', data.monzo_token) will add once have this set in server
         loginAppPage(data.user.username)
       }

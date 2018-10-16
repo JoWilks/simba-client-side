@@ -1,6 +1,6 @@
 import React from 'react'
 import './Forms.css'
-import { moment, today, startDayOfWeek, startDayOfMonth, startDayOfTwoMonthsAgo, convertISOToNiceDate } from '../../datefunctions'
+import { moment } from '../../datefunctions'
 
 // const moment = require('moment');
 const timeFrames = ['since two months ago', 'today', 'this week', 'this month', 'between']
@@ -69,7 +69,7 @@ class FilterForm extends React.Component {
                     <div className='close-form' onClick={this.props.toggleFilterForm}>X</div><br />
 
                     <div>
-                    <p>What have I {this.props.categories[0] === 'Eating Out'? "spent on...": "earnt from..."}</p> <br/>
+                    <p>What have I {this.props.isExpense ? "spent on...": "earnt from..."}</p> <br/>
                     
                     <select name='category' onChange={this.handleChange}>
                     <option value='everything'>everything</option>

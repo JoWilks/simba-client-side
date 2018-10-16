@@ -20,6 +20,7 @@ class Dashboard extends React.Component {
 
         API.list_pots()
         .then(data => this.setState({ pots: data['pots'] }))
+        
     }
 
     render () {

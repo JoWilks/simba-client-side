@@ -16,9 +16,7 @@ class Transactionview extends React.Component {
                 <div className='category'>{transaction.category}</div>
 
                 <div className='middle-box'>
-                    <div className='date'>{transaction.settled === 'Invalid Date' ? 
-                    this.convertDate(transaction.created) : 
-                    this.convertDate(transaction.settled)}</div>
+                    <div className='date'>{this.convertDate(transaction.created)}</div>
                     <div className='name'> 
                         <h4>{transaction.counterparty.name ? transaction.counterparty.name : transaction.description}</h4>
                     </div>
@@ -27,7 +25,7 @@ class Transactionview extends React.Component {
                     </div>
                 </div>
                 
-                <div className='amount'>{`$${transaction.amount < 0 ? transaction.amount/-100: transaction.amount/100}`}</div>
+                <div className='amount'>{`£${transaction.amount < 0 ? transaction.amount/-100: transaction.amount/100}`}</div>
             </div>
         )
     }

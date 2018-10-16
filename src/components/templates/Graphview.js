@@ -17,7 +17,7 @@ class Graphview extends React.Component {
     }
 
     componentDidMount () {
-        // this.checkIsExpense()
+        this.checkIsExpense()
         this.parseDonutData()
         this.parseBarData()
     }
