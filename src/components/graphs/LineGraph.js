@@ -31,7 +31,7 @@ class LineGraph extends React.Component{
                     <div className='donut-graph'>
 
                          <ResponsiveLine
-                            data={data2}
+                            data={this.props.lineGraphData}
                             margin={{
                                 "top": 50,
                                 "right": 110,

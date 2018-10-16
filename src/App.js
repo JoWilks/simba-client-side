@@ -14,6 +14,7 @@ import MonzoSync from './components/user/MonzoSync'
 import Dashboard from './components/dashboard/Dashboard'
 import Debits from './components/debits/Debits'
 import Credits from './components/credits/Credits'
+import Net from './components/net/Net'
 
 class App extends Component {
 
@@ -54,8 +55,9 @@ class App extends Component {
         }
         <Route exact path='/register' component={props => <Register login={this.login} {...this.props} />} />
         <Route exact path='/monzo' component={props => <MonzoSync {...props} />} />
-        <Route exact path='/debits' component={props => <Debits {...this.props} />} />
-        <Route exact path='/credits' component={props => <Credits {...this.props} />} />
+        <Route exact path='/expenses' component={props => <Debits {...this.props} />} />
+        <Route exact path='/income' component={props => <Credits {...this.props} />} />
+        <Route exact path='/net' component={props => <Net {...this.props} />} />
         </div>
         <div>
         {/* <button onClick={() => console.log(this.props)}>Check store</button>

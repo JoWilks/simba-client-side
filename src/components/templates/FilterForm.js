@@ -32,7 +32,7 @@ class FilterForm extends React.Component {
         // const moment = require('moment');
         switch (this.state.timeFrame) {
             case 'today':
-                this.props.setFilterType(this.state.timeFrame, startToday, endToday )
+                this.props.setFilterType(this.state.timeFrame, startToday, endToday, category)
                 this.props.filterTransactions(category, startToday, endToday)
                 break;
             case 'this week':

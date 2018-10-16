@@ -21,9 +21,11 @@ class Graphview extends React.Component {
         this.checkIsExpense()
 
         if (this.props.filterInfo.category === 'everything') {
+            this.setState({ barGraphView: true })
             this.parseBarData()
             this.parseDonutData()
          } else {
+            this.setState({ barGraphView: false })
             this.parseLineData()
          }
     }
@@ -136,6 +138,27 @@ class Graphview extends React.Component {
                 this.setState({ barGraphData: newArray })
                 break;
             default:
+                // make array of days starting from today going back 7 weeks
+                currDate = endDate.subtract(2, 'months').date(1).hour(0).minute(0).second(0)
+                for (let i=1; i<4; i++) {
+                barGraphData[currDate]= {date: currDate.format("dddd Do MMMM")}
+                currDate = currDate.add(1, 'months')
+                } 
+                
+                //add categories with values of summed amounts to each date range
+                barGraphData = this.sortIntoCategoriesandDateRange(barGraphData, 'weekly')
+                    
+                //remove date key from before objects
+                Object.keys(barGraphData).forEach( key => {
+                    Object.keys(barGraphData[key]).forEach( keyname => {
+                        if (Number.isInteger(barGraphData[key][keyname])) {
+                            barGraphData[key][keyname] /= 100 //converts from pence/cents to £/$  
+                        } 
+                    })
+                    newArray.push(barGraphData[key])
+                });
+
+                this.setState({ barGraphData: newArray })
                 break;
         }
     }
@@ -175,10 +198,9 @@ class Graphview extends React.Component {
     
 
     parseLineData = () => {
-
+        //only doing this for 1 category
         const { filterInfo } = this.props
 
-        //for 1 category
         let arrayOfDates = []
         let endDate = moment(filterInfo.endDate).hour(0).minute(0).second(0)
         let currDate
@@ -192,77 +214,33 @@ class Graphview extends React.Component {
                     arrayOfDates.push(currDate.format("dddd Do MMMM"))
                     currDate = currDate.add(1, 'days')
                 }
-                // arrayOfDates.forEach(date => {
-                //     let obj = {} 
-                //     obj['x'] = date
-                //     obj['y'] = 0
-
-                //     allTransactions.forEach(transaction => {
-                //         if ( moment(transaction.created).format("dddd Do MMMM") == date ) {
-                //             obj.y += transaction.amount
-                //         }
-                //     })
-                //     arrayData.push(obj)
-                // })
-
-                let arrayData = this.sortIntoTotalsforDates(arrayOfDates)
-                finalArray = [ { id: filterInfo.category, data: arrayData } ]
-                debugger
-
+                finalArray = this.sortIntoTotalsforDates(arrayOfDates, filterInfo.category)
                 break;
+
             case 'this week':
                 currDate = endDate.subtract(6, 'weeks')
                 for (let i=1; i<8; i++) {
                     arrayOfDates.push(currDate.format("dddd Do MMMM"))
                     currDate = currDate.add(1, 'weeks')
                 }
-                // arrayOfDates.forEach(date => {
-                //     let obj = {} 
-                //     obj['x'] = date
-                //     obj['y'] = 0
-
-                //     allTransactions.forEach(transaction => {
-                //         if ( moment(transaction.created).format("dddd Do MMMM") == date ) {
-                //             obj.y += transaction.amount
-                //         }
-                //     })
-                //     arrayData.push(obj)
-                // })
-
-                // let finalArray = [{id: filterInfo.category, data: arrayData }]
+                finalArray = this.sortIntoTotalsforDates(arrayOfDates, filterInfo.category)
                 break;
+
             case 'this month':
                 currDate = endDate.subtract(6, 'months')
                 for (let i=1; i<8; i++) {
                     arrayOfDates.push(currDate.format("dddd Do MMMM"))
                     currDate = currDate.add(1, 'months')
                 }
-                // arrayOfDates.forEach(date => {
-                //     let obj = {} 
-                //     obj['x'] = date
-                //     obj['y'] = 0
-
-                //     allTransactions.forEach(transaction => {
-                //         if ( moment(transaction.created).format("dddd Do MMMM") == date ) {
-                //             obj.y += transaction.amount
-                //         }
-                //     })
-                //     arrayData.push(obj)
-                // })
-
-                // let finalArray = [{id: filterInfo.category, data: arrayData }]
-            break;
+                finalArray = this.sortIntoTotalsforDates(arrayOfDates, filterInfo.category)
+                break;
         }
         
          this.setState({ lineGraphData: finalArray })
 
-        // [{id: 'category', data: [
-        //                             {x: 1, y 1},
-        //                             {x: 1, y 1}   
-        // ]}]
     }
 
-    sortIntoTotalsforDates = (arrayOfDates) => {
+    sortIntoTotalsforDates = (arrayOfDates, category) => {
         const allTransactions = JSON.parse(JSON.stringify(this.props.allTransactions)).reverse()
         let arrayData = []
 
@@ -270,9 +248,8 @@ class Graphview extends React.Component {
             let obj = {} 
             obj['x'] = date
             obj['y'] = 0
-    
             allTransactions.forEach(transaction => {
-                if ( moment(transaction.created).format("dddd Do MMMM") == date ) {
+                if ( moment(transaction.created).format("dddd Do MMMM") == date && transaction.category === category ) {
                     obj.y += transaction.amount
                 }
             })
@@ -280,13 +257,10 @@ class Graphview extends React.Component {
         })
 
         arrayData.forEach(obj => {
-            obj.y /= -100
+            obj.y < 0 ? obj.y /= -100 : obj.y /= 100
         })
-        return arrayData
+        return [ { id: category, data: arrayData } ]
     }
-
-
-
 
     checkIsExpense = () => {
         //check whether expense or income
@@ -294,17 +268,14 @@ class Graphview extends React.Component {
         this.setState({ isExpense: isExpense })
     }
 
-    toggleBarOrLineGraph = () => {
-        this.setState({ barGraphView: !this.state.barGraphView })
-    }
-
     render () {
         return (
             <div>
-                <h1>Expenses</h1>
-                <button onClick={this.toggleBarOrLineGraph}>{this.state.barGraphView ? "Line Graph" : "Bar Graph"}</button>
-                <button onClick={this.parseLineData}>Test</button>
-                <DonutGraph donutGraphData={this.state.donutGraphData}/>
+                <h1>Expenses {this.props.filterInfo.filterType}</h1>
+                {   
+                    this.props.filterInfo.category === 'everything' &&
+                    <DonutGraph donutGraphData={this.state.donutGraphData}/>
+                }
                 {
                     this.state.barGraphView
                     //for categories prop to bargraph- will change to if statement depending if expense or not once figure out income categories

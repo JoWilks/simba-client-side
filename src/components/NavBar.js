@@ -20,8 +20,9 @@ class NavBar extends React.Component {
                     <div className='dropdown-content'>
                       <p className='user'>{props.currentUser && `Hello, ${props.currentUser}.`}</p>
                       <Link to='/dashboard'>Dashboard</Link>
-                      <Link to='/debits'>Expenses</Link>
-                      <Link to='/credits'>Income</Link>
+                      <Link to='/expenses'>Expenses</Link>
+                      <Link to='/income'>Income</Link>
+                      <Link to='/net'>Net</Link>
                       <Link to='/monzo'>Sync Monzo</Link>
                       <a onClick={props.logout}>LOGOUT</a>
                     </div>
