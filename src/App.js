@@ -20,7 +20,12 @@ class App extends Component {
 
   loginAppPage = username => {
     this.props.login(username)
-    this.props.history.push('/dashboard') //going to want to push this to the dashboard
+    if (localStorage.getItem('monzo_token')) {
+      this.props.last_two_months()
+      this.props.history.push('/dashboard') //going to want to push this to the dashboard
+    } else{
+      this.props.history.push('/monzo')
+    }
   }
 
   logout = () => {
