@@ -88,10 +88,13 @@ class Net extends React.Component {
     filterTransactions = (category, startDate, endDate) => {
         //Filter for net values in a time range
         let netAll = [...this.state.netAll]
-        let newNet = netAll.filter(item => {
-            moment(item.x).isBetween( startDate, endDate, null, [] )
+        let newNet = []
+        netAll.forEach(item => {
+            let date = moment(item.x, "dddd Do MMMM").hour(1)
+            if ( date.isBetween( startDate, endDate, null, [] ) ) {  
+                newNet.push(item)
+            }
         })
-        console.log(newNet)
         let lineGraphData = [{id: 'net', data: newNet}]
         this.setState({ net: newNet, lineGraphData })
      }
