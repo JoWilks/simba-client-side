@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nivo/bar": "^0.49.1",
     "@nivo/line": "^0.49.1",
     "@nivo/pie": "^0.49.0",
     "moment": "^2.22.2",

@@ -19,7 +19,7 @@ class Debits extends React.Component {
             addFormView: false,
             filterFormView: false,
             debits: transactions,
-            filterInfo: {filterType: 'since two months ago', startDate , endDate }
+            filterInfo: {filterType: 'since two months ago', startDate , endDate, category: 'everything' }
         }
     }
 
@@ -41,7 +41,7 @@ class Debits extends React.Component {
         })
     }
 
-    setFilterType = (string, start, end) => {
+    setFilterType = (string, start, end, category) => {
         if (string === 'between') {
             const diff = end.diff(start, 'days')
             let filterType
@@ -52,9 +52,9 @@ class Debits extends React.Component {
                 } else {
                     filterType = 'today'
                 }
-            this.setState(prev => ({ ...prev, filterInfo: {...prev.filterInfo, filterType, startDate: start, endDate: end} })) 
+            this.setState(prev => ({ ...prev, filterInfo: {...prev.filterInfo, filterType, startDate: start, endDate: end, category: category} })) 
         } else {
-            this.setState(prev => ({ ...prev, filterInfo: {...prev.filterInfo, filterType: string} })) 
+            this.setState(prev => ({ ...prev, filterInfo: {...prev.filterInfo, filterType: string, category: category} })) 
         }
     }
 

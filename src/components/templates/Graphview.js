@@ -2,6 +2,7 @@ import React from 'react'
 import DonutGraph from '../graphs/DonutGraph'
 import BarGraph from '../graphs/BarGraph'
 import LineGraph from '../graphs/LineGraph'
+import { connect } from 'react-redux'
 import { moment } from '../../datefunctions'
 
 class Graphview extends React.Component {
@@ -18,8 +19,13 @@ class Graphview extends React.Component {
 
     componentDidMount () {
         this.checkIsExpense()
-        this.parseDonutData()
-        this.parseBarData()
+
+        if (this.props.filterInfo.category === 'everything') {
+            this.parseBarData()
+            this.parseDonutData()
+         } else {
+            this.parseLineData()
+         }
     }
 
     parseDonutData = () => {
@@ -132,8 +138,6 @@ class Graphview extends React.Component {
             default:
                 break;
         }
-
-
     }
 
     sortIntoCategoriesandDateRange = (array, rangeType) => {
@@ -163,7 +167,6 @@ class Graphview extends React.Component {
                                                                     ? (transaction.amount/-1)
                                                                     : transaction.amount
                         }
-
                     }
             })
         })
@@ -172,8 +175,117 @@ class Graphview extends React.Component {
     
 
     parseLineData = () => {
-        //get expenses and income for same time ranges, subtract expenses from income
+
+        const { filterInfo } = this.props
+
+        //for 1 category
+        let arrayOfDates = []
+        let endDate = moment(filterInfo.endDate).hour(0).minute(0).second(0)
+        let currDate
+        // let arrayData = []
+        let finalArray = []
+
+        switch (filterInfo.filterType) {
+            case 'today':
+                currDate = endDate.subtract(6, 'days')
+                for (let i=1; i<8; i++) {
+                    arrayOfDates.push(currDate.format("dddd Do MMMM"))
+                    currDate = currDate.add(1, 'days')
+                }
+                // arrayOfDates.forEach(date => {
+                //     let obj = {} 
+                //     obj['x'] = date
+                //     obj['y'] = 0
+
+                //     allTransactions.forEach(transaction => {
+                //         if ( moment(transaction.created).format("dddd Do MMMM") == date ) {
+                //             obj.y += transaction.amount
+                //         }
+                //     })
+                //     arrayData.push(obj)
+                // })
+
+                let arrayData = this.sortIntoTotalsforDates(arrayOfDates)
+                finalArray = [ { id: filterInfo.category, data: arrayData } ]
+                debugger
+
+                break;
+            case 'this week':
+                currDate = endDate.subtract(6, 'weeks')
+                for (let i=1; i<8; i++) {
+                    arrayOfDates.push(currDate.format("dddd Do MMMM"))
+                    currDate = currDate.add(1, 'weeks')
+                }
+                // arrayOfDates.forEach(date => {
+                //     let obj = {} 
+                //     obj['x'] = date
+                //     obj['y'] = 0
+
+                //     allTransactions.forEach(transaction => {
+                //         if ( moment(transaction.created).format("dddd Do MMMM") == date ) {
+                //             obj.y += transaction.amount
+                //         }
+                //     })
+                //     arrayData.push(obj)
+                // })
+
+                // let finalArray = [{id: filterInfo.category, data: arrayData }]
+                break;
+            case 'this month':
+                currDate = endDate.subtract(6, 'months')
+                for (let i=1; i<8; i++) {
+                    arrayOfDates.push(currDate.format("dddd Do MMMM"))
+                    currDate = currDate.add(1, 'months')
+                }
+                // arrayOfDates.forEach(date => {
+                //     let obj = {} 
+                //     obj['x'] = date
+                //     obj['y'] = 0
+
+                //     allTransactions.forEach(transaction => {
+                //         if ( moment(transaction.created).format("dddd Do MMMM") == date ) {
+                //             obj.y += transaction.amount
+                //         }
+                //     })
+                //     arrayData.push(obj)
+                // })
+
+                // let finalArray = [{id: filterInfo.category, data: arrayData }]
+            break;
+        }
+        
+         this.setState({ lineGraphData: finalArray })
+
+        // [{id: 'category', data: [
+        //                             {x: 1, y 1},
+        //                             {x: 1, y 1}   
+        // ]}]
     }
+
+    sortIntoTotalsforDates = (arrayOfDates) => {
+        const allTransactions = JSON.parse(JSON.stringify(this.props.allTransactions)).reverse()
+        let arrayData = []
+
+        arrayOfDates.forEach(date => {
+            let obj = {} 
+            obj['x'] = date
+            obj['y'] = 0
+    
+            allTransactions.forEach(transaction => {
+                if ( moment(transaction.created).format("dddd Do MMMM") == date ) {
+                    obj.y += transaction.amount
+                }
+            })
+            arrayData.push(obj)
+        })
+
+        arrayData.forEach(obj => {
+            obj.y /= -100
+        })
+        return arrayData
+    }
+
+
 
 
     checkIsExpense = () => {
@@ -191,19 +303,22 @@ class Graphview extends React.Component {
             <div>
                 <h1>Expenses</h1>
                 <button onClick={this.toggleBarOrLineGraph}>{this.state.barGraphView ? "Line Graph" : "Bar Graph"}</button>
-                <button onClick={this.parseBarData}>Test</button>
+                <button onClick={this.parseLineData}>Test</button>
                 <DonutGraph donutGraphData={this.state.donutGraphData}/>
                 {
                     this.state.barGraphView
-                    ? <BarGraph   barGraphData={this.state.barGraphData} />
+                    //for categories prop to bargraph- will change to if statement depending if expense or not once figure out income categories
+                    ? <BarGraph   barGraphData={this.state.barGraphData} categories={this.props.categories.debit}/>
                     : <LineGraph  lineGraphData={this.state.lineGraphData} />
                 }
             </div>
         )
     }
 
-
 }
 
+const mapStateToProps = state => ({
+    categories: state.categoriesReducer
+})
 
-export default Graphview
+export default connect(mapStateToProps, null)(Graphview)
