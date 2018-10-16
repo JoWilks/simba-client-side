@@ -1,6 +1,6 @@
 import React from 'react'
-import Listview from '../templates/Listview'
-import Graphview from '../templates/Graphview'
+import NetListview from './NetListview'
+import NetGraphview from './NetGraphview'
 import Toolbar from '../Toolbar'
 import FilterForm from '../templates/FilterForm'
 import '../templates/Forms.css'
@@ -10,23 +10,50 @@ import { moment } from '../../datefunctions'
 class Net extends React.Component {
     constructor(props) {
         super(props)
-        const transactions = this.props.transactions.debits
         const startDate = moment().subtract(2, 'months').date(1).hour(0).minute(0).second(0)
         const endDate = moment().hour(23).minute(59).second(59)
         this.state = {
+            net: [], 
+            lineGraphData: [],
             listView: true,
-            addFormView: false,
-            filterFormView: false,
-            debits: transactions,
-            filterInfo: {filterType: 'since two months ago', startDate , endDate }
+            filterInfo: {filterType: 'since two months ago', startDate , endDate, category: 'everything' }
+   
         }
     }
 
     componentDidMount () {
         //get sum of all daily transactions (i.e. debit + credit), and store on per day basis
+        //*** CURRRENTLY STORES IN FORMAT LIKED BY LINE DATA GRAPH *****
+        const allTransactions = JSON.parse(JSON.stringify(this.props.transactions.twoMonths)).reverse()
 
+        let arrayDates = []
+        let arrayObjsDateSum = [] 
+        let cyclingDate = this.state.filterInfo.startDate
+        let endDate = this.state.filterInfo.endDate
+        //make array of objects for each day
+        while (cyclingDate.isSameOrBefore(endDate)) {
+            arrayDates.push( {date: cyclingDate.format("dddd Do MMMM")} )
+            cyclingDate = cyclingDate.add(1, 'days')
+        }
+        //sum transactions for each day based on arrayDates
+        arrayDates.forEach(obj => {
+            let newObj = {} 
+            newObj['x'] = obj.date
+            newObj['y'] = 0
+                allTransactions.forEach(transaction => {
+                    if ( moment(transaction.created).format("dddd Do MMMM") === obj.date ) {
+                        newObj.y += transaction.amount
+                    }
+                })
+                arrayObjsDateSum.push(newObj)
+        })
+        //convert to £/$
+        arrayObjsDateSum.forEach(obj => obj.y /= 100)
+
+        let lineGraphData = [{id: 'net', data: arrayObjsDateSum}]
+        this.setState({ net : arrayObjsDateSum, lineGraphData })
+        
     }
-
 
     toggleListView = () => {
         this.setState({ listView: !this.state.listView })
@@ -57,39 +84,24 @@ class Net extends React.Component {
         }
     }
 
-    filterTransactions = (category, startDate, endDate) => {
-       //Filter for transction in a time range and of a specific category
-       let debits = JSON.parse(JSON.stringify(this.props.transactions.debits)).reverse()
-       let filtered
-       
-       if (category === 'everything') {
-            filtered =  debits.filter(debit => moment(debit.settled).isBetween( startDate, endDate ))
-       } else {
-            filtered = debits.filter(debit => debit.category === category && moment(debit.settled).isBetween( startDate, endDate ) )
-       }
-       this.setState({ debits: filtered })
-    }
 
     render () {
         return (
             <div>
-
+                NET VIEW
                 {
                     this.state.filterFormView &&
                     <FilterForm categories={this.props.categories.debit}
                                 toggleFilterForm={this.toggleFilterForm}
-                                setFilterType={this.setFilterType}
-                                filterTransactions={this.filterTransactions}
-                                isExpense={true}/>
+                                setFilterType={this.setFilterType}/>
                 }
 
                 {
                     //if statement to show either listview or graph
                      this.state.listView ? 
-                    <Listview   transactions={this.state.debits} /> :
-                    <Graphview  transactions={this.state.debits}
-                                allTransactions={this.props.transactions.debits}
-                                filterInfo={this.state.filterInfo} />
+                    <NetListview    net={this.state.net} /> :
+                    <NetGraphview   lineGraphData={this.state.lineGraphData}
+                                    filterInfo={this.state.filterInfo} />
                 }
 
                 <div>

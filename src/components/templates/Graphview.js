@@ -19,7 +19,6 @@ class Graphview extends React.Component {
 
     componentDidMount () {
         this.checkIsExpense()
-
         if (this.props.filterInfo.category === 'everything') {
             this.setState({ barGraphView: true })
             this.parseBarData()
@@ -249,7 +248,7 @@ class Graphview extends React.Component {
             obj['x'] = date
             obj['y'] = 0
             allTransactions.forEach(transaction => {
-                if ( moment(transaction.created).format("dddd Do MMMM") == date && transaction.category === category ) {
+                if ( moment(transaction.created).format("dddd Do MMMM") === date && transaction.category === category ) {
                     obj.y += transaction.amount
                 }
             })
