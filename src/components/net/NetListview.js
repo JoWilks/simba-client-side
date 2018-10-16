@@ -19,7 +19,7 @@ class NetListview extends React.Component {
             <div>
                 {
                     this.props.net &&
-                    this.props.net.map(item => 
+                    this.props.net.reverse().map(item => 
                         <NetTransactionview item={item} key={item.x}/>
                     
                     )

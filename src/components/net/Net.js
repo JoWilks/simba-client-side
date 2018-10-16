@@ -13,7 +13,8 @@ class Net extends React.Component {
         const startDate = moment().subtract(2, 'months').date(1).hour(0).minute(0).second(0)
         const endDate = moment().hour(23).minute(59).second(59)
         this.state = {
-            net: [], 
+            netAll: [], 
+            net: [],
             lineGraphData: [],
             listView: true,
             filterInfo: {filterType: 'since two months ago', startDate , endDate, category: 'everything' }
@@ -24,7 +25,7 @@ class Net extends React.Component {
     componentDidMount () {
         //get sum of all daily transactions (i.e. debit + credit), and store on per day basis
         //*** CURRRENTLY STORES IN FORMAT LIKED BY LINE DATA GRAPH *****
-        const allTransactions = JSON.parse(JSON.stringify(this.props.transactions.twoMonths)).reverse()
+        const allTransactions = JSON.parse(JSON.stringify(this.props.transactions.twoMonths))
 
         let arrayDates = []
         let arrayObjsDateSum = [] 
@@ -51,7 +52,7 @@ class Net extends React.Component {
         arrayObjsDateSum.forEach(obj => obj.y /= 100)
 
         let lineGraphData = [{id: 'net', data: arrayObjsDateSum}]
-        this.setState({ net : arrayObjsDateSum, lineGraphData })
+        this.setState({ netAll: arrayObjsDateSum, net : arrayObjsDateSum, lineGraphData })
         
     }
 
@@ -84,6 +85,17 @@ class Net extends React.Component {
         }
     }
 
+    filterTransactions = (category, startDate, endDate) => {
+        //Filter for net values in a time range
+        let netAll = [...this.state.netAll]
+        let newNet = netAll.filter(item => {
+            moment(item.x).isBetween( startDate, endDate, null, [] )
+        })
+        console.log(newNet)
+        let lineGraphData = [{id: 'net', data: newNet}]
+        this.setState({ net: newNet, lineGraphData })
+     }
+
 
     render () {
         return (
@@ -93,7 +105,8 @@ class Net extends React.Component {
                     this.state.filterFormView &&
                     <FilterForm categories={this.props.categories.debit}
                                 toggleFilterForm={this.toggleFilterForm}
-                                setFilterType={this.setFilterType}/>
+                                setFilterType={this.setFilterType}
+                                filterTransactions={this.filterTransactions} />
                 }
 
                 {
