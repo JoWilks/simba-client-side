@@ -46,7 +46,7 @@ class API {
   static exchangeForAuthCode () {
     const client_id = "oauth2client_00009bXcUYcbaBlM4oMMqX"
     const client_secret = "mnzpub.4SIcUmdjk6TAj8EyelSL5RS6sOCj+LB/LhiQt1NsmyQzWJ8Hwqbr39evxUfZHp2yGN7US1pDwwu5Y7boLIb5"
-    const redirect_uri = "https://zealous-kalam-8b6c52.netlify.com/login" 
+    const redirect_uri = "https://zealous-kalam-8b6c52.netlify.com/" 
     const authorization_code = localStorage.getItem('exchange_token')
 
 
