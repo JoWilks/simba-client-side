@@ -41,6 +41,29 @@ class API {
     }).then(resp => resp.json())
   }
 
+// MONZO AUTH CALLS
+
+  static exchangeForAuthCode () {
+    const client_id = "oauth2client_00009bXcUYcbaBlM4oMMqX"
+    const client_secret = "mnzpub.4SIcUmdjk6TAj8EyelSL5RS6sOCj+LB/LhiQt1NsmyQzWJ8Hwqbr39evxUfZHp2yGN7US1pDwwu5Y7boLIb5"
+    const redirect_uri = "https://zealous-kalam-8b6c52.netlify.com/login" 
+    const authorization_code = localStorage.getItem('exchange_token')
+
+    return fetch(API.exchangeToken + `grant_type=authorization_code` 
+    + `client_id=${client_id}` 
+    + `client_secret=${client_secret}` 
+    + `redirect_uri=${redirect_uri}` 
+    + `code=${authorization_code}`, {
+      method: 'POST'
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      console.log(data)
+      localStorage.setItem('monzo_token', data.access_token)
+    })
+  }
+
+
 //MONZO API CALLS
 
   static get_list_accounts () {
@@ -93,12 +116,15 @@ API.registerURL = API.baseURL + '/register'
 API.loginURL = API.baseURL + '/login'
 API.validateURL = API.baseURL + '/validate'
 
+API.exchangeToken = API.monzoBaseURL + '/oauth2/token'
+
 API.monzoBaseURL = 'https://api.monzo.com'
 API.listAccounts = API.monzoBaseURL + '/accounts'
 API.readBalance = API.monzoBaseURL + '/balance'
 API.listPots = API.monzoBaseURL + '/pots'
 API.getAllTransactions = API.monzoBaseURL + '/transactions'
 
+const exchange_token = ocalStorage.getItem('exchange_token')
 const monzo_token = localStorage.getItem('monzo_token')
 const account_id = 'acc_00009YD5n3MghHFkmJCPib'
 

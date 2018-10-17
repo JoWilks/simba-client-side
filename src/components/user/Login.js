@@ -7,6 +7,17 @@ class Login extends React.Component {
     password: ''
   }
 
+componentDidMount () {
+  let tempVar = location.search.split(/=|&/)
+  if (tempVar[tempVar.length-1] === 'randomstring') {
+    localStorage.setItem('exchange_token', tempVar[1])
+    API.exchangeForAuthCode()
+  } else {
+    console.log("Error with getting code from Monzo for authentication")
+  }
+
+}
+
 handleSubmit = (event) => {
   event.preventDefault()
   const { username, password } = this.state
