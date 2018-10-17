@@ -21,6 +21,7 @@ class NavBar extends React.Component {
                       <p className='user'>{props.currentUser && `Hello, ${props.currentUser}.`}</p>
                       <Link to='/dashboard'>Dashboard</Link>
                       <Link to='/expenses'>Expenses</Link>
+                      <Link to='/budget'>Budget</Link>
                       <Link to='/income'>Income</Link>
                       <Link to='/net'>Net</Link>
                       <Link to='/monzo'>Sync Monzo</Link>

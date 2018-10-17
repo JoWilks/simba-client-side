@@ -49,14 +49,13 @@ class API {
     const redirect_uri = "https://zealous-kalam-8b6c52.netlify.com/" 
     const authorization_code = localStorage.getItem('auth_code')
 
-
     return fetch(API.exchangeToken, {
       method: 'POST',
       body:  JSON.stringify({
         grant_type: 'authorization_code',
-        client_id,
-        client_secret,
-        redirect_uri,
+        client_id: client_id,
+        client_secret: client_secret,
+        redirect_uri: redirect_uri,
         code: authorization_code
       })
     })
