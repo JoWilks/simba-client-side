@@ -8,14 +8,6 @@ class Login extends React.Component {
   }
 
 componentDidMount () {
-  debugger
-    let tempVar = window.location.search.split(/=|&/)
-    if (tempVar[tempVar.length-1] === 'randomstring') {
-      localStorage.setItem('exchange_token', tempVar[1])
-      API.exchangeForAuthCode()
-    } else {
-      console.log("Error with getting code from Monzo for authentication")
-    }
 
 }
 
