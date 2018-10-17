@@ -56,7 +56,7 @@ class App extends Component {
         <div className='body'>
         { this.props.currentUser
           ? <Route exact path='/dashboard' component={props => <Dashboard {...this.props} />} />
-          : <Route exact path='/login' component={props => <Login loginAppPage={this.loginAppPage} {...this.props} />} />
+          : <Route path='/login' component={props => <Login loginAppPage={this.loginAppPage} {...this.props} />} />
         }
         <Route exact path='/register' component={props => <Register login={this.login} {...this.props} />} />
         <Route exact path='/monzo' component={props => <MonzoSync {...props} />} />
