@@ -49,12 +49,16 @@ class API {
     const redirect_uri = "https://zealous-kalam-8b6c52.netlify.com/login" 
     const authorization_code = localStorage.getItem('exchange_token')
 
-    return fetch(API.exchangeToken + `grant_type=authorization_code` 
-    + `client_id=${client_id}` 
-    + `client_secret=${client_secret}` 
-    + `redirect_uri=${redirect_uri}` 
-    + `code=${authorization_code}`, {
-      method: 'POST'
+
+    return fetch(API.exchangeToken, {
+      method: 'POST',
+      body:  JSON.stringify({
+        grant_type: 'authorization_code',
+        client_id,
+        client_secret,
+        redirect_uri,
+        authorization_code
+      })
     })
     .then(resp => resp.json())
     .then(data => {
@@ -116,9 +120,9 @@ API.registerURL = API.baseURL + '/register'
 API.loginURL = API.baseURL + '/login'
 API.validateURL = API.baseURL + '/validate'
 
+API.monzoBaseURL = 'https://api.monzo.com'
 API.exchangeToken = API.monzoBaseURL + '/oauth2/token'
 
-API.monzoBaseURL = 'https://api.monzo.com'
 API.listAccounts = API.monzoBaseURL + '/accounts'
 API.readBalance = API.monzoBaseURL + '/balance'
 API.listPots = API.monzoBaseURL + '/pots'
