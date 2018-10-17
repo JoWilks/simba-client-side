@@ -47,7 +47,7 @@ class API {
     const client_id = "oauth2client_00009bXcUYcbaBlM4oMMqX"
     const client_secret = "mnzpub.4SIcUmdjk6TAj8EyelSL5RS6sOCj+LB/LhiQt1NsmyQzWJ8Hwqbr39evxUfZHp2yGN7US1pDwwu5Y7boLIb5"
     const redirect_uri = "https://zealous-kalam-8b6c52.netlify.com/" 
-    const authorization_code = localStorage.getItem('exchange_token')
+    const authorization_code = localStorage.getItem('auth_code')
 
 
     return fetch(API.exchangeToken, {
@@ -63,7 +63,7 @@ class API {
     .then(resp => resp.json())
     .then(data => {
       console.log(data)
-      // localStorage.setItem('monzo_token', data.access_token)
+      localStorage.setItem('monzo_token', data.access_token)
     })
   }
 
@@ -128,7 +128,6 @@ API.readBalance = API.monzoBaseURL + '/balance'
 API.listPots = API.monzoBaseURL + '/pots'
 API.getAllTransactions = API.monzoBaseURL + '/transactions'
 
-const exchange_token = localStorage.getItem('exchange_token')
 const monzo_token = localStorage.getItem('monzo_token')
 const account_id = 'acc_00009YD5n3MghHFkmJCPib'
 

@@ -36,12 +36,13 @@ class App extends Component {
   componentDidMount () {
     let tempVar = window.location.search.split(/=|&/)
     if (tempVar[tempVar.length-1] === 'randomstring') {
-      localStorage.setItem('exchange_token', tempVar[1])
+      localStorage.setItem('auth_code', tempVar[1])
+      console.log(localStorage)
       API.exchangeForAuthCode()
     } else {
       console.log("Error with getting code from Monzo for authentication")
     }
-    
+
     const token = localStorage.getItem('token')
     if (token) {
       API.validate(token)
