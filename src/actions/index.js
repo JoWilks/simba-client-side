@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, REGISTER, STORE_ALL_TRANSACTIONS, STORE_ACCOUNTS, STORE_LAST_TWO_MONTHS, STORE_CREDITS, STORE_DEBITS, STORE_POTS, DEBIT_CATEGORIES, CREDIT_CATEGORIES } from './types'
+import { LOGIN, LOGOUT, REGISTER, STORE_ALL_TRANSACTIONS, STORE_ACCOUNTS, STORE_LAST_TWO_MONTHS, STORE_CREDITS, STORE_DEBITS, STORE_POTS, DEBIT_CATEGORIES, CREDIT_CATEGORIES, GET_BUDGET, SET_BUDGET } from './types'
 import { moment, today, startDayOfWeek, startDayOfMonth, startDayOfTwoMonthsAgo } from '../datefunctions'
 import API from '../adapters/API'
 import { Stream } from 'stream';
@@ -50,7 +50,7 @@ export function last_two_months () {
     }
 }
 
-//ACCOUNT ACTIOONS
+//ACCOUNT ACTIONS
 export function store_accounts_details () {
     return (dispatch) => {
         API.get_list_accounts()
@@ -66,5 +66,25 @@ export function store_pots_details () {
         .then(data => { console.log(data)
             dispatch({ type: STORE_POTS, payload: data})
          })
+    }
+}
+
+//BUDGET ACTIONS
+
+export function getBudget () {
+    return (dispatch) => {
+        API.getBudget()
+        .then(data => { console.log(data)
+            dispatch({ type: GET_BUDGET, payload: data })
+        })
+    }
+}
+
+export function setBudget (budgetObj) {
+    return (dispatch) => {
+        API.setBudget(budgetObj)
+        .then(data => { console.log(data)
+            dispatch({ type: SET_BUDGET, payload: data })
+        })
     }
 }

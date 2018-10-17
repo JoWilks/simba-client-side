@@ -41,6 +41,32 @@ class API {
     }).then(resp => resp.json())
   }
 
+//RAILS BUDGET CALLS
+
+  static getBudget () {
+    return fetch(API.budget, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(resp => resp.json())
+  }
+
+  static setBudget (budgetObj) {
+    //budgetObj format ex { timeFrame: weekly, eating_out: 50 ... }
+    return fetch(API.budget, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ budgetObj })
+    })
+    .then(resp => resp.json())
+  }
+
+
 // MONZO AUTH CALLS
 
   static exchangeForAuthCode () {
@@ -118,6 +144,8 @@ API.baseURL = 'http://localhost:3000/api/v1'
 API.registerURL = API.baseURL + '/register'
 API.loginURL = API.baseURL + '/login'
 API.validateURL = API.baseURL + '/validate'
+
+API.Budget = API.baseURL + '/budget'
 
 API.monzoBaseURL = 'https://api.monzo.com'
 API.exchangeToken = API.monzoBaseURL + '/oauth2/token'
