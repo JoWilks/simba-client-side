@@ -59,7 +59,7 @@ class API {
     .then(resp => resp.json())
     .then(data => {
       console.log(data)
-      localStorage.setItem('monzo_token', data.access_token)
+      // localStorage.setItem('monzo_token', data.access_token)
     })
   }
 
@@ -124,7 +124,7 @@ API.readBalance = API.monzoBaseURL + '/balance'
 API.listPots = API.monzoBaseURL + '/pots'
 API.getAllTransactions = API.monzoBaseURL + '/transactions'
 
-const exchange_token = ocalStorage.getItem('exchange_token')
+const exchange_token = localStorage.getItem('exchange_token')
 const monzo_token = localStorage.getItem('monzo_token')
 const account_id = 'acc_00009YD5n3MghHFkmJCPib'
 
