@@ -57,7 +57,7 @@ class API {
         client_id,
         client_secret,
         redirect_uri,
-        authorization_code
+        code: authorization_code
       })
     })
     .then(resp => resp.json())
