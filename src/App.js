@@ -23,7 +23,8 @@ class App extends Component {
     this.props.login(username)
     if (localStorage.getItem('monzo_token')) {
       this.props.last_two_months()
-      this.props.history.push('/dashboard') //going to want to push this to the dashboard
+      this.props.getCategoriesBudget()
+      this.props.history.push('/budget') //going to want to push this to the dashboard
     } else{
       this.props.history.push('/monzo')
     }
@@ -89,7 +90,8 @@ const mapStateToProps = state => ({
     currentUser: state.userReducer,
     transactions: state.transactionsReducer,
     accounts: state.accountsReducer,
-    categories: state.categoriesReducer
+    categories: state.categoriesReducer,
+    budget: state.budgetCategoriesReducer
 })
 
 

@@ -17,7 +17,6 @@ class Budget extends React.Component {
         }
 
     componentDidMount () {
-
     }
         
     toggleViewSettings = () => {
@@ -49,7 +48,7 @@ class Budget extends React.Component {
                                 <p>How much you've spent on each category...</p> <br></br>
                                 <div className='container'>
                                 {this.props.categories.debit.map(category => 
-                                        <div className={`budget ${category}`}>
+                                        <div key={category} className={`budget ${category}`}>
                                             {category} <LineMeter   size={75}
                                                                     value={75}/>
                                         </div>

@@ -162,11 +162,11 @@ class Graphview extends React.Component {
         }
     }
 
-    sortIntoCategoriesandDateRange = (array, rangeType) => {
+    sortIntoCategoriesandDateRange = (obj, rangeType) => {
          //add categories with values of summed amounts to each date range
          const allTransactions = JSON.parse(JSON.stringify(this.props.allTransactions)).reverse()
 
-         Object.keys(array).forEach(date => {
+         Object.keys(obj).forEach(date => {
             const startKeyDate = moment(date).hour(0).minute(0).second(0)
             let endKeyDate
                 if (rangeType === 'weekly') {
@@ -180,19 +180,19 @@ class Graphview extends React.Component {
                 const transDate = moment(transaction.settled)
                     if (transDate.isBetween(startKeyDate, endKeyDate) ) {
 
-                        if (array[date][transaction.category]) {
-                            array[date][transaction.category] +=  transaction.amount < 0 
+                        if (obj[date][transaction.category]) {
+                            obj[date][transaction.category] +=  transaction.amount < 0 
                                                                     ? transaction.amount/-1
                                                                     : transaction.amount
                         } else {
-                            array[date][transaction.category] = transaction.amount < 0
+                            obj[date][transaction.category] = transaction.amount < 0
                                                                     ? (transaction.amount/-1)
                                                                     : transaction.amount
                         }
                     }
             })
         })
-        return array
+        return obj
     }
     
 

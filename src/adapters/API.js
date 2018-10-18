@@ -1,5 +1,5 @@
-// import { get } from 'https'
-// require('dotenv').config()
+import { get } from 'https'
+require('dotenv').config()
 
 class API {
   // USER API CALLS
@@ -45,7 +45,7 @@ class API {
 //RAILS BUDGET CALLS
 
   static get_categories_budgets () {
-    return fetch('http://localhost:3000/api/v1/categories', {
+    return fetch(API.budgetCatURL, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -55,8 +55,7 @@ class API {
   }
 
   static set_categories_budgets (budgetObj) {
-    //budgetObj format ex { timeFrame: weekly, eating_out: 50 ... }
-    return fetch(API.budget, {
+    return fetch(API.budgetCatURL + '/base', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -80,7 +79,7 @@ class API {
     const redirect_uri = "https://zealous-kalam-8b6c52.netlify.com/" 
     const authorization_code = localStorage.getItem('auth_code')
 
-    return fetch(API.exchangeToken, {
+    return fetch(API.exchangeTokenURL, {
       method: 'POST',
       body:  JSON.stringify({
         grant_type: 'authorization_code',
@@ -101,7 +100,7 @@ class API {
 //MONZO API CALLS
 
   static get_list_accounts () {
-    return fetch(API.listAccounts, {
+    return fetch(API.listAccountsURL, {
       method: 'GET',
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
@@ -109,7 +108,7 @@ class API {
   }
 
   static read_balance_account () {
-    return fetch(API.readBalance + `?account_id=${account_id}`, {
+    return fetch(API.readBalanceURL + `?account_id=${account_id}`, {
       method: 'GET',
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
@@ -117,7 +116,7 @@ class API {
   }
 
   static list_pots () {
-    return fetch(API.listPots, {
+    return fetch(API.listPotsURL, {
       method: 'GET',
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
@@ -125,7 +124,7 @@ class API {
   }
 
   static get_all_transactions () {
-    return fetch(API.getAllTransactions + `?account_id=${account_id}`, {
+    return fetch(API.getAllTransactionsURL + `?account_id=${account_id}`, {
       method: 'GET',
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
@@ -135,7 +134,7 @@ class API {
   static get_range_transactions (since, before) {
     //need to convert the DateTimes to An RFC 3339 encoded-timestamp, can do new Date().toISOString()
     const rest_url = `&since=${since}&before${before}`
-    return fetch(API.getAllTransactions + `?&account_id=${account_id}${rest_url}`, {
+    return fetch(API.getAllTransactionsURL + `?&account_id=${account_id}${rest_url}`, {
       method: 'GET',
       headers: {'Authorization':`Bearer ${monzo_token}`}
     })
@@ -150,15 +149,15 @@ API.registerURL = API.baseURL + '/register'
 API.loginURL = API.baseURL + '/login'
 API.validateURL = API.baseURL + '/validate'
 
-API.categories = API.baseURL + '/categories'
+API.budgetCatURL = API.baseURL + '/categories'
 
 API.monzoBaseURL = 'https://api.monzo.com'
-API.exchangeToken = API.monzoBaseURL + '/oauth2/token'
+API.exchangeTokenURL = API.monzoBaseURL + '/oauth2/token'
 
-API.listAccounts = API.monzoBaseURL + '/accounts'
-API.readBalance = API.monzoBaseURL + '/balance'
-API.listPots = API.monzoBaseURL + '/pots'
-API.getAllTransactions = API.monzoBaseURL + '/transactions'
+API.listAccountsURL = API.monzoBaseURL + '/accounts'
+API.readBalanceURL = API.monzoBaseURL + '/balance'
+API.listPotsURL = API.monzoBaseURL + '/pots'
+API.getAllTransactionsURL = API.monzoBaseURL + '/transactions'
 
 const monzo_token = localStorage.getItem('monzo_token')
 const account_id = 'acc_00009YD5n3MghHFkmJCPib'
