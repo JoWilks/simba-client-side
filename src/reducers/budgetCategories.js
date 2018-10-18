@@ -1,4 +1,4 @@
-import { GET_BUDGET, SET_BUDGET } from '../actions/types'
+import { GET_BUDGET_CATEGORIES, SET_BUDGET_CATEGORIES } from '../actions/types'
 
 const initialState = {
         eating_out: 0,
@@ -15,15 +15,15 @@ const initialState = {
         holidays: 0
 }
 
-const budgetReducer= (state = initialState, action) => {
+const budgetCategoriesReducer= (state = initialState, action) => {
 
     switch (action.type) {
-        case GET_BUDGET:
+        case GET_BUDGET_CATEGORIES:
             return state = action.payload
-        case SET_BUDGET:
+        case SET_BUDGET_CATEGORIES:
             return state = action.payload
         default:
         return state
     }
 }
-export default budgetReducer
+export default budgetCategoriesReducer

@@ -16,6 +16,10 @@ class Budget extends React.Component {
             }
         }
 
+    componentDidMount () {
+
+    }
+        
     toggleViewSettings = () => {
         this.setState({ viewSettings: !this.state.viewSettings })
     } 
@@ -25,15 +29,20 @@ class Budget extends React.Component {
 
     }
 
+    testAPIReduxRequest = () => {
+        this.props.getCategoriesBudget()
+    }
+
     render () {
         return (
             <div>
                     <h1>Budget View</h1>
                     {/* should put button on toolbar */}
+                    <button onClick={this.testAPIReduxRequest}>Test</button>
                     <button onClick={this.toggleViewSettings}>{this.state.viewSettings ? "Close Settings": "Open Budget Settings"}</button>
                     {
                         this.state.viewSettings 
-                        ? <BudgetSettings categories={this.props.categories.debit}/>
+                        ? <BudgetSettings categories={this.props.categories.debit} setCategoriesBudget={this.props.setCategoriesBudget}/>
                         : (<div className=''>
                             <p>Here's how your total {this.state.timeFrame} budget is tracking:</p> <br></br>
                                 <HalfCircleMeter value={75}/> <br></br>

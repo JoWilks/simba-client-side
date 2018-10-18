@@ -12,7 +12,7 @@ class Dashboard extends React.Component {
     }
 
     componentDidMount () {
-        const { accountName, pots } = this.state
+        const { accountName } = this.state
         if (accountName === '') {
             API.get_list_accounts()
             .then(data => this.setState({ accountName: data['accounts'][0].description }))

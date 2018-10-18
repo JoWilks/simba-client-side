@@ -1,5 +1,5 @@
-import { get } from 'https'
-require('dotenv').config()
+// import { get } from 'https'
+// require('dotenv').config()
 
 class API {
   // USER API CALLS
@@ -19,7 +19,8 @@ class API {
     }).then(resp => resp.json())
   }
 
-  static validate (token) {
+  static validate () {
+    const token = localStorage.getItem('token')
     return fetch(API.validateURL, {
       headers: {
         'Content-Type': 'application/json',
@@ -43,8 +44,8 @@ class API {
 
 //RAILS BUDGET CALLS
 
-  static getBudget () {
-    return fetch(API.budget, {
+  static get_categories_budgets () {
+    return fetch('http://localhost:3000/api/v1/categories', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -53,7 +54,7 @@ class API {
     .then(resp => resp.json())
   }
 
-  static setBudget (budgetObj) {
+  static set_categories_budgets (budgetObj) {
     //budgetObj format ex { timeFrame: weekly, eating_out: 50 ... }
     return fetch(API.budget, {
       method: 'POST',
@@ -64,6 +65,10 @@ class API {
       body: JSON.stringify({ budgetObj })
     })
     .then(resp => resp.json())
+  }
+
+  static update_categories () {
+
   }
 
 
@@ -145,7 +150,7 @@ API.registerURL = API.baseURL + '/register'
 API.loginURL = API.baseURL + '/login'
 API.validateURL = API.baseURL + '/validate'
 
-API.Budget = API.baseURL + '/budget'
+API.categories = API.baseURL + '/categories'
 
 API.monzoBaseURL = 'https://api.monzo.com'
 API.exchangeToken = API.monzoBaseURL + '/oauth2/token'

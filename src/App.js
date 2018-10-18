@@ -35,6 +35,19 @@ class App extends Component {
   }
 
   componentDidMount () {
+    const token = localStorage.getItem('token')
+    if (token) {
+      API.validate(
+      )
+        .then(data => {
+          if (data.username) {
+            this.loginAppPage(data.username)
+          } else {
+            this.props.history.push('/login')
+          }
+        })
+    }
+
     let tempVar = window.location.search.split(/=|&/)
     if (tempVar[tempVar.length-1] === 'randomstring') {
       localStorage.setItem('auth_code', tempVar[1])
@@ -42,18 +55,6 @@ class App extends Component {
       API.exchangeForAuthCode()
     } else {
       console.log("Error with getting code from Monzo for authentication")
-    }
-
-    const token = localStorage.getItem('token')
-    if (token) {
-      API.validate(token)
-        .then(data => {
-          if (data.username) {
-            this.loginAppPage(data.username)
-          } else {
-            // this.props.history.push('/login')
-          }
-        })
     }
   }
 

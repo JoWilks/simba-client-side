@@ -33,6 +33,8 @@ class BudgetSettings extends React.Component {
 
         handleSubmit = () => {
             //on submit will put changes into redux store, which will also Post request it to rails server
+            // this.state
+            // this.props.setCategoriesBudget()
         }
     
         calcTotal = () => {

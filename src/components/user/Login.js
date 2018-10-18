@@ -22,7 +22,7 @@ handleSubmit = (event) => {
         console.log(data)
         alert(data.message)
       } else {
-        localStorage.setItem('token', data.token)
+        localStorage.setItem('token', data.jwt)  
         // localStorage.setItem('monzo_token', data.monzo_token) will add once have this set in server
         loginAppPage(data.user.username)
       }

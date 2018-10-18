@@ -7,6 +7,8 @@ const userReducer= (state = null, action) => {
         case LOGOUT:
             localStorage.removeItem('token')
             return state = null
+        case REGISTER:  //add some functionality?
+            return state
         default:
         return state
     }
