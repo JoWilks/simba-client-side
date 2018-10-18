@@ -41,7 +41,9 @@ class Budget extends React.Component {
                     <button onClick={this.toggleViewSettings}>{this.state.viewSettings ? "Close Settings": "Open Budget Settings"}</button>
                     {
                         this.state.viewSettings 
-                        ? <BudgetSettings categories={this.props.categories.debit} setCategoriesBudget={this.props.setCategoriesBudget} toggleViewSettings={this.toggleViewSettings}/>
+                        ? <BudgetSettings   budget={this.props.budget} 
+                                            setCategoriesBudget={this.props.setCategoriesBudget} 
+                                            toggleViewSettings={this.toggleViewSettings}/>
                         : (<div className=''>
                             <p>Here's how your total {this.state.timeFrame} budget is tracking:</p> <br></br>
                                 <HalfCircleMeter value={75}/> <br></br>

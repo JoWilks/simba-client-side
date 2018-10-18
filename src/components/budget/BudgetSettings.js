@@ -4,25 +4,15 @@ import API from '../../adapters/API'
 
 const timeFrames = ['monthly basis', 'weekly basis', 'daily basis']
 
-
 class BudgetSettings extends React.Component {
     
         constructor(props) {
             super(props)
+            const budgetCat = props.budget.categories
+            const timeframe = props.budget.timeFrame
                 this.state = {
-                    timeframe: 'monthly basis',
-                    budgetCat: {eating_out: 0,
-                        transport: 0,
-                        groceries: 0,
-                        shopping: 0,
-                        personal_care: 0,
-                        bills: 0,
-                        finances: 0,
-                        entertainment: 0,
-                        expenses: 0,
-                        family: 0,
-                        general: 0,
-                        holidays: 0},
+                    timeframe,
+                    budgetCat,
                     runningTotal: 0
                 }
             }
@@ -45,9 +35,10 @@ class BudgetSettings extends React.Component {
         }
     
         calcTotal = () => {
+            const { budgetCat } = this.state
             let runningTotal = 0
-            this.props.categories.forEach(category => {
-                runningTotal += (this.state.budgetCat[category])
+            Object.keys(budgetCat).forEach(key => {
+                runningTotal += (this.state.budgetCat[key])
             })
             this.setState({ runningTotal })
         }
@@ -58,26 +49,33 @@ class BudgetSettings extends React.Component {
         }
 
         render () {
+            const { budgetCat} = this.state
+            // Object.keys(this.state.budgetCat).map(l => console.log(budgetCat[l]))
             return (
                 <div>
                         <form>
-                            Set your target spend for each category on a...
+                            <p>Set your target spend for each category on a...</p>
                             <br></br>
+                            <div>
                             <select name='timeframe' onChange={this.handleDropdown}>
                                 {
-                                    timeFrames.map(timeframe => 
-                                    <option value={timeframe} key={timeframe}>{timeframe}</option>
-                                    )
+                                    timeFrames.map(timeframe => <option value={timeframe} key={timeframe}>{timeframe}</option>)
                                 }
                             </select>
-                            {
-                                this.props.categories.map(category => 
-                                    <div>
-                                        <label key={category}>{category}</label>
-                                        <input type='text' name={category} onSelect={this.calcTotal} onChange={this.handleChange} placeholder={null}></input>
+                            </div>
+                            <div>
+                            { 
+                                Object.keys(this.state.budgetCat).map(key => 
+                                    <div key={key}>
+                                        <label>{key}</label>
+                                        <input type='text'  name={key} 
+                                                            onSelect={this.calcTotal} 
+                                                            onChange={this.handleChange} 
+                                                            placeholder={budgetCat[key]}></input>
                                     </div>
                                 )
                             }
+                            </div>
                             <p>For a total spend of £{this.state.runningTotal} on a {this.state.timeframe}</p>
                             <input type='submit' value='Save Changes' onClick={this.handleSubmit}></input>
                         </form>
