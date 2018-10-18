@@ -55,8 +55,8 @@ class API {
   }
 
   static set_categories_budgets (budgetObj) {
-    return fetch(API.budgetCatURL + '/base', {
-      method: 'POST',
+    return fetch(API.budgetCatURL, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -64,10 +64,6 @@ class API {
       body: JSON.stringify({ budgetObj })
     })
     .then(resp => resp.json())
-  }
-
-  static update_categories () {
-
   }
 
 

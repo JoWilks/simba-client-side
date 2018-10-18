@@ -21,9 +21,10 @@ const initialState = {
 
 const budgetCategoriesReducer= (state = initialState, action) => {
 
+    let result = {}
+
     switch (action.type) {
         case GET_BUDGET_CATEGORIES:
-            let result = {}
             action.payload.categories.forEach(cat => {
                 result[cat.name] = cat.budget_amount
             })
@@ -31,8 +32,11 @@ const budgetCategoriesReducer= (state = initialState, action) => {
             state.categories = result
             return state
         case SET_BUDGET_CATEGORIES:
-            console.log("set_budget_categories reducer")
-            debugger
+            action.payload.budgetCat.forEach(cat => {
+                result[cat.name] = cat.budget_amount
+            })
+            state['timeFrame'] = action.payload.budgetCat[0].budget_timeframe
+            state.categories = result
             return state
         default:
         return state

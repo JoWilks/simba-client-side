@@ -37,12 +37,11 @@ class BudgetSettings extends React.Component {
             this.setState({ timeframe: event.target.value })
         }
 
-        handleSubmit = () => {
-            //on submit will put changes into redux store, which will also Post request it to rails server
+        handleSubmit = (event) => {
+            event.preventDefault()
             let budgetObj = JSON.parse(JSON.stringify(this.state))
             this.props.setCategoriesBudget(budgetObj)
-            // API.set_categories_budgets(budgetObj).then(data => console.log(data))
-
+            this.props.toggleViewSettings()
         }
     
         calcTotal = () => {
@@ -61,8 +60,7 @@ class BudgetSettings extends React.Component {
         render () {
             return (
                 <div>
-                        <button onClick={this.handleSubmit}></button>  
-                        <form onSubmit={this.handleSubmit}>
+                        <form>
                             Set your target spend for each category on a...
                             <br></br>
                             <select name='timeframe' onChange={this.handleDropdown}>
@@ -81,7 +79,7 @@ class BudgetSettings extends React.Component {
                                 )
                             }
                             <p>For a total spend of £{this.state.runningTotal} on a {this.state.timeframe}</p>
-                            <input type='submit' value='Save Changes'></input>
+                            <input type='submit' value='Save Changes' onClick={this.handleSubmit}></input>
                         </form>
 
 

@@ -83,7 +83,7 @@ export function getCategoriesBudget () {
 export function setCategoriesBudget (budgetObj) {
     return (dispatch) => {
         API.set_categories_budgets(budgetObj)
-        .then(data => { console.log("data")
+        .then(data => { console.log(data)
             dispatch({ type: SET_BUDGET_CATEGORIES, payload: data })
         })
     }
