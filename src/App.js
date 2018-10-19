@@ -22,12 +22,14 @@ class App extends Component {
   loginAppPage = username => {
     this.props.login(username)
     if (localStorage.getItem('monzo_token')) {
-      this.props.last_two_months()
-      this.props.getCategoriesBudget()
-      this.checkAccessTokenStatus() //check if current Monzo_token expired
-      this.props.history.push('/dashboard') //going to want to push this to the dashboard
-    } else{
-      this.props.history.push('/monzo')
+        this.props.last_two_months()
+        this.props.getCategoriesBudget()
+        this.checkAccessTokenStatus() //check if current Monzo_token expired
+        this.props.history.push('/dashboard') //going to want to push this to the dashboard
+    } else if ( localStorage.getItem('auth_token') ) {
+        this.API.exchange()
+    } else {
+        this.props.history.push('/monzo')
     }
   }
 
