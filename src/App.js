@@ -25,7 +25,7 @@ class App extends Component {
       this.props.last_two_months()
       this.props.getCategoriesBudget()
       this.checkAccessTokenStatus() //check if current Monzo_token expired
-      this.props.history.push('/budget') //going to want to push this to the dashboard
+      this.props.history.push('/dashboard') //going to want to push this to the dashboard
     } else{
       this.props.history.push('/monzo')
     }
@@ -48,9 +48,8 @@ class App extends Component {
 
   checkForUser = () => {
     const token = localStorage.getItem('token')
-    if (token) {
-      API.validate(
-      )
+    if (token === null) {
+      API.validate()
         .then(data => {
           if (data.username) {
             this.loginAppPage(data.username)
