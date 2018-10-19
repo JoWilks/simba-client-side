@@ -52,7 +52,7 @@ class App extends Component {
     //check whether app user still logged in
     this.checkForUser()
     //check for response from Monzo auth redirect
-    if (localStorage.getItem('auth_token')) {
+    if (!localStorage.getItem('auth_token')) {
       this.checkMonzoRedirect()
     }
 
