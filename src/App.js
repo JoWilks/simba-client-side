@@ -96,7 +96,6 @@ class App extends Component {
           <NavBar currentUser={this.props.currentUser} login={this.login} logout={this.logout} />
         </header>
         <div className='body'>
-        <button onClick={API.check_access_token}>API exchange</button>
         { this.props.currentUser
           ? <Route exact path='/dashboard' component={props => <Dashboard {...this.props} />} />
           : <Route exact path='/login' component={props => <Login loginAppPage={this.loginAppPage} {...this.props} />} />

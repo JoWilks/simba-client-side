@@ -11,24 +11,25 @@ class Register extends React.Component {
       const { username, password } = this.state
       const { login } = this.props
       API.register(username, password)
-        .then(data => {
-          console.log(data)
-          if (data.error) {
-            console.log(data)
-            alert(data.error)
-          } else {
-            API.login(username, password)
-              .then(data2 => {
-                if (data2.message) {
-                  console.log(data2)
-                  alert(data2.message)
-                } else {
-                  localStorage.setItem('token', data2.token)
-                  login(data2.user.username)
-                }
-              })
-          }
-        })
+        .then(data => console.log(data))
+        // .then(data => {
+        //   console.log(data)
+        //   if (data.error) {
+        //     console.log(data)
+        //     alert(data.error)
+        //   } else {
+        //     API.login(username, password)
+        //       .then(data2 => {
+        //         if (data2.message) {
+        //           console.log(data2)
+        //           alert(data2.message)
+        //         } else {
+        //           localStorage.setItem('token', data2.token)
+        //           login(data2.user.username)
+        //         }
+        //       })
+        //   }
+        // })
     }
 
     handleChange = (event) => {
