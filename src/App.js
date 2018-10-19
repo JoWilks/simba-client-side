@@ -22,7 +22,7 @@ class App extends Component {
   loginAppPage = username => {
     this.props.login(username)
     if ( localStorage.getItem('auth_token') && !localStorage.getItem('monzo_token') ) {
-      this.API.exchange().then(data => console.log(data))
+      API.exchange().then(data => console.log(data))
     } else if (localStorage.getItem('monzo_token')) {
       //check if current Monzo_token expired
         API.check_access_token
@@ -99,6 +99,10 @@ class App extends Component {
     })
   }
 
+  reExchangeButton = () => {
+    API.exchange().then(data => console.log(data))
+  }
+
 
   render() {
     return (
@@ -107,6 +111,7 @@ class App extends Component {
           <NavBar currentUser={this.props.currentUser} login={this.login} logout={this.logout} />
         </header>
         <div className='body'>
+        <button onClick={this.reExchangeButton}></button>
         { this.props.currentUser
           ? <Route exact path='/dashboard' component={props => <Dashboard {...this.props} />} />
           : <Route exact path='/login' component={props => <Login loginAppPage={this.loginAppPage} {...this.props} />} />

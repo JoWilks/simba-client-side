@@ -43,11 +43,12 @@ class API {
   }
 
   static exchange () {
+    const token = localStorage.getItem('token')
     return fetch(API.baseURL + '/exchange', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({ 
               exchange: {
@@ -59,10 +60,11 @@ class API {
   }
 
   static refresh () {
+    const token = localStorage.getItem('token')
     return fetch(API.baseURL + '/refresh', {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        'Authorization': `Bearer ${token}`
       }
     })
     .then(resp => resp.json())
