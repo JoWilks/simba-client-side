@@ -42,6 +42,32 @@ class API {
     }).then(resp => resp.json())
   }
 
+  static exchange () {
+    return fetch(API.baseURL + '/exchange', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+      },
+      body: JSON.stringify({ 
+              exchange: {
+                auth_token: localStorage.getItem('auth_token') 
+              }
+            })
+    })
+    .then(resp => resp.json())
+  }
+
+  static refresh () {
+    return fetch(API.baseURL + '/refresh', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+      }
+    })
+    .then(resp => resp.json())
+  }
+
 //RAILS BUDGET CALLS
 
   static get_categories_budgets () {
@@ -66,32 +92,13 @@ class API {
     .then(resp => resp.json())
   }
 
-
-// MONZO AUTH CALLS
-
-  static exchangeForAuthCode () {
-    const client_id = "oauth2client_00009bXcUYcbaBlM4oMMqX"
-    const client_secret = "mnzpub.4SIcUmdjk6TAj8EyelSL5RS6sOCj+LB/LhiQt1NsmyQzWJ8Hwqbr39evxUfZHp2yGN7US1pDwwu5Y7boLIb5"
-    const redirect_uri = "https://zealous-kalam-8b6c52.netlify.com/" 
-    const authorization_code = localStorage.getItem('auth_code')
-
-    return fetch(API.exchangeTokenURL, {
-      method: 'POST',
-      body:  JSON.stringify({
-        grant_type: 'authorization_code',
-        client_id: client_id,
-        client_secret: client_secret,
-        redirect_uri: redirect_uri,
-        code: authorization_code
-      })
+//MONZO AUTH CALLS
+  static check_access_token () {
+    return fetch("https://api.monzo.com/ping/whoami", {
+      headers: {'Authorization':`Bearer ${monzo_token}`}
     })
-    .then(resp => resp.json())
-    .then(data => {
-      console.log(data)
-      localStorage.setItem('monzo_token', data.access_token)
-    })
+    .then( resp => resp.json() )
   }
-
 
 //MONZO API CALLS
 

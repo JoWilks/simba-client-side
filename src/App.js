@@ -24,6 +24,7 @@ class App extends Component {
     if (localStorage.getItem('monzo_token')) {
       this.props.last_two_months()
       this.props.getCategoriesBudget()
+      this.checkAccessTokenStatus() //check if current Monzo_token expired
       this.props.history.push('/budget') //going to want to push this to the dashboard
     } else{
       this.props.history.push('/monzo')
@@ -36,6 +37,16 @@ class App extends Component {
   }
 
   componentDidMount () {
+
+    //check whether app user still logged in
+    this.checkForUser()
+
+    //check for response from Monzo auth redirect
+    this.checkMonzoRedirect()
+
+  }
+
+  checkForUser = () => {
     const token = localStorage.getItem('token')
     if (token) {
       API.validate(
@@ -49,15 +60,34 @@ class App extends Component {
         })
     }
 
+  }
+
+  checkMonzoRedirect = () => {
     let tempVar = window.location.search.split(/=|&/)
     if (tempVar[tempVar.length-1] === 'randomstring') {
-      localStorage.setItem('auth_code', tempVar[1])
+      localStorage.setItem('auth_token', tempVar[1])
       console.log(localStorage)
-      API.exchangeForAuthCode()
+      API.exchange()
+      .then(data => {console.log(data) 
+        localStorage.setItem('monzo_token', data["access_token"])})
     } else {
       console.log("Error with getting code from Monzo for authentication")
     }
   }
+
+  checkAccessTokenStatus = () => {
+    API.check_access_token()
+    .then( data => {
+      if (data["error"]) {
+        console.log(data["error"])
+        API.refresh()
+      } else {
+        console.log("Current token still good")
+      }
+    })
+  }
+
+
 
   render() {
     return (
@@ -66,6 +96,7 @@ class App extends Component {
           <NavBar currentUser={this.props.currentUser} login={this.login} logout={this.logout} />
         </header>
         <div className='body'>
+        <button onClick={API.check_access_token}>API exchange</button>
         { this.props.currentUser
           ? <Route exact path='/dashboard' component={props => <Dashboard {...this.props} />} />
           : <Route exact path='/login' component={props => <Login loginAppPage={this.loginAppPage} {...this.props} />} />
