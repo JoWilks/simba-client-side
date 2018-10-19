@@ -21,8 +21,8 @@ class App extends Component {
 
   loginAppPage = username => {
     this.props.login(username)
-    if ( localStorage.getItem('auth_token') !== "undefined" ) {
-      this.API.exchange()
+    if ( localStorage.getItem('auth_token') && !localStorage.getItem('monzo_token') ) {
+      this.API.exchange().then(data => console.log(data))
     } else if (localStorage.getItem('monzo_token') !== "undefined") {
         this.props.last_two_months()
         this.props.getCategoriesBudget()
@@ -42,7 +42,7 @@ class App extends Component {
 
     //check whether app user still logged in
     this.checkForUser()
-
+    debugger
     //check for response from Monzo auth redirect
     if (localStorage.getItem('auth_token')) {
       this.checkMonzoRedirect()
