@@ -23,11 +23,20 @@ class App extends Component {
     this.props.login(username)
     if ( localStorage.getItem('auth_token') && !localStorage.getItem('monzo_token') ) {
       this.API.exchange().then(data => console.log(data))
-    } else if (localStorage.getItem('monzo_token') !== "undefined") {
-        this.props.last_two_months()
-        this.props.getCategoriesBudget()
-        this.checkAccessTokenStatus() //check if current Monzo_token expired
-        this.props.history.push('/dashboard') //going to want to push this to the dashboard
+    } else if (localStorage.getItem('monzo_token')) {
+      //check if current Monzo_token expired
+        API.check_access_token
+        .then( data => {
+          console.log(data)
+          if (data["access_token"]) {
+            console.log("token still good")
+            this.props.last_two_months()
+            this.props.getCategoriesBudget()
+            this.props.history.push('/dashboard')
+          } else {
+            console.log(data["error"])
+          }
+        })
     } else {
         this.props.history.push('/monzo')
     }
@@ -42,7 +51,6 @@ class App extends Component {
 
     //check whether app user still logged in
     this.checkForUser()
-    debugger
     //check for response from Monzo auth redirect
     if (localStorage.getItem('auth_token')) {
       this.checkMonzoRedirect()
@@ -52,7 +60,7 @@ class App extends Component {
 
   checkForUser = () => {
     const token = localStorage.getItem('token')
-    if (token === null) {
+    if ( token ) {
       API.validate()
         .then(data => {
           if (data.username) {
@@ -86,10 +94,10 @@ class App extends Component {
         API.refresh()
       } else {
         console.log("Current token still good")
+        return true
       }
     })
   }
-
 
 
   render() {
@@ -111,8 +119,6 @@ class App extends Component {
         <Route exact path='/net' component={props => <Net {...this.props} />} />
         </div>
         <div>
-        {/* <button onClick={() => console.log(this.props)}>Check store</button>
-        <button onClick={this.props.store_pots_details}>Test</button> */}
         </div>
       </div>
     );
