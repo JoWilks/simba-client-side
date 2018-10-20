@@ -22,13 +22,13 @@ class App extends Component {
   loginAppPage = username => {
     this.props.login(username)
     if ( localStorage.getItem('auth_token') && !localStorage.getItem('monzo_token') ) {
-      API.exchange().then(data => console.log(data))
+      this.apiCalltoExchange()
     } else if (localStorage.getItem('monzo_token')) {
       //check if current Monzo_token expired
-        API.check_access_token
+        API.check_access_token()
         .then( data => {
           console.log(data)
-          if (data["access_token"]) {
+          if (data.authenticated) {
             console.log("token still good")
             this.props.last_two_months()
             this.props.getCategoriesBudget()
@@ -78,14 +78,8 @@ class App extends Component {
     if (tempVar[tempVar.length-1] === 'randomstring') {
       localStorage.setItem('auth_token', tempVar[1])
       console.log(localStorage)
-        API.exchange()
-        .then(data => {
-          console.log(data)
-          if (data["error"]) {
-            console.log(data["error"])
-          } else if (data["access_token"]) {
-            localStorage.setItem( 'monzo_token', data["access_token"] )}
-          })
+      this.apiCalltoExchange()
+      this.props.history.push('/')
     } else {
       console.log("Error with getting authorization token from Monzo")
     }
@@ -104,8 +98,15 @@ class App extends Component {
     })
   }
 
-  reExchangeButton = () => {
-    API.exchange().then(data => console.log(data))
+  apiCalltoExchange = () => {
+    API.exchange()
+    .then(data => {
+      console.log(data)
+      if (data["error"]) {
+        console.log(data["error"])
+      } else if (data["access_token"]) {
+        localStorage.setItem( 'monzo_token', data["access_token"] )}
+      })
   }
 
 

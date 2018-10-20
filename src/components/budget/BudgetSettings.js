@@ -2,17 +2,17 @@ import React from 'react'
 import { moment } from '../../datefunctions'
 import API from '../../adapters/API'
 
-const timeFrames = ['monthly basis', 'weekly basis', 'daily basis']
+const timeFrames = ['monthly', 'weekly', 'daily']
 
 class BudgetSettings extends React.Component {
     
         constructor(props) {
             super(props)
             const budgetCat = props.budget.categories
-            const timeframe = props.budget.timeFrame
+            const timeFrame = props.budget.timeFrame
                 this.state = {
-                    timeframe,
                     budgetCat,
+                    timeFrame,
                     runningTotal: 0
                 }
             }
@@ -24,13 +24,15 @@ class BudgetSettings extends React.Component {
         }
 
         handleDropdown = (event) => {
-            this.setState({ timeframe: event.target.value })
+            this.props.setTimeFrame( event.target.value )
+            this.setState({ timeFrame: event.target.value })
         }
 
         handleSubmit = (event) => {
             event.preventDefault()
             let budgetObj = JSON.parse(JSON.stringify(this.state))
             this.props.setCategoriesBudget(budgetObj)
+            this.props.calculateBudget(event.target.value)
             this.props.toggleViewSettings()
         }
     
@@ -50,17 +52,18 @@ class BudgetSettings extends React.Component {
 
         render () {
             const { budgetCat} = this.state
-            // Object.keys(this.state.budgetCat).map(l => console.log(budgetCat[l]))
+
             return (
                 <div>
                         <form>
-                            <p>Set your target spend for each category on a...</p>
+                            <p>Set your target spend for each category ...</p>
                             <br></br>
                             <div>
                             <select name='timeframe' onChange={this.handleDropdown}>
                                 {
                                     timeFrames.map(timeframe => <option value={timeframe} key={timeframe}>{timeframe}</option>)
                                 }
+                                <p>basis...</p>
                             </select>
                             </div>
                             <div>

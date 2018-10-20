@@ -177,7 +177,7 @@ class Graphview extends React.Component {
                     endKeyDate = moment(date).hour(23).minute(59).second(59)
                 }
             allTransactions.forEach(transaction => {
-                const transDate = moment(transaction.settled)
+                const transDate = moment(transaction.created)
                     if (transDate.isBetween(startKeyDate, endKeyDate) ) {
 
                         if (obj[date][transaction.category]) {

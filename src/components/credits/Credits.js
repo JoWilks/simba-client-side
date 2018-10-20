@@ -64,9 +64,9 @@ class Credits extends React.Component {
            let credits = JSON.parse(JSON.stringify(this.props.transactions.credits)).reverse()
            let filtered
            if (category === 'everything') {
-                filtered =  credits.filter(credit => moment(credit.settled).isBetween( startDate, endDate ) )
+                filtered =  credits.filter(credit => moment(credit.created).isBetween( startDate, endDate ) )
            } else {
-                filtered = credits.filter(credit => credit.category === category && moment(credit.settled).isBetween( startDate, endDate ) )
+                filtered = credits.filter(credit => credit.category === category && moment(credit.created).isBetween( startDate, endDate ) )
            }
            this.setState({ credits: filtered })
         }

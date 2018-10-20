@@ -64,9 +64,9 @@ class Debits extends React.Component {
        let filtered
        
        if (category === 'everything') {
-            filtered =  debits.filter(debit => moment(debit.settled).isBetween( startDate, endDate ))
+            filtered =  debits.filter(debit => moment(debit.created).isBetween( startDate, endDate ))
        } else {
-            filtered = debits.filter(debit => debit.category === category && moment(debit.settled).isBetween( startDate, endDate ) )
+            filtered = debits.filter(debit => debit.category === category && moment(debit.created).isBetween( startDate, endDate ) )
        }
        this.setState({ debits: filtered })
     }
