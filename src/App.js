@@ -78,11 +78,16 @@ class App extends Component {
     if (tempVar[tempVar.length-1] === 'randomstring') {
       localStorage.setItem('auth_token', tempVar[1])
       console.log(localStorage)
-      API.exchange()
-      .then(data => {console.log(data) 
-        localStorage.setItem('monzo_token', data["access_token"])})
+        API.exchange()
+        .then(data => {
+          console.log(data)
+          if (data["error"]) {
+            console.log(data["error"])
+          } else if (data["access_token"]) {
+            localStorage.setItem( 'monzo_token', data["access_token"] )}
+          })
     } else {
-      console.log("Error with getting code from Monzo for authentication")
+      console.log("Error with getting authorization token from Monzo")
     }
   }
 
