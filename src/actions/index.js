@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, REGISTER, STORE_ALL_TRANSACTIONS, STORE_ACCOUNTS, STORE_LAST_TWO_MONTHS, STORE_CREDITS, STORE_DEBITS, STORE_POTS, DEBIT_CATEGORIES, CREDIT_CATEGORIES, GET_BUDGET_CATEGORIES, SET_BUDGET_CATEGORIES } from './types'
+import { LOGIN, LOGOUT, REGISTER, STORE_ALL_TRANSACTIONS, STORE_ACCOUNTS, STORE_LAST_TWO_MONTHS, STORE_CREDITS, STORE_DEBITS, STORE_POTS, DEBIT_CATEGORIES, CREDIT_CATEGORIES, GET_BUDGET_CATEGORIES, SET_BUDGET_CATEGORIES, STORE_CURRENT_SPENDING } from './types'
 import { moment, today, startDayOfWeek, startDayOfMonth, startDayOfTwoMonthsAgo } from '../datefunctions'
 import API from '../adapters/API'
 // import { Stream } from 'stream';
@@ -24,6 +24,10 @@ export function get_debit_categories () {
 
 export function get_credit_categories () {
     return {type: CREDIT_CATEGORIES}
+}
+
+export function store_current_spending (current_spending) {
+    return {type: STORE_CURRENT_SPENDING, payload: current_spending }
 }
 
 //TRANSACTION ACTIONS

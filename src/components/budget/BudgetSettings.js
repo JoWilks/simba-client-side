@@ -32,7 +32,7 @@ class BudgetSettings extends React.Component {
             event.preventDefault()
             let budgetObj = JSON.parse(JSON.stringify(this.state))
             this.props.setCategoriesBudget(budgetObj)
-            this.props.calculateBudget(event.target.value)
+            this.props.calculateBudget()
             this.props.toggleViewSettings()
         }
     

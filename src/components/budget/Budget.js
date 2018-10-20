@@ -2,6 +2,8 @@ import React from 'react'
 import BudgetSettings from './BudgetSettings'
 import { LineMeter, HalfCircleMeter } from 'react-svg-meters'
 import { moment } from '../../datefunctions'
+import { connect } from 'react-redux'
+import * as actions from '../../actions'
 import './Budget.css' 
 
 class Budget extends React.Component {
@@ -66,7 +68,6 @@ class Budget extends React.Component {
                 totalSpent += transaction.amount
                 if (sortedCatOfDebits[transaction.category]) {
                     sortedCatOfDebits[transaction.category] +=  transaction.amount
-                    
                 } else {
                     sortedCatOfDebits[transaction.category] = transaction.amount
                 }
@@ -83,15 +84,14 @@ class Budget extends React.Component {
                     obj[key]['spent'] = sortedCatOfDebits[key] ? sortedCatOfDebits[key] / 100 : 0
                     finalArray.push(obj)
                 })
-                console.log(finalArray)
-                console.log(totalSpent)
-            this.setState({ targetsSpent: finalArray, totalSpent, totalBudget })
+            let budget = this.props.store_current_spending(finalArray)
+            debugger
+            this.setState({ targetsSpent: budget.payload, totalSpent, totalBudget })
     }
-
-
 
     render () {
         const { totalSpent, totalBudget, timeFrame } = this.state
+        console.log(this.props.budget.targetsSpent)
         return (
             <div>
                     <h1>Budget View</h1>
@@ -122,7 +122,6 @@ class Budget extends React.Component {
                                                     }
                                                     </p>
                                                 </div>
-                                            
                                         )
                                     }
                                 </div>
@@ -132,8 +131,14 @@ class Budget extends React.Component {
         )
     }
     
-    
 }
 
+const mapStateToProps = state => ({
+    currentUser: state.userReducer,
+    transactions: state.transactionsReducer,
+    accounts: state.accountsReducer,
+    categories: state.categoriesReducer,
+    budget: state.budgetCategoriesReducer
+})
 
-export default Budget
+export default connect(mapStateToProps, actions)(Budget)

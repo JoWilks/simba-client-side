@@ -1,4 +1,4 @@
-import { GET_BUDGET_CATEGORIES, SET_BUDGET_CATEGORIES } from '../actions/types'
+import { GET_BUDGET_CATEGORIES, SET_BUDGET_CATEGORIES, STORE_CURRENT_SPENDING } from '../actions/types'
 import { stat } from 'fs';
 
 const initialState = {
@@ -16,7 +16,8 @@ const initialState = {
         family: 0,
         general: 0,
         holidays: 0
-        }
+        },
+    targetsSpent: []
     }
 
 const budgetCategoriesReducer= (state = initialState, action) => {
@@ -37,6 +38,9 @@ const budgetCategoriesReducer= (state = initialState, action) => {
             })
             state['timeFrame'] = action.payload.budgetCat[0].budget_timeframe
             state.categories = result
+            return state
+        case STORE_CURRENT_SPENDING:
+            state.targetsSpent = action.payload
             return state
         default:
         return state
