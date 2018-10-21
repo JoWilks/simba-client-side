@@ -34,7 +34,13 @@ class App extends Component {
             this.props.getCategoriesBudget()
             this.props.history.push('/dashboard')
           } else {
-            console.log(data["error"])
+            console.log(data["need to refresh access token"])
+            API.refresh()
+            .then(data => {
+              console.log(data)
+
+              localStorage.setItem('monzo_token', data.access_token)
+            })
           }
         })
     } else {

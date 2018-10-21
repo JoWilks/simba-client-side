@@ -18,6 +18,8 @@ class Budget extends React.Component {
                 totalBudget: 0,
                 timeFrame: timeFrame //will need to pull this from redux
             }
+            this.calculateBudget = this.calculateBudget.bind(this);
+            this.setTimeFrame = this.setTimeFrame.bind(this);
         }
 
     componentDidMount () {
@@ -85,13 +87,11 @@ class Budget extends React.Component {
                     finalArray.push(obj)
                 })
             let budget = this.props.store_current_spending(finalArray)
-            debugger
             this.setState({ targetsSpent: budget.payload, totalSpent, totalBudget })
     }
 
     render () {
         const { totalSpent, totalBudget, timeFrame } = this.state
-        console.log(this.props.budget.targetsSpent)
         return (
             <div>
                     <h1>Budget View</h1>
