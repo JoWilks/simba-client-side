@@ -1,5 +1,25 @@
 import React from 'react'
 import API from '../../adapters/API'
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Input from '@material-ui/core/Input';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    maxWidth: 600,
+    padding: theme.spacing.unit * 2,
+  },
+  button: {
+    margin: theme.spacing.unit,
+    textAlign: 'center',
+  },
+  input: {
+    display: 'none',
+  },
+});
 
 class Register extends React.Component {
     state = {
@@ -39,44 +59,33 @@ class Register extends React.Component {
     render () {
       const { username, password } = this.state
       const { handleChange, handleSubmit } = this
+      const { classes } = this.props;
 
       return (
-        <div className='login container'>
+        <Grid
+          container
+          spacing={24}
+          direction="column"
+          alignContent="center"
+          alignItems="center"
+          justify="center"
+          style={{ minHeight: '50vh' }}
+        >
           <form>
-            <div className='field is-horizontal'>
-              <div className='field-label is-normal'>
-                <label className='label'>Username: </label>
-              </div>
-              <div className='field-body'>
-                <div className='field'>
-                  <div className='control'>
-                    <input className='input' type='text' name='username' onChange={handleChange} value={username} />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='field is-horizontal'>
-              <div className='field-label is-normal'>
-                <label className='label'>Password: </label>
-              </div>
-              <div className='field-body'>
-                <div className='field'>
-                  <div className='control'>
-                    <input className='input' type='password' name='password' onChange={handleChange} value={password} />
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div className='field is-horizontal'>
-              <div className='field-label is-normal'>
-                <button className='button label is-primary' onClick={handleSubmit}>Register</button>
-              </div>
-            </div>
+                <label className='label'>Username: </label> <br />
+                <Input className='input' type='text' name='username' onChange={handleChange} value={username} /> <br />
+                <label className='label'>Password: </label> <br />
+                <Input className='input' type='password' name='password' onChange={handleChange} value={password} /> <br />
           </form>
-        </div>
+          <Button onClick={this.handleSubmit} variant="contained" color="primary" className={classes.button}>REGISTER</Button>
+        </Grid>
       )
     }
 }
 
-export default Register
+Register.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+
+export default withStyles(styles)(Register)

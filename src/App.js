@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
+// import './App.css';
 
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as actions from './actions'
+
+import 'typeface-roboto'
 
 import API from './adapters/API'
 
@@ -123,7 +125,6 @@ class App extends Component {
           <NavBar currentUser={this.props.currentUser} login={this.login} logout={this.logout} />
         </header>
         <div className='body'>
-        <button onClick={this.reExchangeButton}>exchange</button>
         { this.props.currentUser
           ? <Route exact path='/dashboard' component={props => <Dashboard {...this.props} />} />
           : <Route exact path='/login' component={props => <Login loginAppPage={this.loginAppPage} {...this.props} />} />
