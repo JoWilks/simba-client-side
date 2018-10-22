@@ -6,7 +6,23 @@ import AddForm from '../templates/AddForm'
 import FilterForm from '../templates/FilterForm'
 import '../templates/Forms.css'
 
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
 import { moment } from '../../datefunctions'
+
+const styles = theme => ({
+    root: {
+      flexGrow: 1,
+    },
+    paper: {
+      padding: theme.spacing.unit * 2,
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+    },
+  });
 
 class Debits extends React.Component {
     constructor(props) {
@@ -72,8 +88,9 @@ class Debits extends React.Component {
     }
 
     render () {
+        const { classes } = this.props;
         return (
-            <div>
+            <div className={classes.root} >
                 {
                     this.state.addFormView &&
                     <AddForm    categories={this.props.categories.debit} 
@@ -98,7 +115,7 @@ class Debits extends React.Component {
                                 filterInfo={this.state.filterInfo} />
                 }
 
-                <div>
+                <div >
                     <Toolbar 
                     toggleListView={this.toggleListView} 
                     listView={this.state.listView}
@@ -116,5 +133,9 @@ class Debits extends React.Component {
 
 }
 
+Debits.propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+  
 
-export default Debits
+export default withStyles(styles)(Debits)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import './App.css';
+import './App.css';
 
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -27,9 +27,13 @@ class App extends Component {
     const monzo_token = localStorage.getItem('monzo_token')
     if (monzo_token) {
       const { dispatch } = this.props
-      localStorage.getItem('last_two_months') 
-        ? dispatch( 'STORE_LAST_TWO_MONTHS', JSON.parse(localStorage.getItem('last_two_months')) ) 
-        : this.props.last_two_months()
+      if ( localStorage.getItem('last_two_months') ) {
+        dispatch( 'STORE_LAST_TWO_MONTHS', JSON.parse(localStorage.getItem('last_two_months')) )
+        dispatch('STORE_CREDITS')
+        dispatch('STORE_DEBITS')
+      } else {
+        this.props.last_two_months()
+      }
       localStorage.getItem('account_details') 
         ? dispatch( 'STORE_ACCOUNTS', JSON.parse(localStorage.getItem('account_details')) )
         : this.props.store_accounts_details()
@@ -39,7 +43,7 @@ class App extends Component {
       localStorage.getItem('budget_categories') 
         ? dispatch( 'GET_BUDGET_CATEGORIES',  JSON.parse(localStorage.getItem('budget_categories')) )
         : this.props.getCategoriesBudget()
-      history.push('/dashboard')
+      history.push('/expenses')
     } else {
       history.push('/monzo')
     }
@@ -92,20 +96,7 @@ class App extends Component {
     }
   }
 
-  //will be made redundant as will do server-side
-  checkAccessTokenStatus = () => {
-    API.check_access_token()
-    .then( data => {
-      if (data["error"]) {
-        console.log(data["error"])
-        API.refresh()
-      } else {
-        console.log("Current token still good")
-        return true
-      }
-    })
-  }
-
+  //redundant? done server side?
   apiCalltoExchange = () => {
     API.exchange()
     .then(data => {

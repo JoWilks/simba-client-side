@@ -1,4 +1,9 @@
+.a {
+    text-decoration: none;
+}
 
+
+/* 
 .navbar {
     background-color: darkblue;
     position: fixed;
@@ -84,4 +89,4 @@
     padding: 10px;
     padding-right: 45%;
     float: right;
-  }
+  } */
