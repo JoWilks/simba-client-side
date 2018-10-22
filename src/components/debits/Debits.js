@@ -120,7 +120,8 @@ class Debits extends React.Component {
               ? <Listview transactions={this.state.debits} />
               : <Graphview transactions={this.state.debits}
                 allTransactions={this.props.transactions.debits}
-                filterInfo={this.state.filterInfo} />
+                filterInfo={this.state.filterInfo}
+                currentView={this.props.views.currentView} />
           }
 
           <div >
