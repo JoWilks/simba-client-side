@@ -36,17 +36,22 @@ componentDidMount () {
 handleSubmit = (event) => {
   event.preventDefault()
   const { username, password } = this.state
-  const { loginAppPage } = this.props
 
   API.login(username, password)
     .then(data => {
-      if (data.message) {
+      if (data.error) {
         console.log(data)
-        alert(data.message)
+        alert(data.error)
       } else {
-        localStorage.setItem('token', data.jwt)  
-        localStorage.setItem('monzo_token', data.access_token) //will add once have this set in server
-        loginAppPage(data.user.username)
+        if (data.access_token) {
+          localStorage.setItem('user_token', data.jwt)  
+          localStorage.setItem('monzo_token', data.access_token)
+          this.props.loginRedirect(data.user.username)
+
+        } else {
+          localStorage.setItem('user_token', data.jwt)
+          this.props.loginRedirect(data.user.username)  
+        }
       }
     })
 }
@@ -77,7 +82,7 @@ render () {
             <label className='label'>Password: </label> <br />
             <Input className="input" type='password' name='password' onChange={handleChange} value={password} /> <br />
       </form>
-      <Button onClick={this.handleSubmit} variant="contained" color="primary" className={classes.button}>LOGIN</Button>
+      <Button onClick={handleSubmit} variant="contained" color="primary" className={classes.button}>LOGIN</Button>
     </Grid>
   )
 }

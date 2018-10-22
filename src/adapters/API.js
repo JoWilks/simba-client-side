@@ -20,11 +20,10 @@ class API {
   }
 
   static validate () {
-    const token = localStorage.getItem('token')
     return fetch(API.validateURL, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${user_token}`
       }
     }).then(resp => resp.json())
   }
@@ -43,12 +42,11 @@ class API {
   }
 
   static exchange () {
-    const token = localStorage.getItem('token')
     return fetch(API.baseURL + '/exchange', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${user_token}`
       },
       body: JSON.stringify({ 
               exchange: {
@@ -60,11 +58,10 @@ class API {
   }
 
   static refresh () {
-    const token = localStorage.getItem('token')
     return fetch(API.baseURL + '/refresh', {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${user_token}`
       }
     })
     .then(resp => resp.json())
@@ -76,7 +73,7 @@ class API {
     return fetch(API.budgetCatURL, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${localStorage.getItem('user_token')}`
       }
     })
     .then(resp => resp.json())
@@ -87,7 +84,7 @@ class API {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${localStorage.getItem('user_token')}`
       },
       body: JSON.stringify({ budgetObj })
     })
@@ -164,6 +161,7 @@ API.readBalanceURL = API.monzoBaseURL + '/balance'
 API.listPotsURL = API.monzoBaseURL + '/pots'
 API.getAllTransactionsURL = API.monzoBaseURL + '/transactions'
 
+const user_token = localStorage.getItem('user_token')
 const monzo_token = localStorage.getItem('monzo_token')
 const account_id = 'acc_00009YD5n3MghHFkmJCPib'
 

@@ -21,46 +21,30 @@ import Net from './components/net/Net'
 
 class App extends Component {
 
-  loginAppPage = username => {
+  loginRedirect= (username) => {
     this.props.login(username)
-    if ( localStorage.getItem('auth_token') && !localStorage.getItem('monzo_token') ) {
-      this.apiCalltoExchange()
-    } else if (localStorage.getItem('monzo_token')) {
-      //check if current Monzo_token expired
-        API.check_access_token()
-        .then( data => {
-          console.log(data)
-          if (data.authenticated) {
-            console.log("token still good")
-            this.props.last_two_months()
-            this.props.getCategoriesBudget()
-            this.props.history.push('/dashboard')
-          } else {
-            console.log(data["need to refresh access token"])
-            API.refresh()
-            .then(data => {
-              console.log(data)
-
-              localStorage.setItem('monzo_token', data.access_token)
-            })
-          }
-        })
+    if (localStorage.getItem('monzo_token')) {
+      localStorage.getItem('last_two_months') ?  : this.props.last_two_months()
+      localStorage.getItem('account_details') ? : this.props.store_accounts_details()
+      localStorage.getItem('pot_details') ? : this.props.store_pots_details()
+      localStorage.getItem('budget_categories') ? : this.props.getCategoriesBudget()
+      this.props.history.push('/dashboard')
     } else {
-        this.props.history.push('/monzo')
+      this.props.history.push('/monzo')
     }
-  }
 
+  }
+  
   logout = () => {
     this.props.logout()
     this.props.history.push('/')
   }
 
   componentDidMount () {
-
-    //check whether app user still logged in
+    //check whether users's jwt token still in localstorage & valid if so logins in that user if not sends user to login page
     this.checkForUser()
-    //check for response from Monzo auth redirect
-    if (!localStorage.getItem('auth_token')) {
+    //check's if auth token and monzo token not exists, so then can check for response from Monzo auth redirect
+    if (!localStorage.getItem('auth_token') && !localStorage.getItem('monzo_token') && !window.location.search === "") {
       this.checkMonzoRedirect()
     }
 
@@ -72,16 +56,20 @@ class App extends Component {
       API.validate()
         .then(data => {
           if (data.username) {
-            this.loginAppPage(data.username)
+            this.login(data.username)
           } else {
+            console.log(data.error)
             this.props.history.push('/login')
           }
         })
+    } else {
+      this.props.history.push('/login')
     }
 
   }
 
   checkMonzoRedirect = () => {
+    //gets the code off the end of the url, stores in localstorage, and sends to backend to exchange for monzo_token (access_token)
     let tempVar = window.location.search.split(/=|&/)
     if (tempVar[tempVar.length-1] === 'randomstring') {
       localStorage.setItem('auth_token', tempVar[1])
@@ -93,6 +81,7 @@ class App extends Component {
     }
   }
 
+  //will be made redundant as will do server-side
   checkAccessTokenStatus = () => {
     API.check_access_token()
     .then( data => {
@@ -127,7 +116,7 @@ class App extends Component {
         <div className='body'>
         { this.props.currentUser
           ? <Route exact path='/dashboard' component={props => <Dashboard {...this.props} />} />
-          : <Route exact path='/login' component={props => <Login loginAppPage={this.loginAppPage} {...this.props} />} />
+          : <Route exact path='/login' component={props => <Login loginRedirect={this.loginRedirect} {...this.props} />} />
         }
         <Route exact path='/register' component={props => <Register login={this.login} {...this.props} />} />
         <Route exact path='/monzo' component={props => <MonzoSync {...props} />} />

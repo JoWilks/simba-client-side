@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import './NavBar.css'
 
 import 'typeface-roboto'
-import PropTypes from 'prop-types'
+import propTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -59,27 +59,27 @@ class NavBar extends React.Component {
     const title = "Dashboard" 
     let navbar
 
-    // if ( this.props.currentUser && localStorage.getItem('monzo_token') ) {
-    //     navbar = <React.Fragment>
-    //               <MenuItem onClick={this.handleClose}><Link to='/dashboard'>Dashboard</Link></MenuItem>
-    //               <MenuItem onClick={this.handleClose}><Link to='/expenses'>Expenses</Link></MenuItem>
-    //               <MenuItem onClick={this.handleClose}><Link to='/budget'>Budget</Link></MenuItem>
-    //               <MenuItem onClick={this.handleClose}><Link to='/income'>Income</Link></MenuItem>
-    //               <MenuItem onClick={this.handleClose}><Link to='/net'>Net</Link></MenuItem>
-    //               <MenuItem onClick={this.handleClose}><Link to='/monzo'>Sync Monzo</Link></MenuItem>
-    //               <MenuItem onClick={this.logout}>Logout</MenuItem>
-    //             </React.Fragment>
-    // } else if (this.props.currentUser && !localStorage.getItem('monzo_token')) {
-    //   navbar =  <React.Fragment>
-    //                 <MenuItem onClick={this.handleClose}><Link to='/monzo'>Sync Monzo</Link></MenuItem>
-    //                 <MenuItem onClick={this.logout}>Logout</MenuItem>
-    //             </React.Fragment>
-    // } else {
-    //   navbar =  <React.Fragment>
-    //               <MenuItem onClick={this.handleClose}><Link to='/login'>Login</Link></MenuItem>
-    //               <MenuItem onClick={this.handleClose}><Link to='/register'>Register</Link></MenuItem>
-    //             </React.Fragment>
-    // }
+    if ( this.props.currentUser && localStorage.getItem('monzo_token') ) {
+        navbar = <React.Fragment>
+                  <MenuItem onClick={this.handleClose}><Link to='/dashboard'>Dashboard</Link></MenuItem>
+                  <MenuItem onClick={this.handleClose}><Link to='/expenses'>Expenses</Link></MenuItem>
+                  <MenuItem onClick={this.handleClose}><Link to='/budget'>Budget</Link></MenuItem>
+                  <MenuItem onClick={this.handleClose}><Link to='/income'>Income</Link></MenuItem>
+                  <MenuItem onClick={this.handleClose}><Link to='/net'>Net</Link></MenuItem>
+                  <MenuItem onClick={this.handleClose}><Link to='/monzo'>Sync Monzo</Link></MenuItem>
+                  <MenuItem onClick={this.logout}>Logout</MenuItem>
+                </React.Fragment>
+    } else if (this.props.currentUser && !localStorage.getItem('monzo_token')) {
+      navbar =  <React.Fragment>
+                    <MenuItem onClick={this.handleClose}><Link to='/monzo'>Sync Monzo</Link></MenuItem>
+                    <MenuItem onClick={this.logout}>Logout</MenuItem>
+                </React.Fragment>
+    } else {
+      navbar =  <React.Fragment>
+                  <MenuItem onClick={this.handleClose}><Link to='/login'>Login</Link></MenuItem>
+                  <MenuItem onClick={this.handleClose}><Link to='/register'>Register</Link></MenuItem>
+                </React.Fragment>
+    }
     
     return (
           <div className={classes.root}>
@@ -109,19 +109,7 @@ class NavBar extends React.Component {
                       onClose={this.handleClose}
                   >
                   {
-                    this.props.currentUser ? <div>
-                    <MenuItem onClick={this.handleClose}><Link to='/dashboard'>Dashboard</Link></MenuItem>
-                    <MenuItem onClick={this.handleClose}><Link to='/expenses'>Expenses</Link></MenuItem>
-                    <MenuItem onClick={this.handleClose}><Link to='/budget'>Budget</Link></MenuItem>
-                    <MenuItem onClick={this.handleClose}><Link to='/income'>Income</Link></MenuItem>
-                    <MenuItem onClick={this.handleClose}><Link to='/net'>Net</Link></MenuItem>
-                    <MenuItem onClick={this.handleClose}><Link to='/monzo'>Sync Monzo</Link></MenuItem>
-                    <MenuItem onClick={this.logout}>Logout</MenuItem> 
-                    </div>
-                    : <div>
-                      <MenuItem onClick={this.handleClose}><Link to='/login'>Login</Link></MenuItem>
-                      <MenuItem onClick={this.handleClose}><Link to='/register'>Register</Link></MenuItem>
-                      </div>
+                    navbar
                   }
                 </Menu>
                   <Typography variant="h6" color="inherit" className={classes.grow}>
@@ -135,8 +123,8 @@ class NavBar extends React.Component {
   }
 }
 
-NavBar.PropTypes = {
-  classes: PropTypes.object.isRequired
+NavBar.propTypes = {
+  classes: propTypes.object.isRequired
 }
 
 export default withStyles(styles)(NavBar)
