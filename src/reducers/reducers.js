@@ -5,6 +5,7 @@ import budgetCategoriesReducer from './budgetCategories'
 import accountsReducer from './account'
 import userReducer from './user'
 import dateReducer from './date'
+import viewsReducer from './views'
 
 
 const rootReducer = combineReducers({
@@ -13,7 +14,9 @@ const rootReducer = combineReducers({
     accountsReducer: accountsReducer,
     dateReducer: dateReducer,
     categoriesReducer: categoriesReducer,
-    budgetCategoriesReducer: budgetCategoriesReducer
+    budgetCategoriesReducer: budgetCategoriesReducer,
+    viewsReducer: viewsReducer
+
 })
 
 export default rootReducer

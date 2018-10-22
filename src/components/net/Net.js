@@ -106,7 +106,7 @@ class Net extends React.Component {
                 NET VIEW
                 {
                     this.state.filterFormView &&
-                    <FilterForm categories={this.props.categories.debit}
+                    <FilterForm 
                                 toggleFilterForm={this.toggleFilterForm}
                                 setFilterType={this.setFilterType}
                                 filterTransactions={this.filterTransactions} />

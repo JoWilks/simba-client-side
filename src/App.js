@@ -43,7 +43,7 @@ class App extends Component {
       localStorage.getItem('budget_categories') 
         ? dispatch( 'GET_BUDGET_CATEGORIES',  JSON.parse(localStorage.getItem('budget_categories')) )
         : this.props.getCategoriesBudget()
-      history.push('/expenses')
+      history.push('/dashboard')
     } else {
       history.push('/monzo')
     }
@@ -62,7 +62,6 @@ class App extends Component {
     if (!localStorage.getItem('auth_token') && !localStorage.getItem('monzo_token') && !window.location.search === "") {
       this.checkMonzoRedirect()
     }
-
   }
 
   checkForUser = () => {
@@ -113,7 +112,12 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <NavBar currentUser={this.props.currentUser} login={this.login} logout={this.logout} />
+          <NavBar currentUser={this.props.currentUser} 
+          login={this.login} 
+          logout={this.logout}
+          view={this.props.views.currentView}
+          setView={this.props.set_view} 
+          />
         </header>
         <div className='body'>
         { this.props.currentUser
@@ -139,7 +143,8 @@ const mapStateToProps = state => ({
     transactions: state.transactionsReducer,
     accounts: state.accountsReducer,
     categories: state.categoriesReducer,
-    budget: state.budgetCategoriesReducer
+    budget: state.budgetCategoriesReducer,
+    views: state.viewsReducer
 })
 
 

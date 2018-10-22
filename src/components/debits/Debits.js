@@ -39,6 +39,9 @@ class Debits extends React.Component {
         }
     }
 
+    componentDidMount () {
+    }
+
     toggleListView = () => {
         this.setState({ listView: !this.state.listView })
     }

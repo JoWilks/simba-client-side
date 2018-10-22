@@ -30,7 +30,6 @@ class Login extends React.Component {
   }
 
 componentDidMount () {
-
 }
 
 handleSubmit = (event) => {

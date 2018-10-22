@@ -23,6 +23,9 @@ class Credits extends React.Component {
                 filterInfo: {filterType: 'since two months ago', startDate , endDate }
             }
         }
+
+        componentDidMount () {
+        }
     
         toggleListView = () => {
             this.setState({ listView: !this.state.listView })
@@ -82,7 +85,7 @@ class Credits extends React.Component {
     
                     {
                         this.state.filterFormView &&
-                        <FilterForm categories={this.props.categories.credit}
+                        <FilterForm categories={this.props.categories.debit}
                                     toggleFilterForm={this.toggleFilterForm}
                                     setFilterType={this.setFilterType}
                                     filterTransactions={this.filterTransactions}/>

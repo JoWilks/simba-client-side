@@ -10,7 +10,6 @@ class Graphview extends React.Component {
         super(props)
         this.state = {
             barGraphView: false,
-            isExpense: true,
             donutGraphData: [],
             barGraphData: [],
             lineGraphData: []
@@ -18,7 +17,6 @@ class Graphview extends React.Component {
     }
 
     componentDidMount () {
-        this.checkIsExpense()
         if (this.props.filterInfo.category === 'everything') {
             this.setState({ barGraphView: true })
             this.parseBarData()
@@ -110,7 +108,6 @@ class Graphview extends React.Component {
                     })
                     newArray.push(barGraphData[key])
                 });
-
                     this.setState({ barGraphData: newArray })
                 break; 
             case 'this month':
@@ -261,16 +258,10 @@ class Graphview extends React.Component {
         return [ { id: category, data: arrayData } ]
     }
 
-    checkIsExpense = () => {
-        //check whether expense or income
-        const isExpense = this.props.transactions[0].amount < 0 ? true : false
-        this.setState({ isExpense: isExpense })
-    }
-
     render () {
         return (
             <div>
-                <h1>Expenses {this.props.filterInfo.filterType}</h1>
+                <h1>{null} {this.props.filterInfo.filterType}</h1>
                 {   
                     this.props.filterInfo.category === 'everything' &&
                     <DonutGraph donutGraphData={this.state.donutGraphData}/>
@@ -288,7 +279,8 @@ class Graphview extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    categories: state.categoriesReducer
+    categories: state.categoriesReducer,
+    views: state.viewsReducer
 })
 
 export default connect(mapStateToProps, null)(Graphview)

@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import './Forms.css'
 import { moment } from '../../datefunctions'
 
@@ -6,13 +7,13 @@ import { moment } from '../../datefunctions'
 const timeFrames = ['since two months ago', 'today', 'this week', 'this month', 'between']
 
 class FilterForm extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             category: 'everything',
             timeFrame: 'since two months ago',
             startDate: '',
-            endDate:''
+            endDate:'',
         }
     }
 
@@ -63,20 +64,46 @@ class FilterForm extends React.Component {
     }
 
     render () {
+        let descriptionFilter
+
+        switch(this.props.views.currentView) {
+            case 'Expenses':
+                 descriptionFilter = "What have I spent on..."
+                 break;
+            case 'Income':
+                 descriptionFilter = "What have I earnt in..."
+                 break;
+            case 'Net':
+                 descriptionFilter = "Filter Net by"
+                 break;
+            default:
+                 descriptionFilter = "Filter"
+                 break;
+        }
+
+        let categoryFilter = this.props.categories ? 
+                (
+                <select name='category' onChange={this.handleChange}>
+                <option value='everything'>everything</option>
+                        {
+                            this.props.categories.map(category => 
+                        <option value={category} key={category}>{category}</option>
+                        )}
+                </select>)
+            : null
+
+        
+
+
+
         return (
             <div id='wrapper'>
                 <form id='form' onSubmit={(event) => this.handleSubmit(event)}>
                     <div className='close-form' onClick={this.props.toggleFilterForm}>X</div><br />
 
                     <div>
-                    <p>What have I {this.props.isExpense ? "spent on...": "earnt from..."}</p> <br/>
-                    
-                    <select name='category' onChange={this.handleChange}>
-                    <option value='everything'>everything</option>
-                        {this.props.categories.map(category => 
-                            <option value={category} key={category}>{category}</option>
-                        )}  
-                    </select> <br/>
+                    <p>{descriptionFilter}</p> <br/>
+                        {categoryFilter} <br />
                     <select name='timeFrame' onChange={this.handleChange}>
                         {timeFrames.map(timeFrame => 
                             <option value={timeFrame} key={timeFrame}>{timeFrame}</option>
@@ -100,4 +127,8 @@ class FilterForm extends React.Component {
 
 }
 
-export default FilterForm
+const mapStateToProps = state => ({
+    views: state.viewsReducer
+})
+
+export default connect(mapStateToProps, null)(FilterForm)

@@ -12,6 +12,7 @@ const styles = theme => ({
         maxWidth: 600,
         padding: theme.spacing.unit * 2,
         textAlign: 'center',
+        alignItems: 'center',
       },
     paper: {
       padding: theme.spacing.unit * 2,
@@ -30,7 +31,7 @@ class Transactionview extends React.Component {
         const { transaction, classes } = this.props
         return (
             <Paper className={classes.root}> 
-                <Grid container spacing={32} key={transaction.id}> 
+                <Grid container spacing={0} key={transaction.id}> 
                     <Grid item xs={3} container direction="column">{transaction.category}</Grid>
 
                     <Grid item xs={6}  container direction="column">
@@ -39,9 +40,11 @@ class Transactionview extends React.Component {
                     
                     <Grid item xs={3}  container direction="column" >{`£${transaction.amount < 0 ? transaction.amount/-100: transaction.amount/100}`}</Grid>
                     
-                    <Grid item> 
-                        <Grid item container direction="row">
+                    <Grid item xs={12}> 
+                        <Grid item xs={12} container direction="row">
                         <h4>{transaction.counterparty.name ? transaction.counterparty.name : transaction.description}</h4>
+                        </Grid>
+                        <Grid item xs={12}container direction="row">
                         <p>{transaction.notes}</p>
                         </Grid>
                     </Grid>

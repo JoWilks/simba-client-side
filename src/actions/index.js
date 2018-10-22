@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, REGISTER, STORE_ALL_TRANSACTIONS, STORE_ACCOUNTS, STORE_LAST_TWO_MONTHS, STORE_CREDITS, STORE_DEBITS, STORE_POTS, DEBIT_CATEGORIES, CREDIT_CATEGORIES, GET_BUDGET_CATEGORIES, SET_BUDGET_CATEGORIES, STORE_CURRENT_SPENDING } from './types'
+import { LOGIN, LOGOUT, REGISTER, STORE_ALL_TRANSACTIONS, STORE_ACCOUNTS, STORE_LAST_TWO_MONTHS, STORE_CREDITS, STORE_DEBITS, STORE_POTS, DEBIT_CATEGORIES, CREDIT_CATEGORIES, GET_BUDGET_CATEGORIES, SET_BUDGET_CATEGORIES, STORE_CURRENT_SPENDING, SET_VIEW } from './types'
 import { moment, today, startDayOfWeek, startDayOfMonth, startDayOfTwoMonthsAgo } from '../datefunctions'
 import API from '../adapters/API'
 // import { Stream } from 'stream';
@@ -6,6 +6,11 @@ import API from '../adapters/API'
 //DYNAMIC DISPATCH
 export function dispatch (type, payload) {
     return {type, payload}
+}
+
+//VIEWS ACTIONS
+export function set_view (stringNameView) {
+    return {type: SET_VIEW, payload: stringNameView}
 }
 
 //USER ACTIONS

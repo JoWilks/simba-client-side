@@ -26,6 +26,7 @@ const styles = {
   }
 };
 
+// menuItemArr= [""]
 
 class NavBar extends React.Component {
 
@@ -45,8 +46,13 @@ class NavBar extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  handleLink = (viewName) => {
+    this.handleClose()
+    this.props.setView(viewName)
+  }
+
   logout = () => {
-    this.setState({ anchorEl: null });
+    this.handleClose()
     this.props.logout()
   }
 
@@ -128,35 +134,34 @@ class NavBar extends React.Component {
                   >
 
                     <Link style={{ color: 'black', textDecoration: 'none' }} to='/dashboard' >
-                      <MenuItem onClick={this.handleClose}>Dashboard</MenuItem>
+                      <MenuItem onClick={() => this.handleLink("Dashboard")}>Dashboard</MenuItem>
                     </Link>
 
                     <Link style={{ color: 'black', textDecoration: 'none' }} to='/budget'>
-                      <MenuItem onClick={this.handleClose}>Budget</MenuItem>
+                      <MenuItem onClick={() => this.handleLink("Budget")}>Budget</MenuItem>
                     </Link>
 
                     <Link style={{ color: 'black', textDecoration: 'none' }} to='/expenses'>
-                      <MenuItem onClick={this.handleClose}>Expenses</MenuItem>
+                      <MenuItem onClick={() => this.handleLink("Expenses")}>Expenses</MenuItem>
                     </Link>
 
                     <Link style={{ color: 'black', textDecoration: 'none' }} to='/income'>
-                      <MenuItem onClick={this.handleClose}>Income</MenuItem>
+                      <MenuItem onClick={() => this.handleLink("Income")}>Income</MenuItem>
                     </Link>
 
                     <Link style={{ color: 'black', textDecoration: 'none' }} to='/net'>
-                      <MenuItem onClick={this.handleClose}>Net</MenuItem>
+                      <MenuItem onClick={() => this.handleLink("Net")}>Net</MenuItem>
                     </Link>
 
                     <Link style={{ color: 'black', textDecoration: 'none' }} to='/monzo'>
-                      <MenuItem onClick={this.handleClose}>Sync Monzo</MenuItem>
+                      <MenuItem onClick={() => this.handleLink("Sync Monzo")}>Sync Monzo</MenuItem>
                     </Link>
                     
                     <MenuItem onClick={this.logout}>Logout</MenuItem>
 
                 </Menu>
                   <Typography variant="h6" color="inherit" className={classes.grow}>
-                    {"Title"} 
-                    {/* this will be dynamically rendered from redux */}
+                    {this.props.view}
                   </Typography>
               </Toolbar>
             </AppBar>

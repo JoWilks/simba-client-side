@@ -13,6 +13,7 @@ class Dashboard extends React.Component {
 
     componentDidMount () {
         const { accountName } = this.state
+        //may not need
         if (accountName === '') {
             API.get_list_accounts()
             .then(data => this.setState({ accountName: data['accounts'][0].description }))
@@ -23,7 +24,6 @@ class Dashboard extends React.Component {
             API.list_pots()
             .then(data => this.setState({ pots: data['pots'] }))
         }
-        
     }
 
     render () {

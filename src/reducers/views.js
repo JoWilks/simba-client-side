@@ -1,14 +1,16 @@
-// import { DEBIT_LIST_VIEW, } from '../actions/types'
+import { SET_VIEW } from '../actions/types'
 
-// //DEBIT_LIST_VIEW = true to show list view, if false will show graph view
-// //DEBIT_ADD_FORM = true to show add debit form
-// //DEBIT_FILTER_FORM = true to show filter debit form
+// SET_VIEW takes a string and setst he current view to the name of the current page it's on
 
-// const userReducer= (state = null, action) => {
-//     switch (action.type) {
-//         default:
-//         return state
-//     }
-// }
+const viewsReducer= (state = { currentView: 'Dashboard'}, action) => {
+    switch (action.type) {
+        case 'SET_VIEW':
+            let currState = JSON.parse(JSON.stringify(state))
+            currState.currentView = action.payload
+            return state = currState
+        default:
+        return state
+    }
+}
 
-// export default userReducer
+export default viewsReducer

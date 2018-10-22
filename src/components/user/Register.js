@@ -27,6 +27,9 @@ class Register extends React.Component {
       password: ''
     }
 
+    componentDidMount () {
+    }
+
     handleSubmit = () => {
       const { username, password } = this.state
       const { login } = this.props
