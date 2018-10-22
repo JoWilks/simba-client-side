@@ -3,6 +3,10 @@ import { moment, today, startDayOfWeek, startDayOfMonth, startDayOfTwoMonthsAgo 
 import API from '../adapters/API'
 // import { Stream } from 'stream';
 
+//DYNAMIC DISPATCH
+export function dispatch (type, payload) {
+    return {type, payload}
+}
 
 //USER ACTIONS
 export function login (username) {
@@ -46,7 +50,7 @@ export function last_two_months () {
         .then(data => { 
             console.log(data)
             dispatch({ type: STORE_LAST_TWO_MONTHS, payload: data})
-            localStorage.setItem('last_two_months', data)
+            localStorage.setItem('last_two_months', JSON.stringify(data) )
          } )
         .then(() => {
             dispatch({ type: STORE_CREDITS })
@@ -61,7 +65,7 @@ export function store_accounts_details () {
         API.get_list_accounts()
         .then(data => { console.log(data)
             dispatch({ type: STORE_ACCOUNTS, payload: data})
-            localStorage.setItem('account_details', data)
+            localStorage.setItem('account_details', JSON.stringify(data) )
          })
     }
 }
@@ -71,7 +75,7 @@ export function store_pots_details () {
         API.list_pots()
         .then(data => { console.log(data)
             dispatch({ type: STORE_POTS, payload: data})
-            localStorage.setItem('pot_details', data)
+            localStorage.setItem('pot_details', JSON.stringify(data) )
          })
     }
 }
@@ -83,7 +87,7 @@ export function getCategoriesBudget () {
         API.get_categories_budgets()
         .then(data => { console.log(data)
             dispatch({ type: GET_BUDGET_CATEGORIES, payload: data })
-            localStorage.setItem('budget_categories', data)
+            localStorage.setItem('budget_categories', JSON.stringify(data) )
         })
     }
 }

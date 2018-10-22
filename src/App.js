@@ -23,14 +23,25 @@ class App extends Component {
 
   loginRedirect= (username) => {
     this.props.login(username)
-    if (localStorage.getItem('monzo_token')) {
-      localStorage.getItem('last_two_months') ?  : this.props.last_two_months()
-      localStorage.getItem('account_details') ? : this.props.store_accounts_details()
-      localStorage.getItem('pot_details') ? : this.props.store_pots_details()
-      localStorage.getItem('budget_categories') ? : this.props.getCategoriesBudget()
-      this.props.history.push('/dashboard')
+    const { history } = this.props
+    const monzo_token = localStorage.getItem('monzo_token')
+    if (monzo_token) {
+      const { dispatch } = this.props
+      localStorage.getItem('last_two_months') 
+        ? dispatch( 'STORE_LAST_TWO_MONTHS', JSON.parse(localStorage.getItem('last_two_months')) ) 
+        : this.props.last_two_months()
+      localStorage.getItem('account_details') 
+        ? dispatch( 'STORE_ACCOUNTS', JSON.parse(localStorage.getItem('account_details')) )
+        : this.props.store_accounts_details()
+      localStorage.getItem('pot_details') 
+        ? dispatch( 'STORE_POTS', JSON.parse(localStorage.getItem('pot_details')) )
+        : this.props.store_pots_details()
+      localStorage.getItem('budget_categories') 
+        ? dispatch( 'GET_BUDGET_CATEGORIES',  JSON.parse(localStorage.getItem('budget_categories')) )
+        : this.props.getCategoriesBudget()
+      history.push('/dashboard')
     } else {
-      this.props.history.push('/monzo')
+      history.push('/monzo')
     }
 
   }
@@ -51,12 +62,12 @@ class App extends Component {
   }
 
   checkForUser = () => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('user_token')
     if ( token ) {
       API.validate()
         .then(data => {
           if (data.username) {
-            this.login(data.username)
+            this.loginRedirect(data.username)
           } else {
             console.log(data.error)
             this.props.history.push('/login')

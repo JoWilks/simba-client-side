@@ -14,7 +14,7 @@ class MonzoSync extends React.Component {
             <div>
                 <h1>Click to sync the app with your Monzo Account</h1>
                 <a href={link} >
-                    <img src='https://www.vectorlogo.zone/logos/monzo/monzo-card.png' alt='monzo_redirect' />
+                    <img src='https://www.vectorlogo.zone/logos/monzo/monzo-card.png' alt='monzo_redirect' width="300" />
                 </a>
             </div>
         )
