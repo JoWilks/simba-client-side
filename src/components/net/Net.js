@@ -65,7 +65,7 @@ class Net extends React.Component {
       arrayObjsDateSum.push(newObj)
     })
     // convert to £/$
-    arrayObjsDateSum.forEach(obj => obj.y /= 100)
+    arrayObjsDateSum.forEach(obj => { obj.y /= 100 })
 
     let lineGraphData = [{ id: 'net', data: arrayObjsDateSum }]
     this.setState({ netAll: arrayObjsDateSum, net: arrayObjsDateSum, lineGraphData })
