@@ -3,8 +3,35 @@ import { connect } from 'react-redux'
 import './Forms.css'
 import { moment } from '../../datefunctions'
 
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
+import Select from '@material-ui/core/Select'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import { compose } from '../../../../../Library/Caches/typescript/3.1/node_modules/redux'
+import { MenuItem } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+import FormControl from '@material-ui/core/FormControl'
+
 // const moment = require('moment');
 const timeFrames = ['since two months ago', 'today', 'this week', 'this month', 'between']
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    maxWidth: 600,
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    alignItems: 'center'
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.primary
+  }
+})
 
 class FilterForm extends React.Component {
   constructor (props) {
@@ -67,6 +94,7 @@ class FilterForm extends React.Component {
     }
 
     render () {
+      const { classes } = this.props
       let descriptionFilter
 
       switch (this.props.views.currentView) {
@@ -86,41 +114,49 @@ class FilterForm extends React.Component {
 
       let categoryFilter = this.props.categories
         ? (
-          <select name='category' onChange={this.handleChange}>
-            <option value='everything'>everything</option>
-            {
-              this.props.categories.map(category =>
-                <option value={category} key={category}>{category}</option>
-              )}
-          </select>)
+          <Grid item xs={12} sm container direction='row' >
+            <Select value={this.state.category} autoWidth name='category' onChange={this.handleChange}>
+              <MenuItem value='everything'>everything</MenuItem>
+              {
+                this.props.categories.map(category =>
+                  <MenuItem value={category} key={category}>{category}</MenuItem>
+                )}
+            </Select>
+          </Grid>)
         : null
 
       return (
-        <div id='wrapper'>
-          <form id='form' >
-            <div className='close-form' onClick={this.props.toggleFilterForm}>X</div><br />
 
-            <div>
-              <p>{descriptionFilter}</p> <br />
-              {categoryFilter} <br />
-              <select name='timeFrame' onChange={this.handleChange}>
-                {timeFrames.map(timeFrame =>
-                  <option value={timeFrame} key={timeFrame}>{timeFrame}</option>
-                )}
-              </select> <br />
-
-              {
-                this.state.timeFrame === 'between' &&
-                <div>
-                  <input type='date' name='startDate' placeholder='start date' onChange={this.handleChange} />
-                  <input type='date' name='endDate' placeholder='end date' onChange={this.handleChange} />
-                </div>
-              }
-
-              <button type='submit' onClick={(event) => this.handleSubmit(event)}>FILTER</button>
-            </div>
-          </form>
-        </div>
+        <Grid className={classes.root}>
+          <Paper className={classes.paper}>
+            <Grid container spacing={24}>
+              <Grid item xs={10} />
+              <Grid item xs={2}><i onClick={this.props.toggleFilterForm} class='material-icons'>close</i></Grid>
+              <Grid item xs={12} sm container direction='row' spacing={16} >
+                <p>{descriptionFilter}</p> <br />
+                {categoryFilter}
+                <Grid item xs={12} sm container direction='row' spacing={16}>
+                  <Select value={this.state.timeFrame} autoWidth variant='outlined' name='timeFrame' onChange={this.handleChange}>
+                    {timeFrames.map(timeFrame =>
+                      <MenuItem value={timeFrame} key={timeFrame}>{timeFrame}</MenuItem>
+                    )}
+                  </Select>
+                </Grid>
+                {
+                  this.state.timeFrame === 'between' &&
+                    <Grid item xs={12} sm container direction='row' spacing={16}>
+                      <TextField type='date' name='startDate' placeholder='start date' onChange={this.handleChange} />
+                      <Typography>&</Typography>
+                      <TextField type='date' name='endDate' placeholder='end date' onChange={this.handleChange} />
+                    </Grid>
+                }
+                <Grid item xs={12} sm container direction='row' spacing={16}>
+                  <Button color='primary' variant='outlined' type='submit' onClick={(event) => this.handleSubmit(event)}>FILTER</Button>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
       )
     }
 }
@@ -129,4 +165,10 @@ const mapStateToProps = state => ({
   views: state.viewsReducer
 })
 
-export default connect(mapStateToProps, null)(FilterForm)
+FilterForm.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
+export default compose(
+  withStyles(styles, { name: 'FilterForm' }),
+  connect(mapStateToProps, null))(FilterForm)

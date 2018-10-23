@@ -128,7 +128,7 @@ class App extends Component {
           <Route exact path='/income' component={props => <Credits {...this.props} />} />
           <Route exact path='/net' component={props => <Net {...this.props} />} />
         </div>
-        <div />
+        <link rel='stylesheet' href='//fonts.googleapis.com/icon?family=Material+Icons' />
       </div>
     )
   }

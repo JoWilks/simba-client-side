@@ -126,7 +126,7 @@ class Debits extends React.Component {
             <Toolbar
               toggleListView={this.toggleListView}
               listView={this.state.listView}
-              toggleAddForm={this.toggleAddForm}
+              // toggleAddForm={this.toggleAddForm}
               addFormView={this.state.addFormView}
               toggleFilterForm={this.toggleFilterForm}
               filterFormView={this.state.filterFormView}

@@ -74,30 +74,27 @@ class Credits extends React.Component {
         }
 
         render () {
+          const { classes } = this.props
+          const { listView, addFormView, filterFormView } = this.state
+          let view
+
+          if (filterFormView) {
+            view = <FilterForm categories={this.props.categories.debit}
+              toggleFilterForm={this.toggleFilterForm}
+              setFilterType={this.setFilterType}
+              filterTransactions={this.filterTransactions} />
+          } else if (listView) {
+            view = <Listview transactions={this.state.credits} />
+          } else {
+            view = <Graphview transactions={this.state.credits}
+              allTransactions={this.props.transactions.credits}
+              filterInfo={this.state.filterInfo} />
+          }
+
           return (
             <div>
-              {
-                this.state.addFormView &&
-                <AddForm categories={this.props.categories.credit}
-                  toggleAddForm={this.toggleAddForm} />
-              }
 
-              {
-                this.state.filterFormView &&
-                <FilterForm categories={this.props.categories.debit}
-                  toggleFilterForm={this.toggleFilterForm}
-                  setFilterType={this.setFilterType}
-                  filterTransactions={this.filterTransactions} />
-              }
-
-              {
-                // if statement to show either listview or graph
-                this.state.listView
-                  ? <Listview transactions={this.state.credits} />
-                  : <Graphview transactions={this.state.credits}
-                    allTransactions={this.props.transactions.credits}
-                    filterInfo={this.state.filterInfo} />
-              }
+              {view}
 
               <div>
                 <Toolbar
