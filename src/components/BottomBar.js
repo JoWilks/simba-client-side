@@ -11,6 +11,10 @@ import AppBar from '@material-ui/core/AppBar'
 const styles = theme => ({
   toolbar: {
     alignItems: 'center',
+    justifyContent: 'center'
+  },
+  toolbar2: {
+    alignItems: 'center',
     justifyContent: 'space-around'
   },
   appBar: {
@@ -21,14 +25,25 @@ const styles = theme => ({
 
 class BottomBar extends React.Component {
   render () {
-    const { classes } = this.props
+    const { classes, toggleViewSettings } = this.props
+    let toolbar
+
+    if (toggleViewSettings) {
+      toolbar =
+        <Toolbar className={classes.toolbar}>
+          <IconButton onClick={this.props.toggleViewSettings} style={{ color: '#ffffff' }} className='material-icons'>{this.props.viewSettings ? 'cancel' : 'edit'}</IconButton> <br />
+        </Toolbar>
+    } else {
+      toolbar = <Toolbar className={classes.toolbar2}>
+        <IconButton onClick={this.props.toggleFilterForm} style={{ color: '#ffffff' }} className='material-icons'>filter_list</IconButton>
+        <IconButton onClick={this.props.toggleListView} style={{ color: '#ffffff' }} className='material-icons'>{this.props.listView ? 'bar_chart' : 'list'}</IconButton>
+      </Toolbar>
+    }
+
+    // <IconButton onClick={this.props.toggleAddForm} class='material-icons'>add_circle</IconButton>
     return (
       <AppBar position='fixed' color='primary' className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton onClick={this.props.toggleFilterForm} style={{ color: '#ffffff' }} className='material-icons'>filter_list</IconButton>
-          {/* <IconButton onClick={this.props.toggleAddForm} class='material-icons'>add_circle</IconButton> */}
-          <IconButton onClick={this.props.toggleListView} style={{ color: '#ffffff' }} className='material-icons'>{this.props.listView ? 'bar_chart' : 'list'}</IconButton>
-        </Toolbar>
+        {toolbar}
       </AppBar>
     )
   }

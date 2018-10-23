@@ -119,9 +119,7 @@ class Budget extends React.Component {
       } else if (spent > limit) {
         return 100
       } else {
-        let answer = Math.round((spent / limit) * 100)
-        console.log(answer)
-        return answer
+        return Math.round((spent / limit) * 100)
       }
     }
 
@@ -147,7 +145,7 @@ class Budget extends React.Component {
                       <p>Here's how your total {timeFrame} budget is tracking:</p>
                     </Grid>
                     <Grid item xs={12}>
-                      <HalfCircleMeter value={calcPercent(totalSpent/-100, totalBudget)} />
+                      <HalfCircleMeter value={calcPercent(totalSpent / -100, totalBudget)} />
                     </Grid>
                     <Grid item xs={12}>
                       <p>Total Spent: £{totalSpent / -100} { totalBudget > 0 ? ` out of your £${totalBudget} budget` : ` but you haven't set a budget!`}</p>
@@ -167,13 +165,7 @@ class Budget extends React.Component {
                             <Grid container spacing={0} >
                               <Grid item xs={12}>
                                 <h5>{Object.keys(element)[0]}</h5>
-                                <p>You've spent £{element[Object.keys(element)].spent / -1}
-                                  {
-                                    element[Object.keys(element)[0]].limit > 0
-                                      ? ` out of your £${element[Object.keys(element)[0]].limit} budget`
-                                      : ` but haven't set a budget!`
-                                  }
-                                </p>
+                                <p>You've spent £{element[Object.keys(element)].spent / -1} out of your £${element[Object.keys(element)[0]].limit} budget</p>
                                 <LinearProgress color='secondary' variant='determinate' value={calcPercent((element[Object.keys(element)].spent / -1), element[Object.keys(element)[0]].limit)} />
                               </Grid>
                             </Grid>
@@ -184,10 +176,10 @@ class Budget extends React.Component {
                     }
                   </Grid>
                 </Paper>
-
               </Grid>
           }
-          <BottomBar toggleViewSettings={this.toggleViewSettings} />
+          <BottomBar toggleViewSettings={this.toggleViewSettings}
+            viewSettings={this.state.viewSettings} />
         </div>
       )
     }

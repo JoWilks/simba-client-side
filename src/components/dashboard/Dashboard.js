@@ -33,16 +33,16 @@ class Dashboard extends React.Component {
   componentDidMount () {
     const { accountName } = this.state
     // may not need
-    if (accountName === '') {
-      API.get_list_accounts()
-        .then(data => this.setState({ accountName: data['accounts'][0].description }))
+    // if (accountName === '') {
+    //   API.get_list_accounts()
+    //     .then(data => this.setState({ accountName: data['accounts'][0].description }))
 
-      API.read_balance_account()
-        .then(data => this.setState({ accountBalance: data.balance }))
+    //   API.read_balance_account()
+    //     .then(data => this.setState({ accountBalance: data.balance }))
 
-      API.list_pots()
-        .then(data => this.setState({ pots: data['pots'] }))
-    }
+    //   API.list_pots()
+    //     .then(data => this.setState({ pots: data['pots'] }))
+    // }
   }
 
   render () {

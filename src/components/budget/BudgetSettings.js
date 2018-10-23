@@ -1,8 +1,41 @@
 import React from 'react'
 import { moment } from '../../datefunctions'
 import API from '../../adapters/API'
+import BottomBar from '../BottomBar'
+
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import Select from '@material-ui/core/Select'
+import { MenuItem } from '@material-ui/core'
+
+import FormLabel from '@material-ui/core/FormLabel'
+import FormControl from '@material-ui/core/FormControl'
+import FormGroup from '@material-ui/core/FormGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 const timeFrames = ['monthly', 'weekly', 'daily']
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    textAlign: 'center'
+  },
+  label: {
+    justifyContent: 'space-between',
+    textAlign: 'left',
+    textTransform: 'capitalize'
+  },
+  formControl: {
+    margin: theme.spacing.unit * 3
+  }
+})
 
 class BudgetSettings extends React.Component {
   constructor (props) {
@@ -51,40 +84,38 @@ class BudgetSettings extends React.Component {
 
     render () {
       const { budgetCat } = this.state
+      const { classes } = this.props
 
       return (
-        <div>
-          <form>
-            <p>Set your target spend for each category ...</p>
-            <br />
-            <div>
-              <select name='timeframe' onChange={this.handleDropdown}>
-                {
-                  timeFrames.map(timeframe => <option value={timeframe} key={timeframe}>{timeframe}</option>)
-                }
-                <p>basis...</p>
-              </select>
-            </div>
-            <div>
-              {
-                Object.keys(this.state.budgetCat).map(key =>
-                  <div key={key}>
-                    <label>{key}</label>
-                    <input type='text' name={key}
-                      onSelect={this.calcTotal}
-                      onChange={this.handleChange}
-                      placeholder={budgetCat[key]} />
-                  </div>
-                )
-              }
-            </div>
-            <p>For a total spend of £{this.state.runningTotal} on a {this.state.timeframe}</p>
-            <input type='submit' value='Save Changes' onClick={this.handleSubmit} />
-          </form>
+        <Paper className={classes.root}>
 
-        </div>
+          <FormControl variant='filled' className={classes.formControl}>
+            <FormLabel component='legend'>Set your timeframe for your budget...</FormLabel>
+            <Select value={this.state.timeFrame} autoWidth variant='outlined' name='timeFrame' onChange={this.handleDropdown}>
+              {timeFrames.map(timeFrame => <MenuItem value={timeFrame} key={timeFrame}>{timeFrame}</MenuItem>)}
+            </Select><br />
+            <FormLabel component='legend'>Set your budgets for each category...</FormLabel><br />
+            {
+              Object.keys(this.state.budgetCat).map(key =>
+                <FormControlLabel className={classes.label} key={key} control={<Input type='number' name={key}
+                  onSelect={this.calcTotal}
+                  onChange={this.handleChange}
+                  placeholder={budgetCat[key]} />
+                } label={key} labelPlacement='start'
+                />
+              )
+            }
+            <p>For a total spend of £{this.state.runningTotal} on a {this.state.timeFrame} basis</p>
+            <Button color='secondary' variant='contained' onClick={this.handleSubmit}>SUBMIT</Button>
+          </FormControl>
+          {/* </Grid> */}
+        </Paper>
       )
     }
 }
 
-export default BudgetSettings
+BudgetSettings.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
+export default withStyles(styles)(BudgetSettings)

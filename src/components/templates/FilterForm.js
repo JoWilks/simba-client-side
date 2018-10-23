@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Select from '@material-ui/core/Select'
 import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@material-ui/core/IconButton'
 import TextField from '@material-ui/core/TextField'
 import { compose } from '../../../../../Library/Caches/typescript/3.1/node_modules/redux'
 import { MenuItem } from '@material-ui/core'
@@ -26,7 +26,7 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -139,8 +139,7 @@ class FilterForm extends React.Component {
                 {categoryFilter}
                 <Grid item xs={12} sm container direction='row' spacing={16}>
                   <Select value={this.state.timeFrame} autoWidth variant='outlined' name='timeFrame' onChange={this.handleChange}>
-                    {timeFrames.map(timeFrame =>
-                      <MenuItem value={timeFrame} key={timeFrame}>{timeFrame}</MenuItem>
+                    {timeFrames.map(timeFrame => <MenuItem value={timeFrame} key={timeFrame}>{timeFrame}</MenuItem>
                     )}
                   </Select>
                 </Grid>
@@ -153,7 +152,7 @@ class FilterForm extends React.Component {
                     </Grid>
                 }
                 <Grid item xs={12} sm container direction='row' spacing={16}>
-                  <Button color='primary' variant='outlined' type='submit' onClick={(event) => this.handleSubmit(event)}>FILTER</Button>
+                  <Button color='secondary' variant='contained' onClick={(event) => this.handleSubmit(event)}>FILTER</Button>
                 </Grid>
               </Grid>
             </Grid>
