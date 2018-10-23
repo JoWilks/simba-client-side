@@ -1,7 +1,7 @@
 import React from 'react'
 import NetListview from './NetListview'
 import NetGraphview from './NetGraphview'
-import Toolbar from '../Toolbar'
+import BottomBar from '../BottomBar'
 import FilterForm from '../templates/FilterForm'
 import '../templates/Forms.css'
 
@@ -137,7 +137,7 @@ class Net extends React.Component {
           {view}
 
           <div>
-            <Toolbar
+            <BottomBar
               toggleListView={this.toggleListView}
               listView={this.state.listView}
               toggleFilterForm={this.toggleFilterForm}

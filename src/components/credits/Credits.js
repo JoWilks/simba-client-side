@@ -1,7 +1,7 @@
 import React from 'react'
 import Listview from '../templates/Listview'
 import Graphview from '../templates/Graphview'
-import Toolbar from '../Toolbar'
+import BottomBar from '../BottomBar'
 import AddForm from '../templates/AddForm'
 import FilterForm from '../templates/FilterForm'
 import '../templates/Forms.css'
@@ -97,7 +97,7 @@ class Credits extends React.Component {
               {view}
 
               <div>
-                <Toolbar
+                <BottomBar
                   toggleListView={this.toggleListView}
                   listView={this.state.listView}
                   toggleAddForm={this.toggleAddForm}

@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Select from '@material-ui/core/Select'
 import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField'
 import { compose } from '../../../../../Library/Caches/typescript/3.1/node_modules/redux'
 import { MenuItem } from '@material-ui/core'
@@ -24,7 +25,8 @@ const styles = theme => ({
     maxWidth: 600,
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -131,7 +133,7 @@ class FilterForm extends React.Component {
           <Paper className={classes.paper}>
             <Grid container spacing={24}>
               <Grid item xs={10} />
-              <Grid item xs={2}><i onClick={this.props.toggleFilterForm} class='material-icons'>close</i></Grid>
+              <Grid item xs={2}><IconButton color='inherit' onClick={this.props.toggleFilterForm} class='material-icons'>close</IconButton></Grid>
               <Grid item xs={12} sm container direction='row' spacing={16} >
                 <p>{descriptionFilter}</p> <br />
                 {categoryFilter}
