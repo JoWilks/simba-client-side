@@ -115,24 +115,26 @@ class Net extends React.Component {
 
     render () {
       const { classes } = this.props
+      const { listView, filterFormView } = this.state
+
+      let view
+
+      if (filterFormView) {
+        view = <FilterForm categories={this.props.categories.debit}
+          toggleFilterForm={this.toggleFilterForm}
+          setFilterType={this.setFilterType}
+          filterTransactions={this.filterTransactions} />
+      } else if (listView) {
+        view = <NetListview net={this.state.net} />
+      } else {
+        view = <NetGraphview lineGraphData={this.state.lineGraphData}
+          filterInfo={this.state.filterInfo} />
+      }
+
       return (
         <div className={classes.root} >
 
-          {
-            this.state.filterFormView &&
-            <FilterForm
-              toggleFilterForm={this.toggleFilterForm}
-              setFilterType={this.setFilterType}
-              filterTransactions={this.filterTransactions} />
-          }
-
-          {
-            // if statement to show either listview or graph
-            this.state.listView
-              ? <NetListview net={this.state.net} />
-              : <NetGraphview lineGraphData={this.state.lineGraphData}
-                filterInfo={this.state.filterInfo} />
-          }
+          {view}
 
           <div>
             <Toolbar

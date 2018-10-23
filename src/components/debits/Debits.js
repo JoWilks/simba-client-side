@@ -98,31 +98,29 @@ class Debits extends React.Component {
 
     render () {
       const { classes } = this.props
+      const { listView, addFormView, filterFormView } = this.state
+      let view
+
+      // view = <AddForm categories={this.props.categories.debit} ADD LATER
+      //   toggleAddForm={this.toggleAddForm} />
+      if (filterFormView) {
+        view = <FilterForm categories={this.props.categories.debit}
+          toggleFilterForm={this.toggleFilterForm}
+          setFilterType={this.setFilterType}
+          filterTransactions={this.filterTransactions} />
+      } else if (listView) {
+        view = <Listview transactions={this.state.debits} />
+      } else {
+        view = <Graphview transactions={this.state.debits}
+          allTransactions={this.props.transactions.debits}
+          filterInfo={this.state.filterInfo}
+          currentView={this.props.views.currentView} />
+      }
+
       return (
         <div className={classes.root} >
-          {
-            this.state.addFormView &&
-            <AddForm categories={this.props.categories.debit}
-              toggleAddForm={this.toggleAddForm} />
-          }
 
-          {
-            this.state.filterFormView &&
-            <FilterForm categories={this.props.categories.debit}
-              toggleFilterForm={this.toggleFilterForm}
-              setFilterType={this.setFilterType}
-              filterTransactions={this.filterTransactions} />
-          }
-
-          {
-            // if statement to show either listview or graph
-            this.state.listView
-              ? <Listview transactions={this.state.debits} />
-              : <Graphview transactions={this.state.debits}
-                allTransactions={this.props.transactions.debits}
-                filterInfo={this.state.filterInfo}
-                currentView={this.props.views.currentView} />
-          }
+          {view}
 
           <div >
             <Toolbar

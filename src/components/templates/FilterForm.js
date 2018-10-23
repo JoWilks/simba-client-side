@@ -59,6 +59,9 @@ class FilterForm extends React.Component {
           this.props.setFilterType(this.state.timeFrame, start, end, category)
           this.props.filterTransactions(category, start, end)
           break
+        default:
+          console.log('default')
+          break
       }
       this.props.toggleFilterForm()
     }
