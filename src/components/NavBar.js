@@ -58,6 +58,47 @@ class NavBar extends React.Component {
     const { auth, anchorEl } = this.state
     const open = Boolean(anchorEl)
 
+    let toolbar
+    if (this.props.currentUser) {
+      toolbar = <div>
+        <Link style={{ color: 'black', textDecoration: 'none' }} to='/dashboard' >
+          <MenuItem onClick={() => this.handleLink('Dashboard')}>Dashboard</MenuItem>
+        </Link>
+
+        <Link style={{ color: 'black', textDecoration: 'none' }} to='/budget'>
+          <MenuItem onClick={() => this.handleLink('Budget')}>Budget</MenuItem>
+        </Link>
+
+        <Link style={{ color: 'black', textDecoration: 'none' }} to='/expenses'>
+          <MenuItem onClick={() => this.handleLink('Expenses')}>Expenses</MenuItem>
+        </Link>
+
+        <Link style={{ color: 'black', textDecoration: 'none' }} to='/income'>
+          <MenuItem onClick={() => this.handleLink('Income')}>Income</MenuItem>
+        </Link>
+
+        <Link style={{ color: 'black', textDecoration: 'none' }} to='/net'>
+          <MenuItem onClick={() => this.handleLink('Net')}>Net</MenuItem>
+        </Link>
+
+        <Link style={{ color: 'black', textDecoration: 'none' }} to='/monzo'>
+          <MenuItem onClick={() => this.handleLink('Sync Monzo')}>Sync Monzo</MenuItem>
+        </Link>
+
+        <MenuItem onClick={this.logout}>Logout</MenuItem>
+      </div>
+    } else {
+      toolbar = <div>
+        <Link s
+          tyle={{ color: 'black', textDecoration: 'none' }} to='/login'>
+          <MenuItem onClick={() => this.handleLink('Login')}>Login</MenuItem>
+        </Link>
+        <Link style={{ color: 'black', textDecoration: 'none' }} to='/register'>
+          <MenuItem onClick={() => this.handleLink('Register')}>Register</MenuItem>
+        </Link>
+      </div>
+    }
+
     return (
       <div className={classes.root}>
         <AppBar position='fixed'>
@@ -83,34 +124,9 @@ class NavBar extends React.Component {
                 horizontal: 'right'
               }}
               open={open}
-              onClose={this.handleClose}
-            >
+              onClose={this.handleClose}>
 
-              <Link style={{ color: 'black', textDecoration: 'none' }} to='/dashboard' >
-                <MenuItem onClick={() => this.handleLink('Dashboard')}>Dashboard</MenuItem>
-              </Link>
-
-              <Link style={{ color: 'black', textDecoration: 'none' }} to='/budget'>
-                <MenuItem onClick={() => this.handleLink('Budget')}>Budget</MenuItem>
-              </Link>
-
-              <Link style={{ color: 'black', textDecoration: 'none' }} to='/expenses'>
-                <MenuItem onClick={() => this.handleLink('Expenses')}>Expenses</MenuItem>
-              </Link>
-
-              <Link style={{ color: 'black', textDecoration: 'none' }} to='/income'>
-                <MenuItem onClick={() => this.handleLink('Income')}>Income</MenuItem>
-              </Link>
-
-              <Link style={{ color: 'black', textDecoration: 'none' }} to='/net'>
-                <MenuItem onClick={() => this.handleLink('Net')}>Net</MenuItem>
-              </Link>
-
-              <Link style={{ color: 'black', textDecoration: 'none' }} to='/monzo'>
-                <MenuItem onClick={() => this.handleLink('Sync Monzo')}>Sync Monzo</MenuItem>
-              </Link>
-
-              <MenuItem onClick={this.logout}>Logout</MenuItem>
+              { toolbar }
 
             </Menu>
             <Typography variant='h6' color='inherit' className={classes.grow}>
