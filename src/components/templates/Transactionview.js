@@ -34,55 +34,55 @@ class Transactionview extends React.Component {
 
       switch (transaction.category) {
         case 'eating_out':
-          icon = <IconButton style={{ color: 'rgb(115,205,31)' }} class='material-icons'>restaurant</IconButton>
+          icon = <IconButton style={{ color: 'rgb(115,205,31)' }} className='material-icons'>restaurant</IconButton>
           // colour '115,205,31'
           break
         case 'transport':
-          icon = <IconButton style={{ color: 'rgb(0,104,129)' }} class='material-icons'>directions_car</IconButton>
+          icon = <IconButton style={{ color: 'rgb(0,104,129)' }} className='material-icons'>directions_car</IconButton>
           // colour '0,104,129'
           break
         case 'groceries':
-          icon = <IconButton style={{ color: 'rgb(244,148,5)' }} class='material-icons'>local_grocery_store</IconButton>
+          icon = <IconButton style={{ color: 'rgb(244,148,5)' }} className='material-icons'>local_grocery_store</IconButton>
           // colour '244,148,5'
           break
         case 'shopping':
-          icon = <IconButton style={{ color: 'rgb(241,0,122)' }} class='material-icons'>local_mall</IconButton>
+          icon = <IconButton style={{ color: 'rgb(241,0,122)' }} className='material-icons'>local_mall</IconButton>
           // colour '241,0,122'
           break
         case 'personal_care':
-          icon = <IconButton style={{ color: 'rgb(238,10,14)' }} class='material-icons'>favorite</IconButton>
+          icon = <IconButton style={{ color: 'rgb(238,10,14)' }} className='material-icons'>favorite</IconButton>
           // colour '238,10,14'
           break
         case 'bills':
-          icon = <IconButton style={{ color: 'rgb(0,154,214)' }} class='material-icons'>offline_bolt</IconButton>
+          icon = <IconButton style={{ color: 'rgb(0,154,214)' }} className='material-icons'>offline_bolt</IconButton>
           // colour '0,154,214'
           break
         case 'finances':
-          icon = <IconButton style={{ color: 'rgb(5,177,69)' }} class='material-icons'>local_atm</IconButton>
+          icon = <IconButton style={{ color: 'rgb(5,177,69)' }} className='material-icons'>local_atm</IconButton>
           // colour '5,177,69'
           break
         case 'entertainment':
-          icon = <IconButton style={{ color: 'rgb(155,87,255)' }} class='material-icons'>insert_emoticon</IconButton>
+          icon = <IconButton style={{ color: 'rgb(155,87,255)' }} className='material-icons'>insert_emoticon</IconButton>
           // colour '155,87,255'
           break
         case 'expenses':
-          icon = <IconButton style={{ color: 'rgb(137,39,2)' }} class='material-icons'>monetization_on</IconButton>
+          icon = <IconButton style={{ color: 'rgb(137,39,2)' }} className='material-icons'>monetization_on</IconButton>
           // colour '137,39,2'
           break
         case 'family':
-          icon = <IconButton style={{ color: 'rgb(0,56,192)' }} class='material-icons'>home</IconButton>
+          icon = <IconButton style={{ color: 'rgb(0,56,192)' }} className='material-icons'>home</IconButton>
           // colour '0,56,192'
           break
         case 'general':
-          icon = <IconButton style={{ color: 'rgb(101,101,101)' }} class='material-icons'>category</IconButton>
+          icon = <IconButton style={{ color: 'rgb(101,101,101)' }} className='material-icons'>category</IconButton>
           // colour '101,101,101'
           break
         case 'holidays':
-          icon = <IconButton style={{ color: 'rgb(255,108,62)' }} class='material-icons'>flight_takeoff</IconButton>
+          icon = <IconButton style={{ color: 'rgb(255,108,62)' }} className='material-icons'>flight_takeoff</IconButton>
           // colour '255,108,62'
           break
         default:
-          icon = <IconButton style={{ color: 'rgb(66, 66, 66)' }} class='material-icons'>broken_image</IconButton>
+          icon = <IconButton style={{ color: 'rgb(66, 66, 66)' }} className='material-icons'>broken_image</IconButton>
       }
 
       return (

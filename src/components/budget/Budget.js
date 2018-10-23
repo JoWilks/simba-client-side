@@ -11,6 +11,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import { compose } from '../../../../../Library/Caches/typescript/3.1/node_modules/redux'
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 const styles = theme => ({
   root: {
@@ -57,7 +58,6 @@ class Budget extends React.Component {
     calculateBudget = () => {
       // create hash of category name and cuurent total spend values for specified timeframes && set budget target
       let allDebitsInTimeframe = this.filterByTimeFrame()
-      console.log(allDebitsInTimeframe)
       this.filterByCategories(allDebitsInTimeframe)
     }
 
@@ -113,9 +113,22 @@ class Budget extends React.Component {
       this.setState({ targetsSpent: budget.payload, totalSpent, totalBudget })
     }
 
+    calcPercent = (spent, limit) => {
+      if (spent === 0) {
+        return 0
+      } else if (spent > limit) {
+        return 100
+      } else {
+        let answer = Math.round((spent / limit) * 100)
+        console.log(answer)
+        return answer
+      }
+    }
+
     render () {
       const { totalSpent, totalBudget, timeFrame, viewSettings } = this.state
       const { classes } = this.props
+      const { calcPercent } = this
 
       return (
         <div>
@@ -134,7 +147,7 @@ class Budget extends React.Component {
                       <p>Here's how your total {timeFrame} budget is tracking:</p>
                     </Grid>
                     <Grid item xs={12}>
-                      <HalfCircleMeter value={Math.round((totalSpent / totalBudget) * 100)} />
+                      <HalfCircleMeter value={calcPercent(totalSpent/-100, totalBudget)} />
                     </Grid>
                     <Grid item xs={12}>
                       <p>Total Spent: £{totalSpent / -100} { totalBudget > 0 ? ` out of your £${totalBudget} budget` : ` but you haven't set a budget!`}</p>
@@ -149,17 +162,19 @@ class Budget extends React.Component {
                     </Grid>
                     {
                       this.state.targetsSpent.map(element =>
-                        <div>
+                        <div key={Object.keys(element)[0]}>
                           <Paper className={classes.paper}>
                             <Grid container spacing={0} >
                               <Grid item xs={12}>
-                                <p><strong>{Object.keys(element)[0]}:</strong> You have spent £{element[Object.keys(element)].spent / -1}
+                                <h5>{Object.keys(element)[0]}</h5>
+                                <p>You've spent £{element[Object.keys(element)].spent / -1}
                                   {
                                     element[Object.keys(element)[0]].limit > 0
                                       ? ` out of your £${element[Object.keys(element)[0]].limit} budget`
-                                      : ` but you haven't set a budget!`
+                                      : ` but haven't set a budget!`
                                   }
                                 </p>
+                                <LinearProgress color='secondary' variant='determinate' value={calcPercent((element[Object.keys(element)].spent / -1), element[Object.keys(element)[0]].limit)} />
                               </Grid>
                             </Grid>
                           </Paper>
