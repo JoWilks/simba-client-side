@@ -1,6 +1,7 @@
 import React from 'react'
 import { ResponsiveLine } from '@nivo/line'
 import './Graphs.css'
+import Paper from '@material-ui/core/Paper'
 
 //   const data2 = [
 //         {id: 'positive :)',
@@ -24,63 +25,60 @@ class LineGraph extends React.Component {
     // website examples showcase many properties, you'll often use just a few of them.
 
     return (
-      <div className='wrapper'>
-        <div className='donut-graph'>
+      <Paper className='bar-graph'>
+        <ResponsiveLine
+          data={this.props.lineGraphData}
+          margin={{
+            'top': 50,
+            'right': 110,
+            'bottom': 50,
+            'left': 60
+          }}
+          xScale={{
+            'type': 'point'
+          }}
+          yScale={{
+            'type': 'linear',
+            'stacked': false,
+            'min': 'auto',
+            'max': 'auto'
+          }}
+          minY='auto'
+          maxY='auto'
+          stacked={false}
+          curve='monotoneX'
+          axisBottom={{
+            'orient': 'bottom',
+            'tickSize': 5,
+            'tickPadding': 5,
+            'tickRotation': 0,
+            'legend': 'Start Date of Time Range',
+            'legendOffset': 36,
+            'legendPosition': 'center'
+          }}
+          axisLeft={{
+            'orient': 'left',
+            'tickSize': 5,
+            'tickPadding': 5,
+            'tickRotation': 0,
+            'legend': 'Amount (£)',
+            'legendOffset': -40,
+            'legendPosition': 'center'
+          }}
+          dotSize={10}
+          dotColor='inherit:darker(0.3)'
+          dotBorderWidth={2}
+          dotBorderColor='#ffffff'
+          enableDotLabel
+          dotLabel='y'
+          dotLabelYOffset={-12}
+          animate
+          motionStiffness={90}
+          motionDamping={15}
+          legends={[]}
+        />
 
-          <ResponsiveLine
-            data={this.props.lineGraphData}
-            margin={{
-              'top': 50,
-              'right': 110,
-              'bottom': 50,
-              'left': 60
-            }}
-            xScale={{
-              'type': 'point'
-            }}
-            yScale={{
-              'type': 'linear',
-              'stacked': false,
-              'min': 'auto',
-              'max': 'auto'
-            }}
-            minY='auto'
-            maxY='auto'
-            stacked={false}
-            curve='monotoneX'
-            axisBottom={{
-              'orient': 'bottom',
-              'tickSize': 5,
-              'tickPadding': 5,
-              'tickRotation': 0,
-              'legend': 'Dates',
-              'legendOffset': 36,
-              'legendPosition': 'center'
-            }}
-            axisLeft={{
-              'orient': 'left',
-              'tickSize': 5,
-              'tickPadding': 5,
-              'tickRotation': 0,
-              'legend': 'Amount (£)',
-              'legendOffset': -40,
-              'legendPosition': 'center'
-            }}
-            dotSize={10}
-            dotColor='inherit:darker(0.3)'
-            dotBorderWidth={2}
-            dotBorderColor='#ffffff'
-            enableDotLabel
-            dotLabel='y'
-            dotLabelYOffset={-12}
-            animate
-            motionStiffness={90}
-            motionDamping={15}
-            legends={[]}
-          />
-
-        </div>
-      </div>
+      </Paper>
     )
   }
 }

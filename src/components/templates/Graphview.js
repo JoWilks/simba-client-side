@@ -311,7 +311,7 @@ class Graphview extends React.Component {
           {
             this.props.filterInfo.category === 'everything' &&
             <DonutGraph donutGraphData={this.state.donutGraphData} />
-          }
+          } <br />
           {
             this.state.barGraphView
             // for categories prop to bargraph- will change to if statement depending if expense or not once figure out income categories

@@ -58,6 +58,7 @@ class Budget extends React.Component {
     calculateBudget = () => {
       // create hash of category name and cuurent total spend values for specified timeframes && set budget target
       let allDebitsInTimeframe = this.filterByTimeFrame()
+      console.log(allDebitsInTimeframe)
       this.filterByCategories(allDebitsInTimeframe)
     }
 
