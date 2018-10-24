@@ -1,4 +1,5 @@
 import React from 'react'
+import PosNegLineGraph from './PosNegLineGraph'
 import LineGraph from '../graphs/LineGraph'
 import { moment } from '../../datefunctions'
 

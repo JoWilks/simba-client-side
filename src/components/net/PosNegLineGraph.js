@@ -1,6 +1,6 @@
 import React from 'react'
 import { ResponsiveLine } from '@nivo/line'
-import './Graphs.css'
+import '../graphs/Graphs.css'
 import Paper from '@material-ui/core/Paper'
 
 //   const data2 = [
@@ -18,7 +18,7 @@ import Paper from '@material-ui/core/Paper'
 //             ]}
 // ]
 
-class LineGraph extends React.Component {
+class PosNegLineGraph extends React.Component {
   render () {
     // make sure parent container have a defined height when using responsive component,
     // otherwise height will be 0 and no chart will be rendered.
@@ -27,11 +27,24 @@ class LineGraph extends React.Component {
     return (
       <Paper className='bar-graph'>
         <ResponsiveLine
-          data={this.props.lineGraphData}
+          // data={this.props.lineGraphData}
+          data={[
+            { id: 'positive :)',
+              data: [
+                { x: 24/10/18, y: 0 },
+                { x: 25/10/18, y: 2 },
+                { x: 28/10/18, y: 8.43 }
+              ] },
+            { id: 'negative :(',
+              data: [
+                { x: 26/10/18, y: -3.56 },
+                { x: 27/10/18, y: -5.8 },
+                { x: 29/10/18, y: -19.55 } ] }
+          ]}
           margin={{
-            'top': 40,
-            'right': 40,
-            'bottom': 60,
+            'top': 50,
+            'right': 110,
+            'bottom': 50,
             'left': 60
           }}
           xScale={{
@@ -43,38 +56,24 @@ class LineGraph extends React.Component {
             'min': 'auto',
             'max': 'auto'
           }}
-          minY='auto'
-          maxY='auto'
-          stacked={false}
-          curve='monotoneX'
-          axisBottom={{
-            'orient': 'bottom',
-            'tickSize': 5,
-            'tickPadding': 5,
-            'tickRotation': 0,
-            'legend': 'Start Date of Time Range',
-            'legendOffset': 36,
-            'legendPosition': 'center'
-          }}
-          axisLeft={{
-            'orient': 'left',
-            'tickSize': 5,
-            'tickPadding': 5,
-            'tickRotation': 0,
-            'legend': 'Amount (£)',
-            'legendOffset': -40,
-            'legendPosition': 'center'
-          }}
-          dotSize={10}
-          dotColor='inherit:darker(0.3)'
-          dotBorderWidth={2}
-          dotBorderColor='#ffffff'
-          enableDotLabel
-          dotLabel='y'
-          dotLabelYOffset={-12}
           animate
-          motionStiffness={90}
-          motionDamping={15}
+          curve='monotoneX'
+          enableDotLabel
+          dotSize={7}
+          dotBorderWidth={1}
+          dotBorderColor='inherit:darker(0.3)'
+          dotLabelYOffset={-20}
+          enableGridX={false}
+          colors={['rgb(97, 205, 187)', 'rgb(244, 117, 96)']}
+          xScale={{ type: 'linear' }}
+          yScale={{
+            type: 'linear',
+            stacked: false,
+            min: -1,
+            max: 1
+          }}
+          enableArea
+          areaOpacity={0.07}
         />
 
       </Paper>
@@ -82,4 +81,4 @@ class LineGraph extends React.Component {
   }
 }
 
-export default LineGraph
+export default PosNegLineGraph

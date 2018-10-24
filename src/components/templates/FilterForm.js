@@ -107,7 +107,7 @@ class FilterForm extends React.Component {
           descriptionFilter = 'What have I earnt in...'
           break
         case 'Net':
-          descriptionFilter = 'Filter Net by'
+          descriptionFilter = 'Filter Net '
           break
         default:
           descriptionFilter = 'Filter'
@@ -136,13 +136,13 @@ class FilterForm extends React.Component {
               <Grid item xs={2}><IconButton color='inherit' onClick={this.props.toggleFilterForm} className='material-icons'>close</IconButton></Grid>
               <Grid item xs={12} sm container direction='row' spacing={16} >
                 <p>{descriptionFilter}</p> <br />
-                {categoryFilter}
+                {categoryFilter} <br />
                 <Grid item xs={12} sm container direction='row' spacing={16}>
                   <Select value={this.state.timeFrame} autoWidth variant='outlined' name='timeFrame' onChange={this.handleChange}>
                     {timeFrames.map(timeFrame => <MenuItem value={timeFrame} key={timeFrame}>{timeFrame}</MenuItem>
                     )}
                   </Select>
-                </Grid>
+                </Grid> <br />
                 {
                   this.state.timeFrame === 'between' &&
                     <Grid item xs={12} sm container direction='row' spacing={16}>
@@ -150,7 +150,7 @@ class FilterForm extends React.Component {
                       <Typography>&</Typography>
                       <TextField type='date' name='endDate' placeholder='end date' onChange={this.handleChange} />
                     </Grid>
-                }
+                } <br />
                 <Grid item xs={12} sm container direction='row' spacing={16}>
                   <Button color='secondary' variant='contained' onClick={(event) => this.handleSubmit(event)}>FILTER</Button>
                 </Grid>

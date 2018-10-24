@@ -51,7 +51,7 @@ class Net extends React.Component {
     let endDate = this.state.filterInfo.endDate
     // make array of objects for each day
     while (cyclingDate.isSameOrBefore(endDate)) {
-      arrayDates.push({ date: cyclingDate.format('dddd Do MMMM') })
+      arrayDates.push({ date: cyclingDate.format('MM-DD-YY') })
       cyclingDate = cyclingDate.add(1, 'days')
     }
     // sum transactions for each day based on arrayDates
@@ -60,12 +60,13 @@ class Net extends React.Component {
       newObj['x'] = obj.date
       newObj['y'] = 0
       allTransactions.forEach(transaction => {
-        if (moment(transaction.created).format('dddd Do MMMM') === obj.date) {
+        if (moment(transaction.created).format('MM-DD-YY') === obj.date) {
           newObj.y += transaction.amount
         }
       })
       arrayObjsDateSum.push(newObj)
     })
+
     // convert to £/$
     let runningTotal = 0
     arrayObjsDateSum.forEach(obj => {
@@ -76,7 +77,7 @@ class Net extends React.Component {
     // get running total
 
     let lineGraphData = [{ id: 'net', data: arrayObjsDateSum }]
-    this.setState({ netAll: arrayObjsDateSum, net: arrayObjsDateSum, lineGraphData, isLoading: false, runningTotal: runningTotal/100 })
+    this.setState({ netAll: arrayObjsDateSum, net: arrayObjsDateSum, lineGraphData, isLoading: false, runningTotal: runningTotal / 100 })
   }
 
     toggleListView = () => {
@@ -115,6 +116,7 @@ class Net extends React.Component {
       netAll.forEach(item => {
         let date = moment(item.x, 'dddd Do MMMM').hour(1)
         if (date.isBetween(startDate, endDate, null, [])) {
+          let niceDate = date.format()
           newNet.push(item)
           runningTotal += item.y
         }
