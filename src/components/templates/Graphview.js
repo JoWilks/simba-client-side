@@ -50,7 +50,7 @@ class Graphview extends React.Component {
           obj['value'] = transaction.amount < 0
             ? (transaction.amount / -1)
             : transaction.amount
-          obj['color'] = categoryColourMatcher(transaction.category)
+          // obj['color'] = categoryColourMatcher(transaction.category)
           pieGraphData[transaction.category] = obj
         }
       })

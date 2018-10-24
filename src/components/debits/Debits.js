@@ -28,14 +28,14 @@ const styles = theme => ({
 class Debits extends React.Component {
   constructor (props) {
     super(props)
-    const transactions = this.props.transactions.debits
+    const transactions = JSON.parse(JSON.stringify(this.props.transactions.debits))
     const startDate = moment().subtract(2, 'months').date(1).hour(0).minute(0).second(0)
     const endDate = moment().hour(23).minute(59).second(59)
     this.state = {
       listView: true,
       addFormView: false,
       filterFormView: false,
-      debits: transactions,
+      debits: transactions.reverse(),
       filterInfo: { filterType: 'since two months ago', startDate, endDate, category: 'everything' },
       isLoading: true
     }
@@ -89,6 +89,7 @@ class Debits extends React.Component {
     filterTransactions = (category, startDate, endDate) => {
       // Filter for transction in a time range and of a specific category .reverse()
       let debits = JSON.parse(JSON.stringify(this.props.transactions.debits))
+      debits.reverse()
       let filtered
 
       if (category === 'everything') {

@@ -12,14 +12,14 @@ import { moment } from '../../datefunctions'
 class Credits extends React.Component {
   constructor (props) {
     super(props)
-    const transactions = this.props.transactions.credits
+    const transactions = JSON.parse(JSON.stringify(this.props.transactions.credits))
     const startDate = moment().subtract(2, 'months').date(1).hour(0).minute(0).second(0)
     const endDate = moment().hour(23).minute(59).second(59)
     this.state = {
       listView: true,
       addFormView: false,
       filterFormView: false,
-      credits: transactions,
+      credits: transactions.reverse(),
       filterInfo: { filterType: 'since two months ago', startDate, endDate, category: 'everything' },
       isLoading: true
     }
@@ -67,6 +67,7 @@ class Credits extends React.Component {
         filterTransactions = (category, startDate, endDate) => {
           // Filter for transction in a time range and of a specific category (removed reverse)
           let credits = JSON.parse(JSON.stringify(this.props.transactions.credits))
+          credits.reverse()
           let filtered
           if (category === 'everything') {
             filtered = credits.filter(credit => moment(credit.created).isBetween(startDate, endDate))

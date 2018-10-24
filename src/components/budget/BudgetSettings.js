@@ -50,7 +50,14 @@ class BudgetSettings extends React.Component {
   }
 
     handleChange = (event) => {
-      const value = Number(event.target.value) ? Number(event.target.value) : event.target.value
+      let value
+      if (Number(event.target.value)) {
+        value = Number(event.target.value) 
+      } else if (event.target.value === '') {
+        value = 0
+      } else {
+        value = event.target.value
+      }
       const name = event.target.name
       this.setState(prev => ({ ...prev, budgetCat: { ...prev.budgetCat, [`${name}`]: value } }))
     }
