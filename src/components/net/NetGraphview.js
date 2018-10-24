@@ -7,18 +7,25 @@ class NetGraphview extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-
+      lineGraphData: []
     }
   }
 
   componentDidMount () {
-
+    let data = JSON.parse(JSON.stringify(this.props.lineGraphData))
+    data[0].data.forEach(obj => {
+      obj.y /= 100
+    })
+    console.log(data)
+    // debugger
+    this.setState({ lineGraphData: data })
   }
 
   render () {
+    console.log(this.state.lineGraphData)
     return (
       <div>
-        <LineGraph lineGraphData={this.props.lineGraphData} />
+        <LineGraph lineGraphData={this.state.lineGraphData} />
       </div>
     )
   }

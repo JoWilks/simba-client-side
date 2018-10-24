@@ -59,7 +59,7 @@ class NetTransactionview extends React.Component {
             {item.x}
           </Grid>
           <Grid item xs={4} container direction='column'>
-            {`£${item.y}`}
+            {`£${item.y/100}`}
           </Grid>
         </Grid>
       </Paper>
