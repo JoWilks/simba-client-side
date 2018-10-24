@@ -4,7 +4,7 @@ import BarGraph from '../graphs/BarGraph'
 import LineGraph from '../graphs/LineGraph'
 import { connect } from 'react-redux'
 import { moment } from '../../datefunctions'
-import { timingSafeEqual } from 'crypto'
+import { categoryColourMatcher } from './colourMatcher'
 
 class Graphview extends React.Component {
   constructor (props) {
@@ -50,6 +50,7 @@ class Graphview extends React.Component {
           obj['value'] = transaction.amount < 0
             ? (transaction.amount / -1)
             : transaction.amount
+          obj['color'] = categoryColourMatcher(transaction.category)
           pieGraphData[transaction.category] = obj
         }
       })
@@ -274,10 +275,7 @@ class Graphview extends React.Component {
         })
         arrayData.push(obj)
       })
-      arrayData.forEach(obj => {
-        obj.y < 0 ? obj.y /= -100 : obj.y /= 100
-      })
-      
+      arrayData.forEach(obj => { obj.y < 0 ? obj.y /= -100 : obj.y /= 100 })
       return [ { id: category, data: arrayData } ]
     }
 

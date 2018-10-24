@@ -35,7 +35,7 @@ class DonutGraph extends React.Component {
           radialLabelsLinkStrokeWidth={1}
           radialLabelsLinkColor='inherit'
           slicesLabelsSkipAngle={10}
-          slicesLabelsTextColor='#333333'
+          slicesLabelsTextColor='inherit'
           animate
           motionStiffness={90}
           motionDamping={15}
@@ -59,32 +59,7 @@ class DonutGraph extends React.Component {
               'spacing': 10
             }
           ]}
-          fill={[
-            {
-              'match': {
-                'id': 'eating_out'
-              },
-              'id': 'dots'
-            },
-            {
-              'match': {
-                'id': 'entertainment'
-              },
-              'id': 'dots'
-            },
-            {
-              'match': {
-                'id': 'shopping'
-              },
-              'id': 'dots'
-            },
-            {
-              'match': {
-                'id': 'bills'
-              },
-              'id': 'lines'
-            }
-          ]}
+          fill={[]}
           legends={[]}
         />
       </Paper>

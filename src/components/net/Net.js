@@ -35,7 +35,8 @@ class Net extends React.Component {
       lineGraphData: [],
       listView: true,
       filterInfo: { filterType: 'since two months ago', startDate, endDate, category: 'everything' },
-      isLoading: true
+      isLoading: true,
+      runningTotal: 0
     }
   }
 
@@ -66,10 +67,16 @@ class Net extends React.Component {
       arrayObjsDateSum.push(newObj)
     })
     // convert to £/$
-    arrayObjsDateSum.forEach(obj => { obj.y /= 100 })
+    let runningTotal = 0
+    arrayObjsDateSum.forEach(obj => {
+      runningTotal += obj.y
+      obj.y /= 100
+    })
+
+    // get running total
 
     let lineGraphData = [{ id: 'net', data: arrayObjsDateSum }]
-    this.setState({ netAll: arrayObjsDateSum, net: arrayObjsDateSum, lineGraphData, isLoading: false })
+    this.setState({ netAll: arrayObjsDateSum, net: arrayObjsDateSum, lineGraphData, isLoading: false, runningTotal: runningTotal/100 })
   }
 
     toggleListView = () => {
@@ -102,14 +109,19 @@ class Net extends React.Component {
 
     filterTransactions = (category, startDate, endDate) => {
       // Filter for net values in a time range
+      let runningTotal = 0
       let netAll = [...this.state.netAll]
       let newNet = []
       netAll.forEach(item => {
         let date = moment(item.x, 'dddd Do MMMM').hour(1)
         if (date.isBetween(startDate, endDate, null, [])) {
           newNet.push(item)
+          runningTotal += item.y
         }
       })
+
+      // calculate running total of data points
+
       let lineGraphData = [{ id: 'net', data: newNet }]
       this.setState({ net: newNet, lineGraphData })
     }
@@ -138,6 +150,7 @@ class Net extends React.Component {
             this.state.isLoading &&
             <CircularProgress color='secondary' size={100} />
           }
+          <h3>Net Total: £{this.state.runningTotal}</h3>
           {view}
 
           <div>

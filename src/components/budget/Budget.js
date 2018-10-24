@@ -61,7 +61,6 @@ class Budget extends React.Component {
     calculateBudget = () => {
       // create hash of category name and cuurent total spend values for specified timeframes && set budget target
       let allDebitsInTimeframe = this.filterByTimeFrame()
-      console.log(allDebitsInTimeframe)
       this.filterByCategories(allDebitsInTimeframe)
     }
 
@@ -154,7 +153,7 @@ class Budget extends React.Component {
                       <p>Here's how your total {timeFrame} budget is tracking:</p>
                     </Grid>
                     <Grid item xs={12}>
-                      <HalfCircleMeter value={calcPercent(totalSpent / -100, totalBudget)} />
+                      <HalfCircleMeter backgroundColor='#ff7fb1' foregroundColor='#ff004a' value={calcPercent(totalSpent / -100, totalBudget)} />
                     </Grid>
                     <Grid item xs={12}>
                       <p>Total Spent: £{totalSpent / -100} { totalBudget > 0 ? ` out of your £${totalBudget} budget` : ` but you haven't set a budget!`}</p>

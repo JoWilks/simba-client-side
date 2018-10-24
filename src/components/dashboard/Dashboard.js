@@ -179,7 +179,7 @@ class Dashboard extends React.Component {
               <Grid container spacing={0} >
                 <Grid item xs={12}>
                   <h3>Your {this.props.budget.timeFrame} budget</h3>
-                  <HalfCircleMeter value={this.calcPercent(this.state.totalSpent, this.state.budgetTotal)} />
+                  <HalfCircleMeter backgroundColor='#ff7fb1' foregroundColor='#ff004a' value={this.calcPercent(this.state.totalSpent, this.state.budgetTotal)} />
                   <p>You've spent £{this.state.totalSpent} out of your £{this.state.budgetTotal} {this.props.budget.timeFrame} budget</p>
                 </Grid>
               </Grid>

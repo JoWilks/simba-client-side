@@ -133,7 +133,7 @@ class FilterForm extends React.Component {
           <Paper className={classes.paper}>
             <Grid container spacing={24}>
               <Grid item xs={10} />
-              <Grid item xs={2}><IconButton color='inherit' onClick={this.props.toggleFilterForm} class='material-icons'>close</IconButton></Grid>
+              <Grid item xs={2}><IconButton color='inherit' onClick={this.props.toggleFilterForm} className='material-icons'>close</IconButton></Grid>
               <Grid item xs={12} sm container direction='row' spacing={16} >
                 <p>{descriptionFilter}</p> <br />
                 {categoryFilter}
