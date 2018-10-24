@@ -35,7 +35,9 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount () {
+    //update account & pot details
     const { accountName } = this.state
+
     const accountDetails = JSON.parse(localStorage.getItem('account_details'))
     const potDetails = JSON.parse(localStorage.getItem('pot_details'))
     if (accountDetails.accounts.length !== 0 && accountName === '') {

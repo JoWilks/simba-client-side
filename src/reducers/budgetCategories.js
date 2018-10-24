@@ -1,4 +1,4 @@
-import { GET_BUDGET_CATEGORIES, SET_BUDGET_CATEGORIES, STORE_CURRENT_SPENDING } from '../actions/types'
+import { GET_BUDGET_CATEGORIES, SET_BUDGET_CATEGORIES, PUT_BUDGET_CATEGORIES, STORE_CURRENT_SPENDING, SET_BC_IS_FETCHING, SET_BC_FETCHING_SUCCESS, SET_BC_FETCH_ERROR } from '../actions/types'
 
 const initialState = {
   timeFrame: 'weekly basis',
@@ -16,7 +16,10 @@ const initialState = {
     general: 0,
     holidays: 0
   },
-  targetsSpent: []
+  targetsSpent: [],
+  isFetching: false,
+  fetchSuccess: false,
+  fetchError: null
 }
 
 const budgetCategoriesReducer = (state = initialState, action) => {
@@ -30,16 +33,32 @@ const budgetCategoriesReducer = (state = initialState, action) => {
       state['timeFrame'] = action.payload.categories[0].budget_timeframe
       state.categories = result
       return state
-    case SET_BUDGET_CATEGORIES:
+    case PUT_BUDGET_CATEGORIES:
       action.payload.budgetCat.forEach(cat => {
         result[cat.name] = cat.budget_amount
       })
       state['timeFrame'] = action.payload.budgetCat[0].budget_timeframe
       state.categories = result
       return state
+    case SET_BUDGET_CATEGORIES:
+      return Object.assign({}, state, {
+        categories: action.payload.budgetCat
+      })
     case STORE_CURRENT_SPENDING:
       state.targetsSpent = action.payload
       return state
+    case SET_BC_IS_FETCHING:
+      return Object.assign({}, state, {
+        isFetching: action.payload
+      })
+    case SET_BC_FETCHING_SUCCESS:
+      return Object.assign({}, state, {
+        fetchSuccess: action.payload
+      })
+    case SET_BC_FETCH_ERROR:
+      return Object.assign({}, state, {
+        fetchError: action.payload
+      })
     default:
       return state
   }

@@ -63,6 +63,7 @@ class BudgetSettings extends React.Component {
     handleSubmit = (event) => {
       event.preventDefault()
       let budgetObj = JSON.parse(JSON.stringify(this.state))
+      this.props.putCategoriesBudget(budgetObj)
       this.props.setCategoriesBudget(budgetObj)
       this.props.calculateBudget()
       this.props.toggleViewSettings()
@@ -108,7 +109,7 @@ class BudgetSettings extends React.Component {
             <p>For a total spend of £{this.state.runningTotal} on a {this.state.timeFrame} basis</p>
             <Button color='secondary' variant='contained' onClick={this.handleSubmit}>SUBMIT</Button>
           </FormControl>
-          {/* </Grid> */}
+
         </Paper>
       )
     }

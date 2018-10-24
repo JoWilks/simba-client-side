@@ -140,7 +140,8 @@ const mapStateToProps = state => ({
   accounts: state.accountsReducer,
   categories: state.categoriesReducer,
   budget: state.budgetCategoriesReducer,
-  views: state.viewsReducer
+  views: state.viewsReducer,
+  fetchStatus: state.fetchStatus
 })
 
 export default withRouter(connect(mapStateToProps, actions)(App))

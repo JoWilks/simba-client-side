@@ -7,16 +7,14 @@ import userReducer from './user'
 import dateReducer from './date'
 import viewsReducer from './views'
 
-
 const rootReducer = combineReducers({
-    userReducer: userReducer,
-    transactionsReducer: transactionsReducer,
-    accountsReducer: accountsReducer,
-    dateReducer: dateReducer,
-    categoriesReducer: categoriesReducer,
-    budgetCategoriesReducer: budgetCategoriesReducer,
-    viewsReducer: viewsReducer
-
+  userReducer: userReducer,
+  transactionsReducer: transactionsReducer,
+  accountsReducer: accountsReducer,
+  dateReducer: dateReducer,
+  categoriesReducer: categoriesReducer,
+  budgetCategoriesReducer: budgetCategoriesReducer,
+  viewsReducer: viewsReducer
 })
 
 export default rootReducer

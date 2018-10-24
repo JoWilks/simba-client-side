@@ -134,6 +134,7 @@ class Budget extends React.Component {
           {
             viewSettings
               ? <BudgetSettings budget={this.props.budget}
+                putCategoriesBudget={this.props.putCategoriesBudget}
                 setCategoriesBudget={this.props.setCategoriesBudget}
                 toggleViewSettings={this.toggleViewSettings}
                 calculateBudget={this.calculateBudget}
