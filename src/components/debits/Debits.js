@@ -10,6 +10,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { moment } from '../../datefunctions'
 
@@ -35,7 +36,8 @@ class Debits extends React.Component {
       addFormView: false,
       filterFormView: false,
       debits: transactions,
-      filterInfo: { filterType: 'since two months ago', startDate, endDate, category: 'everything' }
+      filterInfo: { filterType: 'since two months ago', startDate, endDate, category: 'everything' },
+      isLoading: true
     }
 
     this.setFilterType = this.setFilterType.bind(this)
@@ -46,6 +48,7 @@ class Debits extends React.Component {
   }
 
   componentDidMount () {
+    this.setState({ isLoading: false })
   }
 
     toggleListView = () => {
@@ -119,7 +122,10 @@ class Debits extends React.Component {
 
       return (
         <div className={classes.root} >
-
+          {
+            this.state.isLoading &&
+            <CircularProgress color='secondary' size={100} />
+          }
           {view}
 
           <div >

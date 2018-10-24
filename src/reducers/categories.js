@@ -1,5 +1,5 @@
 import { DEBIT_CATEGORIES, CREDIT_CATEGORIES } from '../actions/types'
-
+//REDUNDANT?
 const initialState = {
   debit: [
     'eating_out',

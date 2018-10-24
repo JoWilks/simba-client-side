@@ -4,6 +4,7 @@ import Graphview from '../templates/Graphview'
 import BottomBar from '../BottomBar'
 import AddForm from '../templates/AddForm'
 import FilterForm from '../templates/FilterForm'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import '../templates/Forms.css'
 
 import { moment } from '../../datefunctions'
@@ -19,11 +20,13 @@ class Credits extends React.Component {
       addFormView: false,
       filterFormView: false,
       credits: transactions,
-      filterInfo: { filterType: 'since two months ago', startDate, endDate, category: 'everything' }
+      filterInfo: { filterType: 'since two months ago', startDate, endDate, category: 'everything' },
+      isLoading: true
     }
   }
 
   componentDidMount () {
+    this.setState({ isLoading: false })
   }
 
         toggleListView = () => {
@@ -93,7 +96,10 @@ class Credits extends React.Component {
 
           return (
             <div>
-
+              {
+                this.state.isLoading &&
+                <CircularProgress color='secondary' size={100} />
+              }
               {view}
 
               <div>

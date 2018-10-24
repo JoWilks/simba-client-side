@@ -10,7 +10,7 @@ class DonutGraph extends React.Component {
     // otherwise height will be 0 and no chart will be rendered.
     // website examples showcase many properties, you'll often use just a few of them.
     return (
-      <Paper className='donut-graph'>
+      <div className='dashboard-donut-graph'>
         <ResponsivePie
           data={this.props.donutGraphData}
           margin={{
@@ -87,7 +87,7 @@ class DonutGraph extends React.Component {
           ]}
           legends={[]}
         />
-      </Paper>
+      </div>
     )
   }
 }

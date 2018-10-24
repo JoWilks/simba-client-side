@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { moment } from '../../datefunctions'
 
@@ -33,8 +34,8 @@ class Net extends React.Component {
       net: [],
       lineGraphData: [],
       listView: true,
-      filterInfo: { filterType: 'since two months ago', startDate, endDate, category: 'everything' }
-
+      filterInfo: { filterType: 'since two months ago', startDate, endDate, category: 'everything' },
+      isLoading: true
     }
   }
 
@@ -68,7 +69,7 @@ class Net extends React.Component {
     arrayObjsDateSum.forEach(obj => { obj.y /= 100 })
 
     let lineGraphData = [{ id: 'net', data: arrayObjsDateSum }]
-    this.setState({ netAll: arrayObjsDateSum, net: arrayObjsDateSum, lineGraphData })
+    this.setState({ netAll: arrayObjsDateSum, net: arrayObjsDateSum, lineGraphData, isLoading: false })
   }
 
     toggleListView = () => {
@@ -133,7 +134,10 @@ class Net extends React.Component {
 
       return (
         <div className={classes.root} >
-
+          {
+            this.state.isLoading &&
+            <CircularProgress color='secondary' size={100} />
+          }
           {view}
 
           <div>

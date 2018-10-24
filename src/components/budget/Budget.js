@@ -1,6 +1,6 @@
 import React from 'react'
 import BudgetSettings from './BudgetSettings'
-import { LineMeter, HalfCircleMeter } from 'react-svg-meters'
+import { HalfCircleMeter } from 'react-svg-meters'
 import { moment } from '../../datefunctions'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import { compose } from '../../../../../Library/Caches/typescript/3.1/node_modules/redux'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const styles = theme => ({
   root: {
@@ -37,7 +38,8 @@ class Budget extends React.Component {
       targetsSpent: [],
       totalSpent: 0,
       totalBudget: 0,
-      timeFrame: timeFrame // will need to pull this from redux
+      timeFrame: timeFrame, // will need to pull this from redux
+      isLoading: true
     }
     this.calculateBudget = this.calculateBudget.bind(this)
     this.setTimeFrame = this.setTimeFrame.bind(this)
@@ -45,6 +47,7 @@ class Budget extends React.Component {
 
   componentDidMount () {
     this.calculateBudget()
+    this.setState({ isLoading: false })
   }
 
     toggleViewSettings = () => {
@@ -131,6 +134,10 @@ class Budget extends React.Component {
 
       return (
         <div>
+          {
+            this.state.isLoading &&
+            <CircularProgress color='secondary' size={100} />
+          }
           {
             viewSettings
               ? <BudgetSettings budget={this.props.budget}

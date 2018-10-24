@@ -5,6 +5,12 @@
 
 .donut-graph {
     text-align: center;
+    height: 500px;
+    width: 100%;
+}
+
+.dashboard-donut-graph {
+    text-align: center;
     height: 300px;
     width: 100%;
 }
