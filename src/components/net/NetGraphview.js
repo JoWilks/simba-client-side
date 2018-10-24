@@ -16,13 +16,10 @@ class NetGraphview extends React.Component {
     data[0].data.forEach(obj => {
       obj.y /= 100
     })
-    console.log(data)
-    // debugger
     this.setState({ lineGraphData: data })
   }
 
   render () {
-    console.log(this.state.lineGraphData)
     return (
       <div>
         <LineGraph lineGraphData={this.state.lineGraphData} />

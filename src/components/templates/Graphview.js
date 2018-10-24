@@ -258,7 +258,6 @@ class Graphview extends React.Component {
     }
 
     sortIntoTotalsforDates = (arrayOfDates, category) => {
-      // removed .reverse()
       const allTransactions = JSON.parse(JSON.stringify(this.props.allTransactions))
       let arrayData = []
       arrayOfDates.forEach((date, index) => {

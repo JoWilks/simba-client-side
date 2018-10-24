@@ -72,7 +72,7 @@ class Net extends React.Component {
       })
 
       // change to monthly data points
-      let graphData = arrayObjsDateSum.length > 30 && this.state.filterInfo.filterType !== 'this month'
+      let graphData = arrayObjsDateSum.length > 31 && this.state.filterInfo.filterType !== 'this month'
         ? this.filterTransactionsMonthly(arrayObjsDateSum)
         : arrayObjsDateSum
 
@@ -153,11 +153,15 @@ class Net extends React.Component {
       let runningTotal = 0
       let netAll = [...this.state.netAll]
       let newNet = []
-      let LengthOfTime = endDate - startDate
-      debugger
+      let lengthOfTime = (endDate - startDate) / (1000 * 60 * 60 * 24)
+      let lineGraphData
 
-      if (this.state.filterInfo.filterType === 'since two months ago') {
-        newNet = this.filterTransactionsMonthly()
+      if (this.state.filterInfo.filterType === 'since two months ago' || lengthOfTime > 31) {
+        let data = this.filterTransactionsMonthly()
+        lineGraphData = [{ id: 'net', data }]
+        data.forEach(obj => {
+          runningTotal += obj.y
+        })
       } else {
         netAll.forEach(item => {
           let date = moment(item.realDate, 'MM-DD-YYYY HH:mm').hour(1)
@@ -166,9 +170,9 @@ class Net extends React.Component {
             runningTotal += item.y
           }
         })
+        lineGraphData = [{ id: 'net', data: newNet }]
       }
 
-      let lineGraphData = [{ id: 'net', data: newNet }]
       this.setState({ net: newNet, lineGraphData, runningTotal })
     }
 
