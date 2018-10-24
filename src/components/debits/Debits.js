@@ -87,8 +87,8 @@ class Debits extends React.Component {
     }
 
     filterTransactions = (category, startDate, endDate) => {
-      // Filter for transction in a time range and of a specific category
-      let debits = JSON.parse(JSON.stringify(this.props.transactions.debits)).reverse()
+      // Filter for transction in a time range and of a specific category .reverse()
+      let debits = JSON.parse(JSON.stringify(this.props.transactions.debits))
       let filtered
 
       if (category === 'everything') {

@@ -16,6 +16,22 @@ const styles = theme => ({
     textAlign: 'center',
     alignItems: 'center'
   },
+  rootNeg: {
+    flexGrow: 1,
+    maxWidth: 600,
+    padding: theme.spacing.unit * 1.5,
+    textAlign: 'center',
+    alignItems: 'center',
+    color: 'red'
+  },
+  rootPos: {
+    flexGrow: 1,
+    maxWidth: 600,
+    padding: theme.spacing.unit * 1.5,
+    textAlign: 'center',
+    alignItems: 'center',
+    color: 'green'
+  },
   paper: {
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
@@ -26,8 +42,18 @@ const styles = theme => ({
 class NetTransactionview extends React.Component {
   render () {
     const { item, classes } = this.props
+
+    let style
+    if (item.y === 0) {
+      style = 'root'
+    } else if (item.y > 0 ) {
+      style = 'rootPos'
+    } else {
+      style = 'rootNeg'
+    }
+
     return (
-      <Paper className={classes.root}>
+      <Paper className={classes[style]}>
         <Grid container spacing={8}>
           <Grid item xs={8} container direction='column'>
             {item.x}

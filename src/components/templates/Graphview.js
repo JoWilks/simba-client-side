@@ -178,8 +178,8 @@ class Graphview extends React.Component {
     }
 
     sortIntoCategoriesandDateRange = (obj, rangeType) => {
-      // add categories with values of summed amounts to each date range
-      const allTransactions = JSON.parse(JSON.stringify(this.props.allTransactions)).reverse()
+      // add categories with values of summed amounts to each date range .reverse()
+      const allTransactions = JSON.parse(JSON.stringify(this.props.allTransactions))
       Object.keys(obj).forEach(date => {
         const startKeyDate = moment(date).hour(0).minute(0).second(0)
         let endKeyDate
@@ -258,7 +258,8 @@ class Graphview extends React.Component {
     }
 
     sortIntoTotalsforDates = (arrayOfDates, category) => {
-      const allTransactions = JSON.parse(JSON.stringify(this.props.allTransactions)).reverse()
+      // removed .reverse()
+      const allTransactions = JSON.parse(JSON.stringify(this.props.allTransactions))
       let arrayData = []
       arrayOfDates.forEach((date, index) => {
         let obj = {}

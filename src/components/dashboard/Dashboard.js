@@ -147,7 +147,17 @@ class Dashboard extends React.Component {
       <div>
         { isLoading
           ? <CircularProgress color='secondary' size={100} />
-          : <Grid className={classes.root}>
+          :           <Grid className={classes.root}>
+            <Paper className={classes.paper}>
+              <Grid container spacing={0} >
+                <Grid item xs={12}>
+                  <h3>Your {this.props.budget.timeFrame} budget</h3>
+                  <HalfCircleMeter backgroundColor='#ff7fb1' foregroundColor='#ff004a' value={this.calcPercent(this.state.totalSpent, this.state.budgetTotal)} />
+                  <p>You've spent £{this.state.totalSpent} out of your £{this.state.budgetTotal} {this.props.budget.timeFrame} budget</p>
+                </Grid>
+              </Grid>
+            </Paper><br />
+
             <Paper className={classes.paper}>
               <Grid container spacing={0} >
                 <Grid item xs={12}>
@@ -174,16 +184,6 @@ class Dashboard extends React.Component {
                 </Grid>
               </Grid>
             </Paper> <br />
-
-            <Paper className={classes.paper}>
-              <Grid container spacing={0} >
-                <Grid item xs={12}>
-                  <h3>Your {this.props.budget.timeFrame} budget</h3>
-                  <HalfCircleMeter backgroundColor='#ff7fb1' foregroundColor='#ff004a' value={this.calcPercent(this.state.totalSpent, this.state.budgetTotal)} />
-                  <p>You've spent £{this.state.totalSpent} out of your £{this.state.budgetTotal} {this.props.budget.timeFrame} budget</p>
-                </Grid>
-              </Grid>
-            </Paper>
           </Grid>
         }
       </div>

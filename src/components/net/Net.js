@@ -108,7 +108,7 @@ class Net extends React.Component {
     }
 
     filterTransactions = (category, startDate, endDate) => {
-      // Filter for net values in a time range
+      // Filter for net values in a time range & get running total
       let runningTotal = 0
       let netAll = [...this.state.netAll]
       let newNet = []
@@ -120,10 +120,8 @@ class Net extends React.Component {
         }
       })
 
-      // calculate running total of data points
-
       let lineGraphData = [{ id: 'net', data: newNet }]
-      this.setState({ net: newNet, lineGraphData })
+      this.setState({ net: newNet, lineGraphData, runningTotal })
     }
 
     render () {
@@ -133,8 +131,7 @@ class Net extends React.Component {
       let view
 
       if (filterFormView) {
-        view = <FilterForm categories={this.props.categories.debit}
-          toggleFilterForm={this.toggleFilterForm}
+        view = <FilterForm toggleFilterForm={this.toggleFilterForm}
           setFilterType={this.setFilterType}
           filterTransactions={this.filterTransactions} />
       } else if (listView) {
