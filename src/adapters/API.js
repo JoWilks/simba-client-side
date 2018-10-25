@@ -1,15 +1,18 @@
 import { get } from 'https'
 require('dotenv').config()
 
+const user_token = localStorage.getItem('user_token')
+const monzo_token = localStorage.getItem('monzo_token')
+
 class API {
   // USER API CALLS
   static login (username, password) {
     return fetch(API.loginURL, {
       method: 'POST',
-      headers: { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json' 
-        },
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
       body: JSON.stringify({
         user: {
           username,
@@ -41,6 +44,7 @@ class API {
     }).then(resp => resp.json())
   }
 
+  //redundant
   static exchange () {
     return fetch(API.baseURL + '/exchange', {
       method: 'POST',
@@ -48,15 +52,16 @@ class API {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${user_token}`
       },
-      body: JSON.stringify({ 
-              exchange: {
-                auth_token: localStorage.getItem('auth_token') 
-              }
-            })
+      body: JSON.stringify({
+        exchange: {
+          auth_token: localStorage.getItem('auth_token')
+        }
+      })
     })
-    .then(resp => resp.json())
+      .then(resp => resp.json())
   }
 
+    //redundant
   static refresh () {
     return fetch(API.baseURL + '/refresh', {
       headers: {
@@ -64,10 +69,10 @@ class API {
         'Authorization': `Bearer ${user_token}`
       }
     })
-    .then(resp => resp.json())
+      .then(resp => resp.json())
   }
 
-//RAILS BUDGET CALLS
+  // RAILS BUDGET CALLS
 
   static get_categories_budgets () {
     return fetch(API.budgetCatURL, {
@@ -76,7 +81,7 @@ class API {
         'Authorization': `Bearer ${localStorage.getItem('user_token')}`
       }
     })
-    .then(resp => resp.json())
+      .then(resp => resp.json())
   }
 
   static set_categories_budgets (budgetObj) {
@@ -88,61 +93,60 @@ class API {
       },
       body: JSON.stringify({ budgetObj })
     })
-    .then(resp => resp.json())
+      .then(resp => resp.json())
   }
 
-//MONZO AUTH CALLS
-  static check_access_token () {
-    return fetch("https://api.monzo.com/ping/whoami", {
-      headers: {'Authorization':`Bearer ${monzo_token}`}
+  // MONZO AUTH CALLS REDUNDANT
+  static check_access_token (monzo_token) {
+    return fetch('https://api.monzo.com/ping/whoami', {
+      headers: { 'Authorization': `Bearer ${monzo_token}` }
     })
-    .then( resp => resp.json() )
+      .then(resp => resp.json())
   }
 
-//MONZO API CALLS
+  // MONZO API CALLS
 
   static get_list_accounts () {
     return fetch(API.listAccountsURL, {
       method: 'GET',
-      headers: {'Authorization':`Bearer ${monzo_token}`}
+      headers: { 'Authorization': `Bearer ${monzo_token}` }
     })
-    .then(resp => resp.json())
+      .then(resp => resp.json())
   }
 
   static read_balance_account () {
     return fetch(API.readBalanceURL + `?account_id=${account_id}`, {
       method: 'GET',
-      headers: {'Authorization':`Bearer ${monzo_token}`}
+      headers: { 'Authorization': `Bearer ${monzo_token}` }
     })
-    .then(resp => resp.json())
+      .then(resp => resp.json())
   }
 
   static list_pots () {
     return fetch(API.listPotsURL, {
       method: 'GET',
-      headers: {'Authorization':`Bearer ${monzo_token}`}
+      headers: { 'Authorization': `Bearer ${monzo_token}` }
     })
-    .then(resp => resp.json())
+      .then(resp => resp.json())
   }
 
   static get_all_transactions () {
     return fetch(API.getAllTransactionsURL + `?account_id=${account_id}`, {
       method: 'GET',
-      headers: {'Authorization':`Bearer ${monzo_token}`}
+      headers: { 'Authorization': `Bearer ${monzo_token}` }
     })
-    .then(resp => resp.json())
+      .then(resp => resp.json())
   }
 
   static get_range_transactions (since, before) {
-    //need to convert the DateTimes to An RFC 3339 encoded-timestamp, can do new Date().toISOString()
+    // need to convert the DateTimes to An RFC 3339 encoded-timestamp, can do new Date().toISOString()
     const rest_url = `&since=${since}&before${before}`
     return fetch(API.getAllTransactionsURL + `?&account_id=${account_id}${rest_url}`, {
       method: 'GET',
-      headers: {'Authorization':`Bearer ${monzo_token}`}
+      headers: { 'Authorization': `Bearer ${monzo_token}` }
     })
-    .then(resp => resp.json())
+      .then(resp => resp.json())
   }
-
 }
 
 API.baseURL = 'http://localhost:3000/api/v1'
@@ -161,8 +165,6 @@ API.readBalanceURL = API.monzoBaseURL + '/balance'
 API.listPotsURL = API.monzoBaseURL + '/pots'
 API.getAllTransactionsURL = API.monzoBaseURL + '/transactions'
 
-const user_token = localStorage.getItem('user_token')
-const monzo_token = localStorage.getItem('monzo_token')
 const account_id = 'acc_00009YD5n3MghHFkmJCPib'
 
 export default API

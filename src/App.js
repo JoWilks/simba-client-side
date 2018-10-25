@@ -18,34 +18,50 @@ import Debits from './components/debits/Debits'
 import Budget from './components/budget/Budget'
 import Credits from './components/credits/Credits'
 import Net from './components/net/Net'
+import { moment } from './datefunctions'
+
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 class App extends Component {
+  state = {
+    isLoading: false
+  }
+
   loginRedirect= (username) => {
+    this.setState({ isLoading: true })
     this.props.login(username)
     const { history } = this.props
     const monzo_token = localStorage.getItem('monzo_token')
-    if (monzo_token) {
-      const { dispatch } = this.props
-      if (localStorage.getItem('last_two_months')) {
-        dispatch('STORE_LAST_TWO_MONTHS', JSON.parse(localStorage.getItem('last_two_months')))
-        dispatch('STORE_CREDITS')
-        dispatch('STORE_DEBITS')
+
+    API.check_access_token(monzo_token).then(data => {
+      if (data.authenticated) {
+        const { dispatch } = this.props
+        if (localStorage.getItem('last_two_months')) {
+          dispatch('STORE_LAST_TWO_MONTHS', JSON.parse(localStorage.getItem('last_two_months')))
+          dispatch('STORE_CREDITS')
+          dispatch('STORE_DEBITS')
+        } else {
+          this.last_two_months()
+        }
+        localStorage.getItem('account_details')
+          ? dispatch('STORE_ACCOUNTS', JSON.parse(localStorage.getItem('account_details')))
+          : this.props.store_accounts_details()
+        localStorage.getItem('pot_details')
+          ? dispatch('STORE_POTS', JSON.parse(localStorage.getItem('pot_details')))
+          : this.props.store_pots_details()
+        localStorage.getItem('budget_categories')
+          ? dispatch('GET_BUDGET_CATEGORIES', JSON.parse(localStorage.getItem('budget_categories')))
+          : this.props.getCategoriesBudget()
       } else {
-        this.props.last_two_months()
+        history.push('/monzo')
       }
-      localStorage.getItem('account_details')
-        ? dispatch('STORE_ACCOUNTS', JSON.parse(localStorage.getItem('account_details')))
-        : this.props.store_accounts_details()
-      localStorage.getItem('pot_details')
-        ? dispatch('STORE_POTS', JSON.parse(localStorage.getItem('pot_details')))
-        : this.props.store_pots_details()
-      localStorage.getItem('budget_categories')
-        ? dispatch('GET_BUDGET_CATEGORIES', JSON.parse(localStorage.getItem('budget_categories')))
-        : this.props.getCategoriesBudget()
-      history.push('/dashboard')
-    } else {
-      history.push('/monzo')
-    }
+    }).then(() => {
+      setTimeout(() => {
+        this.setState({ isLoading: false })
+        history.push('/dashboard')
+      }
+      , 3000)
+    })
   }
 
   logout = () => {
@@ -117,6 +133,10 @@ class App extends Component {
           />
         </header>
         <div className='body'>
+          {
+            this.state.isLoading &&
+            <CircularProgress color='secondary' size={100} />
+          }
           { this.props.currentUser
             ? <Route exact path='/dashboard' component={props => <Dashboard {...this.props} />} />
             : <Route exact path='/login' component={props => <Login loginRedirect={this.loginRedirect} {...this.props} />} />
