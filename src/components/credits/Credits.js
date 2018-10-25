@@ -83,7 +83,9 @@ class Credits extends React.Component {
           let view
 
           if (filterFormView) {
-            view = <FilterForm categories={this.props.categories.debit}
+            view = <FilterForm category={this.state.filterInfo.category}
+              timeFrame={this.state.filterInfo.filterType}
+              categories={this.props.categories.debit}
               toggleFilterForm={this.toggleFilterForm}
               setFilterType={this.setFilterType}
               filterTransactions={this.filterTransactions} />

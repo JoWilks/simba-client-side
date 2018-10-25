@@ -199,7 +199,9 @@ class Net extends React.Component {
       let view
 
       if (filterFormView) {
-        view = <FilterForm toggleFilterForm={this.toggleFilterForm}
+        view = <FilterForm category={this.state.filterInfo.category}
+          timeFrame={this.state.filterInfo.filterType}
+          toggleFilterForm={this.toggleFilterForm}
           setFilterType={this.setFilterType}
           filterTransactions={this.filterTransactions} />
       } else if (listView) {

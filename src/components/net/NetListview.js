@@ -9,14 +9,10 @@ class NetListview extends React.Component {
     }
   }
   componentDidMount () {
-    let net = JSON.parse(JSON.stringify(this.props.net))
-    net.reverse()
-    this.setState({ net: net })
   }
 
   render () {
     let net = JSON.parse(JSON.stringify(this.props.net))
-    net.reverse()
     return (
       <div>
         {

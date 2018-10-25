@@ -107,8 +107,10 @@ class Debits extends React.Component {
 
       // view = <AddForm categories={this.props.categories.debit} ADD LATER
       //   toggleAddForm={this.toggleAddForm} />
-      if (filterFormView) {
-        view = <FilterForm categories={this.props.categories.debit}
+      if (filterFormView) { 
+        view = <FilterForm category={this.state.filterInfo.category}
+          timeFrame={this.state.filterInfo.filterType}
+          categories={this.props.categories.debit}
           toggleFilterForm={this.toggleFilterForm}
           setFilterType={this.setFilterType}
           filterTransactions={this.filterTransactions} />

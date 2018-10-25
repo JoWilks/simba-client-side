@@ -63,6 +63,10 @@ class FilterForm extends React.Component {
     }
   }
 
+  componentDidMount () {
+    this.setState({ timeFrame: this.props.timeFrame, category: this.props.category })
+  }
+
     handleChange = (event) => {
       this.setState({ [event.target.name]: event.target.value })
     }
