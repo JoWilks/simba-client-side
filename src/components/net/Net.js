@@ -38,6 +38,7 @@ class Net extends React.Component {
       isLoading: true,
       runningTotal: 0
     }
+
   }
 
   componentDidMount () {
@@ -155,7 +156,7 @@ class Net extends React.Component {
       let newNet = []
       let lengthOfTime = (endDate - startDate) / (1000 * 60 * 60 * 24)
       let lineGraphData
-
+      debugger
       if (this.state.filterInfo.filterType === 'since two months ago' || lengthOfTime > 31) {
         // create range of daily timepoints for list page
         netAll.forEach(item => {

@@ -32,36 +32,48 @@ class App extends Component {
     this.props.login(username)
     const { history } = this.props
     const monzo_token = localStorage.getItem('monzo_token')
+    const { dispatch } = this.props
 
-    API.check_access_token(monzo_token).then(data => {
-      if (data.authenticated) {
-        const { dispatch } = this.props
-        if (localStorage.getItem('last_two_months')) {
-          dispatch('STORE_LAST_TWO_MONTHS', JSON.parse(localStorage.getItem('last_two_months')))
-          dispatch('STORE_CREDITS')
-          dispatch('STORE_DEBITS')
+    if (!localStorage.getItem('last_two_months') &&
+    !localStorage.getItem('account_details') &&
+    !localStorage.getItem('pot_details') &&
+    !localStorage.getItem('budget_categories')) {
+      API.check_access_token(monzo_token).then(data => {
+        if (data.authenticated) {
+          if (localStorage.getItem('last_two_months')) {
+            dispatch('STORE_LAST_TWO_MONTHS', JSON.parse(localStorage.getItem('last_two_months')))
+            dispatch('STORE_CREDITS')
+            dispatch('STORE_DEBITS')
+          } else {
+            this.last_two_months()
+          }
+          localStorage.getItem('account_details')
+            ? dispatch('STORE_ACCOUNTS', JSON.parse(localStorage.getItem('account_details')))
+            : this.props.store_accounts_details()
+          localStorage.getItem('pot_details')
+            ? dispatch('STORE_POTS', JSON.parse(localStorage.getItem('pot_details')))
+            : this.props.store_pots_details()
+          localStorage.getItem('budget_categories')
+            ? dispatch('GET_BUDGET_CATEGORIES', JSON.parse(localStorage.getItem('budget_categories')))
+            : this.props.getCategoriesBudget()
+          setTimeout(() => {
+            this.setState({ isLoading: false })
+            history.push('/dashboard')
+          }, 3000)
         } else {
-          this.last_two_months()
+          history.push('/monzo')
         }
-        localStorage.getItem('account_details')
-          ? dispatch('STORE_ACCOUNTS', JSON.parse(localStorage.getItem('account_details')))
-          : this.props.store_accounts_details()
-        localStorage.getItem('pot_details')
-          ? dispatch('STORE_POTS', JSON.parse(localStorage.getItem('pot_details')))
-          : this.props.store_pots_details()
-        localStorage.getItem('budget_categories')
-          ? dispatch('GET_BUDGET_CATEGORIES', JSON.parse(localStorage.getItem('budget_categories')))
-          : this.props.getCategoriesBudget()
-      } else {
-        history.push('/monzo')
-      }
-    }).then(() => {
-      setTimeout(() => {
-        this.setState({ isLoading: false })
-        history.push('/dashboard')
-      }
-      , 3000)
-    })
+      })
+    } else {
+      dispatch('STORE_LAST_TWO_MONTHS', JSON.parse(localStorage.getItem('last_two_months')))
+      dispatch('STORE_CREDITS')
+      dispatch('STORE_DEBITS')
+      dispatch('STORE_ACCOUNTS', JSON.parse(localStorage.getItem('account_details')))
+      dispatch('STORE_POTS', JSON.parse(localStorage.getItem('pot_details')))
+      dispatch('GET_BUDGET_CATEGORIES', JSON.parse(localStorage.getItem('budget_categories')))
+      this.setState({ isLoading: false })
+      history.push('/dashboard')
+    }
   }
 
   logout = () => {
