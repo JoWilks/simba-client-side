@@ -16,6 +16,7 @@ class NetListview extends React.Component {
 
   render () {
     let net = JSON.parse(JSON.stringify(this.props.net))
+    net.reverse()
     return (
       <div>
         {
