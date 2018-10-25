@@ -98,16 +98,16 @@ export function store_pots_details () {
 
 export function getCategoriesBudget () {
   return (dispatch) => {
-    dispatch(SET_BC_IS_FETCHING, true)
-    dispatch(SET_BC_FETCHING_SUCCESS, false)
-    dispatch(SET_BC_FETCH_ERROR, null) // no actually error checks on the server side
+    // dispatch(SET_BC_IS_FETCHING, true)
+    // dispatch(SET_BC_FETCHING_SUCCESS, false)
+    // dispatch(SET_BC_FETCH_ERROR, null) // no actually error checks on the server side
 
     API.get_categories_budgets()
       .then(data => {
         console.log(data)
         dispatch({ type: GET_BUDGET_CATEGORIES, payload: data })
-        dispatch(SET_BC_IS_FETCHING, false)
-        dispatch(SET_BC_FETCHING_SUCCESS, true)
+        // dispatch(SET_BC_IS_FETCHING, false)
+        // dispatch(SET_BC_FETCHING_SUCCESS, true)
         localStorage.setItem('budget_categories', JSON.stringify(data))
       })
   }

@@ -45,7 +45,7 @@ class App extends Component {
             dispatch('STORE_CREDITS')
             dispatch('STORE_DEBITS')
           } else {
-            this.last_two_months()
+            this.props.last_two_months()
           }
           localStorage.getItem('account_details')
             ? dispatch('STORE_ACCOUNTS', JSON.parse(localStorage.getItem('account_details')))

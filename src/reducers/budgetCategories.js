@@ -27,11 +27,19 @@ const budgetCategoriesReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case GET_BUDGET_CATEGORIES:
-      action.payload.budgetCat.forEach(cat => {
-        result[cat.name] = cat.budget_amount
-      })
-      state['timeFrame'] = action.payload.budgetCat[0].budget_timeframe
-      state.categories = result
+      if (action.payload.budgetCat) {
+        action.payload.budgetCat.forEach(cat => {
+          result[cat.name] = cat.budget_amount
+        })
+        state['timeFrame'] = action.payload.budgetCat[0].budget_timeframe
+        state.categories = result
+      } else {
+        action.payload.categories.forEach(cat => {
+          result[cat.name] = cat.budget_amount
+        })
+        state['timeFrame'] = action.payload.categories[0].budget_timeframe
+        state.categories = result
+      }
       return state
     case PUT_BUDGET_CATEGORIES:
       action.payload.budgetCat.forEach(cat => {

@@ -85,19 +85,23 @@ class NavBar extends React.Component {
           <MenuItem onClick={() => this.handleLink('Sync Monzo')}>Sync Monzo</MenuItem>
         </Link>
 
-        <MenuItem onClick={this.logout}>Logout</MenuItem>
+        {/* <MenuItem onClick={this.logout}>Logout</MenuItem> */}
       </div>
     } else {
       toolbar = <div>
-        <Link 
+        {/* <Link
           style={{ color: 'black', textDecoration: 'none' }} to='/login'>
           <MenuItem onClick={() => this.handleLink('Login')}>Login</MenuItem>
-        </Link>
+        </Link> */}
         <Link style={{ color: 'black', textDecoration: 'none' }} to='/register'>
           <MenuItem onClick={() => this.handleLink('Register')}>Register</MenuItem>
         </Link>
       </div>
     }
+
+    let userButton = this.props.currentUser
+      ? <Button variant='outlined' onClick={this.logout} color='inherit'>Logout</Button>
+      : <Link style={{ color: 'white', textDecoration: 'none' }} to='/login'><Button variant='outlined' onClick={() => this.handleLink('Login')} color='inherit'>Login</Button></Link>
 
     return (
       <div className={classes.root}>
@@ -132,6 +136,9 @@ class NavBar extends React.Component {
             <Typography variant='h6' color='inherit' className={classes.grow}>
               {this.props.view}
             </Typography>
+
+            {userButton}
+
           </Toolbar>
         </AppBar>
       </div>

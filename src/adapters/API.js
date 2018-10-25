@@ -2,7 +2,6 @@ import { get } from 'https'
 require('dotenv').config()
 
 const user_token = localStorage.getItem('user_token')
-const monzo_token = localStorage.getItem('monzo_token')
 
 class API {
   // USER API CALLS
@@ -107,6 +106,7 @@ class API {
   // MONZO API CALLS
 
   static get_list_accounts () {
+    const monzo_token = localStorage.getItem('monzo_token')
     return fetch(API.listAccountsURL, {
       method: 'GET',
       headers: { 'Authorization': `Bearer ${monzo_token}` }
@@ -115,6 +115,7 @@ class API {
   }
 
   static read_balance_account () {
+    const monzo_token = localStorage.getItem('monzo_token')
     return fetch(API.readBalanceURL + `?account_id=${account_id}`, {
       method: 'GET',
       headers: { 'Authorization': `Bearer ${monzo_token}` }
@@ -123,6 +124,7 @@ class API {
   }
 
   static list_pots () {
+    const monzo_token = localStorage.getItem('monzo_token')
     return fetch(API.listPotsURL, {
       method: 'GET',
       headers: { 'Authorization': `Bearer ${monzo_token}` }
@@ -131,6 +133,7 @@ class API {
   }
 
   static get_all_transactions () {
+    const monzo_token = localStorage.getItem('monzo_token')
     return fetch(API.getAllTransactionsURL + `?account_id=${account_id}`, {
       method: 'GET',
       headers: { 'Authorization': `Bearer ${monzo_token}` }
@@ -140,6 +143,7 @@ class API {
 
   static get_range_transactions (since, before) {
     // need to convert the DateTimes to An RFC 3339 encoded-timestamp, can do new Date().toISOString()
+    const monzo_token = localStorage.getItem('monzo_token')
     const rest_url = `&since=${since}&before${before}`
     return fetch(API.getAllTransactionsURL + `?&account_id=${account_id}${rest_url}`, {
       method: 'GET',
