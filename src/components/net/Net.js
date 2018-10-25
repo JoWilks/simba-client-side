@@ -72,7 +72,7 @@ class Net extends React.Component {
             newObj.y += transaction.amount
           }
         })
-        arrayObjsDateSum.push(newObj)
+        arrayObjsDateSum.unshift(newObj)
       })
 
       // change to monthly data points
@@ -184,7 +184,9 @@ class Net extends React.Component {
             runningTotal += item.y
           }
         })
-        lineGraphData = [{ id: 'net', data: newNet }]
+        let data = JSON.parse(JSON.stringify(newNet))
+        data.reverse()
+        lineGraphData = [{ id: 'net', data: data }]
       }
 
       this.setState({ net: newNet, lineGraphData, runningTotal })
