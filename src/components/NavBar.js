@@ -89,8 +89,8 @@ class NavBar extends React.Component {
       </div>
     } else {
       toolbar = <div>
-        <Link s
-          tyle={{ color: 'black', textDecoration: 'none' }} to='/login'>
+        <Link 
+          style={{ color: 'black', textDecoration: 'none' }} to='/login'>
           <MenuItem onClick={() => this.handleLink('Login')}>Login</MenuItem>
         </Link>
         <Link style={{ color: 'black', textDecoration: 'none' }} to='/register'>

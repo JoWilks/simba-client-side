@@ -157,11 +157,21 @@ class Net extends React.Component {
       let lineGraphData
 
       if (this.state.filterInfo.filterType === 'since two months ago' || lengthOfTime > 31) {
+        // create range of daily timepoints for list page
+        netAll.forEach(item => {
+          let date = moment(item.realDate, 'MM-DD-YYYY HH:mm').hour(1)
+          if (date.isBetween(startDate, endDate, null, [])) {
+            newNet.push(item)
+            runningTotal += item.y
+          }
+        })
+
+        // create monthly net data points for graph
         let data = this.filterTransactionsMonthly()
-        lineGraphData = [{ id: 'net', data }]
         data.forEach(obj => {
           runningTotal += obj.y
         })
+        lineGraphData = [{ id: 'net', data }]
       } else {
         netAll.forEach(item => {
           let date = moment(item.realDate, 'MM-DD-YYYY HH:mm').hour(1)
