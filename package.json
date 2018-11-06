@@ -14,11 +14,11 @@
     "react-dom": "^16.5.2",
     "react-infinite-calendar": "^2.3.1",
     "react-meter-bar": "^1.0.2",
-    "react-redux": "^5.0.7",
+    "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.4",
     "react-svg-meters": "^0.1.7",
-    "redux": "^4.0.0",
+    "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "typeface-roboto": "0.0.54"
   },

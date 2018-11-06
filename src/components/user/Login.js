@@ -37,9 +37,10 @@ handleSubmit = (event) => {
 
   API.login(username, password)
     .then(data => {
-      if (data.error) {
+      console.log(data)
+      if (data.message || data.error) {
         console.log(data)
-        alert(data.error)
+        alert(data.message)
       } else {
         if (data.access_token) {
           localStorage.setItem('user_token', data.jwt)

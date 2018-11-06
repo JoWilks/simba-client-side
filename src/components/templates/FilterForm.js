@@ -11,7 +11,7 @@ import Select from '@material-ui/core/Select'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import TextField from '@material-ui/core/TextField'
-import { compose } from '../../../../../Library/Caches/typescript/3.1/node_modules/redux'
+import { compose } from 'redux'
 import { MenuItem } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 
